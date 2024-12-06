@@ -19,6 +19,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "i18next": "^24.0.5",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-hook-form": "^7.53.2",
