@@ -4,6 +4,14 @@ import { I18nextProvider, useTranslation } from 'react-i18next';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Navbar from './components/Navbar';
 import i18n from './i18n'; // Import i18n configuration
+import About from './pages/About';
+import Blog from './pages/Blog';
+import ContactUs from './pages/ContactUs';
+import Cycles from './pages/Cycles';
+import GrandioseBenefits from './pages/GrandioseBenefits';
+import Home from './pages/Home';
+import Inscription from './pages/Inscription';
+import WhyChooseUs from './pages/WhyChooseUs';
 
 const App = () => {
     const [language, setLanguage] = useState(i18n.language); // Track current language
@@ -18,6 +26,14 @@ const App = () => {
         <I18nextProvider i18n={i18n}>
             <div>
                 <Navbar />
+                <Home />
+                <About />
+                <WhyChooseUs />
+                <Cycles />
+                <GrandioseBenefits />
+                <Blog />
+                <Inscription />
+                <ContactUs />
                 <h1>{t('welcome')}</h1> {/* Translated "welcome" message */}
                 {/* <LanguageSwitcher setLanguage={setLanguage} />  */}
                 {/* Pass setLanguage to switch languages */}
