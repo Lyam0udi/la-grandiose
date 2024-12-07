@@ -20,11 +20,36 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex space-x-4">
+                    <div className="hidden md:flex space-x-4 items-center">
                         <a href="/" className="hover:text-secondary">{t('home')}</a>
                         <a href="/about" className="hover:text-secondary">{t('about')}</a>
                         <a href="/cycles" className="hover:text-secondary">{t('cycles')}</a>
-                        <a href="/inscription" className="hover:text-secondary">{t('inscription')}</a>
+                        <a href="/contact" className="hover:text-secondary">{t('contact')}</a>
+
+                        {/* Dropdown Menu */}
+                        <div className="relative group">
+                            <button className="hover:text-secondary">{t('more')}</button>
+                            <div className="absolute hidden group-hover:block bg-primary text-white shadow-md rounded-md mt-2">
+                                <a href="/testimonials" className="block px-4 py-2 hover:bg-secondary">{t('testimonials')}</a>
+                                <a href="/inscription" className="block px-4 py-2 hover:bg-secondary">{t('inscription')}</a>
+                            </div>
+                        </div>
+
+                        {/* Language Switcher */}
+                        <div className="flex space-x-2">
+                            <button onClick={() => changeLanguage('en')} className="hover:text-secondary">EN</button>
+                            <button onClick={() => changeLanguage('fr')} className="hover:text-secondary">FR</button>
+                            <button onClick={() => changeLanguage('ar')} className="hover:text-secondary">AR</button>
+                        </div>
+
+                        {/* Theme Toggle */}
+                        <button className="ml-4 hover:text-secondary">
+                            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"
+                                />
+                            </svg>
+                        </button>
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -49,13 +74,6 @@ const Navbar = () => {
                             </svg>
                         </button>
                     </div>
-
-                    {/* Language Switcher */}
-                    <div className="hidden md:flex items-center space-x-2">
-                        <button onClick={() => changeLanguage('en')} className="hover:text-secondary">EN</button>
-                        <button onClick={() => changeLanguage('fr')} className="hover:text-secondary">FR</button>
-                        <button onClick={() => changeLanguage('ar')} className="hover:text-secondary">AR</button>
-                    </div>
                 </div>
             </div>
 
@@ -66,14 +84,9 @@ const Navbar = () => {
                         <a href="/" className="block text-white hover:bg-secondary rounded">{t('home')}</a>
                         <a href="/about" className="block text-white hover:bg-secondary rounded">{t('about')}</a>
                         <a href="/cycles" className="block text-white hover:bg-secondary rounded">{t('cycles')}</a>
+                        <a href="/contact" className="block text-white hover:bg-secondary rounded">{t('contact')}</a>
+                        <a href="/testimonials" className="block text-white hover:bg-secondary rounded">{t('testimonials')}</a>
                         <a href="/inscription" className="block text-white hover:bg-secondary rounded">{t('inscription')}</a>
-
-                        {/* Language Switcher */}
-                        <div className="flex items-center space-x-2 mt-4">
-                            <button onClick={() => changeLanguage('en')} className="hover:text-secondary">EN</button>
-                            <button onClick={() => changeLanguage('fr')} className="hover:text-secondary">FR</button>
-                            <button onClick={() => changeLanguage('ar')} className="hover:text-secondary">AR</button>
-                        </div>
                     </div>
                 </div>
             )}

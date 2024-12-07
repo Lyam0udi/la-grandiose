@@ -2,7 +2,10 @@
     "welcome": "Welcome to our application! 🕮",
     "cycle": "Cycle",
     "home": "Home",
-    "about": "About",
+    "about": "About Us",
     "cycles": "Cycles",
-    "inscription": "Inscription"
+    "contact": "Contact Us",
+    "testimonials": "Testimonials",
+    "inscription": "Inscription",
+    "more": "More"
 }
