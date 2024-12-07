@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Grandiose</title>
     <!-- Include CSS -->
-    @vite('resources/css/app.css') <!-- If you have CSS -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])  <!-- If you have CSS -->
 </head>
 <body>
     <div id="app"></div>
