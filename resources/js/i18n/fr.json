@@ -1,4 +1,8 @@
 {
     "welcome": "Bienvenue dans notre application! 🕮",
-    "cycle": "Cycle"
+    "cycle": "Cycle",
+    "home": "Accueil",
+    "about": "À propos",
+    "cycles": "Cycles",
+    "inscription": "Inscription"
 }
