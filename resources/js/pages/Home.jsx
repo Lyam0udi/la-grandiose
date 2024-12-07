@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Home = () => {
+const Home = ({ isDarkMode }) => {
     const { t } = useTranslation();
 
     const [imageIndex, setImageIndex] = useState(0);
@@ -13,8 +13,6 @@ const Home = () => {
         '/images/hero-bg5.jpg'
     ]; // Array of background images
 
-    const [isDarkMode, setIsDarkMode] = useState(false); // To toggle dark mode (optional)
-
     useEffect(() => {
         const interval = setInterval(() => {
             setImageIndex((prevIndex) => (prevIndex + 1) % images.length); // Loop through images
@@ -22,11 +20,6 @@ const Home = () => {
 
         return () => clearInterval(interval); // Clean up interval on component unmount
     }, [images.length]);
-
-    // Function to toggle dark mode (optional, could be global state)
-    const toggleDarkMode = () => {
-        setIsDarkMode((prev) => !prev);
-    };
 
     return (
         <div className={`home relative ${isDarkMode ? 'dark' : ''}`}>
@@ -56,7 +49,9 @@ const Home = () => {
 
                 {/* Navigation Arrows */}
                 <button
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
+                        isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'
+                    } p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110`}
                     onClick={() => setImageIndex((prev) => (prev - 1 + images.length) % images.length)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16">
@@ -65,7 +60,9 @@ const Home = () => {
                 </button>
 
                 <button
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+                    className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${
+                        isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'
+                    } p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110`}
                     onClick={() => setImageIndex((prev) => (prev + 1) % images.length)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">

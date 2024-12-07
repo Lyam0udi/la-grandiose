@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+// Navbar.jsx
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Navbar = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
+const Navbar = ({ isDarkMode, setIsDarkMode }) => {
     const { i18n, t } = useTranslation();
 
     const changeLanguage = (lang) => {
@@ -11,14 +10,13 @@ const Navbar = () => {
     };
 
     const toggleTheme = () => {
-        setIsDarkTheme(!isDarkTheme);
-        document.documentElement.classList.toggle('dark');
+        setIsDarkMode((prevMode) => !prevMode); // This updates App.jsx's state
     };
 
     return (
         <nav
             className={`${
-                isDarkTheme ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'
+                isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'
             } shadow-md`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,7 +25,7 @@ const Navbar = () => {
                     <div className="flex items-center">
                         <span
                             className={`text-2xl font-bold ${
-                                isDarkTheme ? 'text-skyBlue' : 'text-vibrantGreen'
+                                isDarkMode ? 'text-skyBlue' : 'text-vibrantGreen'
                             }`}
                         >
                             La Grandiose
@@ -46,7 +44,7 @@ const Navbar = () => {
                             <button className="hover:text-skyBlue">{t('more')}</button>
                             <div
                                 className={`absolute hidden group-hover:block ${
-                                    isDarkTheme ? 'bg-darkBackground' : 'bg-lightBackground'
+                                    isDarkMode ? 'bg-darkBackground' : 'bg-lightBackground'
                                 } text-gray-800 dark:text-white shadow-md rounded-md mt-2 z-10`}
                             >
                                 <a href="/testimonials" className="block px-4 py-2 hover:bg-vibrantGreen">
@@ -62,14 +60,29 @@ const Navbar = () => {
                     {/* Theme Toggle and Language Switcher */}
                     <div className="flex items-center space-x-4">
                         <button onClick={toggleTheme} className="hover:text-skyBlue">
-                            {isDarkTheme ? '🌙' : '☀️'}
+                            {isDarkMode ? '🌙' : '☀️'}
                         </button>
 
                         {/* Language Switcher */}
                         <div className="flex space-x-2">
-                            <button onClick={() => changeLanguage('en')} className="hover:text-skyBlue">EN</button>
-                            <button onClick={() => changeLanguage('fr')} className="hover:text-vibrantGreen">FR</button>
-                            <button onClick={() => changeLanguage('ar')} className="hover:text-normalRed">AR</button>
+                            <button
+                                onClick={() => changeLanguage('en')}
+                                className="hover:text-skyBlue"
+                            >
+                                EN
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('fr')}
+                                className="hover:text-vibrantGreen"
+                            >
+                                FR
+                            </button>
+                            <button
+                                onClick={() => changeLanguage('ar')}
+                                className="hover:text-normalRed"
+                            >
+                                AR
+                            </button>
                         </div>
                     </div>
                 </div>
