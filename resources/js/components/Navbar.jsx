@@ -62,15 +62,7 @@ const Navbar = () => {
                     {/* Theme Toggle and Language Switcher */}
                     <div className="flex items-center space-x-4">
                         <button onClick={toggleTheme} className="hover:text-skyBlue">
-                            {isDarkTheme ? (
-                                <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m6.364 1.636l-.707.707M21 12h-1m-1.636 6.364l-.707-.707M12 21v-1m-6.364-1.636l.707-.707M3 12h1m1.636-6.364l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z" />
-                                </svg>
-                            ) : (
-                                <svg className="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m6.364 1.636l-.707.707M21 12h-1m-1.636 6.364l-.707-.707M12 21v-1m-6.364-1.636l.707-.707M3 12h1m1.636-6.364l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z" />
-                                </svg>
-                            )}
+                            {isDarkTheme ? '🌙' : '☀️'}
                         </button>
 
                         {/* Language Switcher */}
