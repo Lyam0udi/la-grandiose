@@ -11,6 +11,8 @@ import Cycles from './pages/Cycles';
 import GrandioseBenefits from './pages/GrandioseBenefits';
 import Home from './pages/Home';
 import Inscription from './pages/Inscription';
+import ProfessorCard from './pages/ProfessorCard';
+import Testimonials from './pages/Testimonials';
 import WhyChooseUs from './pages/WhyChooseUs';
 
 const App = () => {
@@ -30,10 +32,12 @@ const App = () => {
                 <About />
                 <WhyChooseUs />
                 <Cycles />
+                <ProfessorCard />
                 <GrandioseBenefits />
                 <Blog />
                 <Inscription />
                 <ContactUs />
+                <Testimonials />
                 <h1>{t('welcome')}</h1> {/* Translated "welcome" message */}
                 {/* <LanguageSwitcher setLanguage={setLanguage} />  */}
                 {/* Pass setLanguage to switch languages */}
