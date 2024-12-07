@@ -19,9 +19,9 @@ const App = () => {
             <div>
                 <Navbar />
                 <h1>{t('welcome')}</h1> {/* Translated "welcome" message */}
-                <LanguageSwitcher setLanguage={setLanguage} /> {/* Pass setLanguage to switch languages */}
+                {/* <LanguageSwitcher setLanguage={setLanguage} />  */}
+                {/* Pass setLanguage to switch languages */}
             </div>
-            <div className="bg-red-500 text-white p-4">Tailwind Default Red Test</div>
         </I18nextProvider>
         
     );
