@@ -1,10 +1,9 @@
-// resources/js/pages/Home.jsx
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Home = () => {
     const { t } = useTranslation();
-    
+
     const [imageIndex, setImageIndex] = useState(0);
     const images = [
         '/images/hero-bg1.jpg',
@@ -12,7 +11,9 @@ const Home = () => {
         '/images/hero-bg3.jpg',
         '/images/hero-bg4.jpg',
         '/images/hero-bg5.jpg'
-    ]; // Background images array
+    ]; // Array of background images
+
+    const [isDarkMode, setIsDarkMode] = useState(false); // To toggle dark mode (optional)
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -22,9 +23,14 @@ const Home = () => {
         return () => clearInterval(interval); // Clean up interval on component unmount
     }, [images.length]);
 
+    // Function to toggle dark mode (optional, could be global state)
+    const toggleDarkMode = () => {
+        setIsDarkMode((prev) => !prev);
+    };
+
     return (
-        <div className="home relative">
-            {/* Hero Section with Dynamic Background Images */}
+        <div className={`home relative ${isDarkMode ? 'dark' : ''}`}>
+            {/* Hero Section */}
             <section
                 className="hero bg-cover bg-center h-screen text-white flex items-center justify-center transition-all duration-1000 ease-in-out"
                 style={{
@@ -33,17 +39,39 @@ const Home = () => {
                     backgroundPosition: 'center',
                 }}
             >
-                <div className="absolute inset-0 bg-black opacity-40"></div> {/* Overlay for text readability */}
+                {/* Dark Mode Overlay */}
+                <div className={`absolute inset-0 ${isDarkMode ? 'bg-black opacity-50' : 'bg-black opacity-30'}`}></div>
+
+                {/* Text Content */}
                 <div className="text-center relative z-10 px-4">
-                    <h1 className="text-5xl font-bold">{t('welcome_to_la_grandiose')}</h1>
-                    <p className="mt-4 text-xl">{t('hero_subheading')}</p>
+                    <h1 className="text-5xl font-bold sm:text-4xl lg:text-6xl">{t('welcome_to_la_grandiose')}</h1>
+                    <p className="mt-4 text-xl sm:text-lg lg:text-2xl">{t('hero_subheading')}</p>
                     <a
                         href="/inscription"
-                        className="mt-6 bg-vibrantGreen text-white py-3 px-6 rounded-full hover:bg-green-700 inline-block"
+                        className="mt-6 bg-vibrantGreen text-white py-3 px-6 rounded-full hover:bg-green-700 transition-colors inline-block"
                     >
                         {t('get_started')}
                     </a>
                 </div>
+
+                {/* Navigation Arrows */}
+                <button
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+                    onClick={() => setImageIndex((prev) => (prev - 1 + images.length) % images.length)}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path d="M11.293 12.293a1 1 0 0 0 0-1.414L7.414 8l3.879-3.879a1 1 0 0 0-1.414-1.414l-5 5a1 1 0 0 0 0 1.414l5 5a1 1 0 0 0 1.414 0z" />
+                    </svg>
+                </button>
+
+                <button
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110"
+                    onClick={() => setImageIndex((prev) => (prev + 1) % images.length)}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path d="M4.707 12.293a1 1 0 0 1 0-1.414L8.586 8 4.707 4.121a1 1 0 1 1 1.414-1.414l5 5a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0z" />
+                    </svg>
+                </button>
             </section>
         </div>
     );
