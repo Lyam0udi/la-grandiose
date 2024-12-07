@@ -30,14 +30,14 @@ const App = () => {
                 <Navbar />
                 <Home />
                 <About />
-                <WhyChooseUs />
+                <WhyChooseUs /> 
                 <Cycles />
+                <Testimonials />
                 <ProfessorCard />
                 <GrandioseBenefits />
                 <Blog />
                 <Inscription />
-                <ContactUs />
-                <Testimonials />
+                <ContactUs />            
                 <h1>{t('welcome')}</h1> {/* Translated "welcome" message */}
                 {/* <LanguageSwitcher setLanguage={setLanguage} />  */}
                 {/* Pass setLanguage to switch languages */}
