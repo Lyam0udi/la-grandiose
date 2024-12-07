@@ -1,6 +1,8 @@
 {
-    "welcome": "Welcome to our application! 🕮",
-    "cycle": "Cycle",
+    "hero_title": "Welcome to La Grandiose",
+    "hero_description": "Your gateway to exceptional education and endless opportunities.",
+    "inscription_button": "Join Us Now",
+    "welcome": "Welcome to our application!",
     "home": "Home",
     "about": "About Us",
     "cycles": "Cycles",

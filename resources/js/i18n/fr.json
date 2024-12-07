@@ -1,8 +1,10 @@
 {
-    "welcome": "Bienvenue dans notre application! 🕮",
-    "cycle": "Cycle",
+    "hero_title": "Bienvenue à La Grandiose",
+    "hero_description": "Votre passerelle vers une éducation exceptionnelle et des opportunités infinies.",
+    "inscription_button": "Rejoignez-nous maintenant",
+    "welcome": "Bienvenue dans notre application!",
     "home": "Accueil",
-    "about": "À propos",
+    "about": "À propos de nous",
     "cycles": "Cycles",
     "contact": "Contactez-nous",
     "testimonials": "Témoignages",
