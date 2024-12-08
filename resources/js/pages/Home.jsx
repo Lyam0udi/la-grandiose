@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 const Home = ({ isDarkMode, onLoaded }) => {
     const { t } = useTranslation();
 
-    const [imageIndex, setImageIndex] = useState(0); // Current image index
+    const [imageIndex, setImageIndex] = useState(0);
     const [loadedImages, setLoadedImages] = useState({});
     const [currentImage, setCurrentImage] = useState('/images/placeholder.webp');
     const sectionRef = useRef(null);
     const timerRef = useRef(null);
+    const isManualSwitching = useRef(false); // Track manual interactions
+    const touchStartX = useRef(0); // Track touch start position for tactile navigation
 
-    // Array of images to display
     const images = useMemo(() => [
         '/images/hero-bg1.webp',
         '/images/hero-bg2.webp',
@@ -19,7 +20,7 @@ const Home = ({ isDarkMode, onLoaded }) => {
         '/images/hero-bg5.webp',
     ], []);
 
-    // Preload the current, next, and previous images
+    // Preload adjacent images
     useEffect(() => {
         const preloadAdjacentImages = (index) => {
             const current = images[index];
@@ -48,24 +49,51 @@ const Home = ({ isDarkMode, onLoaded }) => {
         }
     }, [images, loadedImages, onLoaded]);
 
-    // Set the current image when it's fully loaded
+    // Set the current image when fully loaded
     useEffect(() => {
         if (loadedImages[images[imageIndex]]) {
             setCurrentImage(images[imageIndex]);
         }
     }, [imageIndex, images, loadedImages]);
 
-    // Automatically rotate images every 5 seconds
+    // Automatic rotation every 5000ms
     useEffect(() => {
         const startTimer = () => {
             timerRef.current = setInterval(() => {
-                setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+                if (!isManualSwitching.current) { // Skip rotation during manual switching
+                    setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+                }
             }, 5000);
         };
 
         startTimer();
         return () => clearInterval(timerRef.current); // Cleanup on unmount
     }, [images]);
+
+    // Manual navigation
+    const handleManualChange = (direction) => {
+        isManualSwitching.current = true; // Indicate manual interaction
+        setImageIndex((prevIndex) =>
+            direction === 'next'
+                ? (prevIndex + 1) % images.length
+                : (prevIndex - 1 + images.length) % images.length
+        );
+        setTimeout(() => (isManualSwitching.current = false), 5000); // Reset manual switching flag after 5 seconds
+    };
+
+    // Handle touch gestures for tactile navigation
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchEndX - touchStartX.current;
+
+        if (Math.abs(diff) > 50) { // Minimum swipe distance threshold
+            handleManualChange(diff > 0 ? 'prev' : 'next');
+        }
+    };
 
     return (
         <div
@@ -76,8 +104,10 @@ const Home = ({ isDarkMode, onLoaded }) => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundColor: isDarkMode ? '#000' : '#fff', // Fallback background
-                transition: 'background-image 1s ease-in-out', // Smooth transitions
+                transition: 'background-image 1s ease-in-out',
             }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
         >
             {/* Hero Section */}
             <section
@@ -101,6 +131,32 @@ const Home = ({ isDarkMode, onLoaded }) => {
                         {t('inscription_button')}
                     </a>
                 </div>
+
+                {/* Navigation Buttons */}
+                <button
+                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
+                        isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'
+                    } p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none`}
+                    onClick={() => handleManualChange('prev')}
+                    aria-label="Previous Image"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M15.293 4.293a1 1 0 0 1 0 1.414L9.414 12l5.879 5.879a1 1 0 1 1-1.414 1.414l-6.5-6.5a1 1 0 0 1 0-1.414l6.5-6.5a1 1 0 0 1 1.414 0z" />
+                    </svg>
+                </button>
+
+                <button
+                    className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${
+                        isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'
+                    } p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none`}
+                    onClick={() => handleManualChange('next')}
+                    aria-label="Next Image"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8.707 4.293a1 1 0 0 0 0 1.414L14.586 12l-5.879 5.879a1 1 0 0 0 1.414 1.414l6.5-6.5a1 1 0 0 0 0-1.414l-6.5-6.5a1 1 0 0 0-1.414 0z" />
+                    </svg>
+                </button>
+
             </section>
         </div>
     );
