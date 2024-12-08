@@ -1,16 +1,16 @@
-// resources/js/pages/Home.jsx
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Home = ({ isDarkMode, onLoaded }) => {
     const { t } = useTranslation();
 
-    const [imageIndex, setImageIndex] = useState(0);
+    const [imageIndex, setImageIndex] = useState(0); // Current image index
     const [loadedImages, setLoadedImages] = useState({});
     const [currentImage, setCurrentImage] = useState('/images/placeholder.webp');
     const sectionRef = useRef(null);
     const timerRef = useRef(null);
 
+    // Array of images to display
     const images = useMemo(() => [
         '/images/hero-bg1.webp',
         '/images/hero-bg2.webp',
@@ -19,28 +19,41 @@ const Home = ({ isDarkMode, onLoaded }) => {
         '/images/hero-bg5.webp',
     ], []);
 
-    // Preload images and notify the parent when all are loaded
+    // Preload the current, next, and previous images
     useEffect(() => {
-        let loadedCount = 0;
+        const preloadAdjacentImages = (index) => {
+            const current = images[index];
+            const next = images[(index + 1) % images.length];
+            const prev = images[(index - 1 + images.length) % images.length];
 
-        images.forEach((src) => {
-            const img = new Image();
-            img.src = src;
-            img.onload = () => {
-                setLoadedImages((prev) => ({ ...prev, [src]: true }));
-                loadedCount++;
-
-                // If all images are loaded, notify parent
-                if (loadedCount === images.length && onLoaded) {
-                    onLoaded();
+            [current, next, prev].forEach((src) => {
+                if (!loadedImages[src]) {
+                    const img = new Image();
+                    img.src = src;
+                    img.onload = () => {
+                        setLoadedImages((prev) => ({ ...prev, [src]: true }));
+                    };
                 }
-            };
-        });
-    }, [images, onLoaded]);
+            });
+        };
 
+        preloadAdjacentImages(imageIndex);
+    }, [imageIndex, images, loadedImages]);
+
+    // Notify the parent when all images are loaded
     useEffect(() => {
-        setCurrentImage(images[imageIndex]);
-    }, [imageIndex, images]);
+        const allImagesLoaded = images.every((src) => loadedImages[src]);
+        if (allImagesLoaded && onLoaded) {
+            onLoaded();
+        }
+    }, [images, loadedImages, onLoaded]);
+
+    // Set the current image when it's fully loaded
+    useEffect(() => {
+        if (loadedImages[images[imageIndex]]) {
+            setCurrentImage(images[imageIndex]);
+        }
+    }, [imageIndex, images, loadedImages]);
 
     // Automatically rotate images every 5 seconds
     useEffect(() => {
@@ -51,7 +64,7 @@ const Home = ({ isDarkMode, onLoaded }) => {
         };
 
         startTimer();
-        return () => clearInterval(timerRef.current);
+        return () => clearInterval(timerRef.current); // Cleanup on unmount
     }, [images]);
 
     return (
@@ -62,7 +75,8 @@ const Home = ({ isDarkMode, onLoaded }) => {
                 backgroundImage: `url(${currentImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                backgroundColor: isDarkMode ? '#000' : '#fff',
+                backgroundColor: isDarkMode ? '#000' : '#fff', // Fallback background
+                transition: 'background-image 1s ease-in-out', // Smooth transitions
             }}
         >
             {/* Hero Section */}
