@@ -60,8 +60,8 @@ const App = () => {
                 <Home isDarkMode={isDarkMode} onLoaded={() => setIsLoading(false)} />
 
                 {/* Other Sections */}
-                {/* <About />
-                <WhyChooseUs />
+                <About isDarkMode={isDarkMode} />
+                {/* <WhyChooseUs />
                 <Cycles />
                 <Testimonials />
                 <ProfessorCard />
