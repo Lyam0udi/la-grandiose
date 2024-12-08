@@ -134,9 +134,7 @@ const Home = ({ isDarkMode, onLoaded }) => {
 
                 {/* Navigation Buttons */}
                 <button
-                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
-                        isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'
-                    } p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none`}
+                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'} p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none hidden md:block`}
                     onClick={() => handleManualChange('prev')}
                     aria-label="Previous Image"
                 >
@@ -146,9 +144,7 @@ const Home = ({ isDarkMode, onLoaded }) => {
                 </button>
 
                 <button
-                    className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${
-                        isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'
-                    } p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none`}
+                    className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'} p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none hidden md:block`}
                     onClick={() => handleManualChange('next')}
                     aria-label="Next Image"
                 >
