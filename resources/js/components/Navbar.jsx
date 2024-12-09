@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next';
 const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading }) => {
     const { t } = useTranslation();
     const [navbarBg, setNavbarBg] = useState('');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const changeLanguage = (lang) => {
         setLanguage(lang);
+        setIsDropdownOpen(false); // Close dropdown after selecting a language
     };
 
     const toggleTheme = () => {
@@ -94,19 +96,43 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         {/* Dark Mode Toggle */}
                         <button onClick={toggleTheme}>{isDarkMode ? '🌙' : '☀️'}</button>
 
-                        {/* Language Switch */}
-                        <div className="flex space-x-2">
-                            {['en', 'fr', 'ar'].map((lang) => (
-                                <button
-                                    key={lang}
-                                    onClick={() => changeLanguage(lang)}
-                                    className={`hover:underline ${
-                                        language === lang ? 'font-bold' : ''
-                                    }`}
+                        {/* Language Switcher Dropdown */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className={`${
+                                    isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'
+                                } px-3 py-1.5 rounded-md shadow-md flex items-center justify-between w-24 text-sm font-medium hover:bg-opacity-80 focus:outline-none transition-all`}
+                            >
+                                {language.toUpperCase()}
+                                <span
+                                    className={`ml-2 transition-transform ${isDropdownOpen ? 'transform rotate-180' : ''}`}
                                 >
-                                    {lang.toUpperCase()}
-                                </button>
-                            ))}
+                                    ▼
+                                </span>
+                            </button>
+
+                            {isDropdownOpen && (
+                                <div
+                                    className={`absolute top-full mt-2 w-full rounded-md ${
+                                        isDarkMode ? 'bg-gray-800' : 'bg-white'
+                                    } shadow-lg z-10`}
+                                >
+                                    {['en', 'fr', 'ar'].map((lang) => (
+                                        <button
+                                            key={lang}
+                                            onClick={() => changeLanguage(lang)}
+                                            className={`block w-full text-left px-4 py-2 text-sm transition-all ${
+                                                language === lang
+                                                    ? 'bg-blue-500 text-white font-semibold'
+                                                    : 'hover:bg-gray-100 text-gray-600'
+                                            }`}
+                                        >
+                                            {lang.toUpperCase()}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
