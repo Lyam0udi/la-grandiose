@@ -50,14 +50,14 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <div
-                        className={`text-2xl font-bold cursor-pointer ${
-                            isDarkMode ? 'text-skyBlue' : 'text-vibrantGreen'
-                        }`}
-                        onClick={() => scrollToSection('home')}
-                    >
-                        La Grandiose
+                    <div className="cursor-pointer" onClick={() => scrollToSection('home')}>
+                        <img
+                            src="/images/logo.png"
+                            alt="La Grandiose Logo"
+                            className={`w-32 ${isDarkMode ? 'text-skyBlue' : 'text-vibrantGreen'}`}
+                        />
                     </div>
+
 
                     {/* Main Menu (Desktop) */}
                     <div className={`hidden md:flex space-x-6`}>
