@@ -5,6 +5,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
     const { t } = useTranslation();
     const [navbarBg, setNavbarBg] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu toggle
 
     const changeLanguage = (lang) => {
         setLanguage(lang);
@@ -58,43 +59,25 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         La Grandiose
                     </div>
 
-                    {/* Main Menu */}
-                    <div className="hidden md:flex space-x-6">
+                    {/* Main Menu (Desktop) */}
+                    <div className={`hidden md:flex space-x-6`}>
                         <button onClick={() => scrollToSection('home')}>{t('home')}</button>
                         <button onClick={() => scrollToSection('about')}>{t('about')}</button>
                         <button onClick={() => scrollToSection('cycles')}>{t('cycles')}</button>
                         <button onClick={() => scrollToSection('whychooseus')}>{t('whychooseus')}</button>
                         <button onClick={() => scrollToSection('testimonials')}>{t('testimonials')}</button>
                         <button onClick={() => scrollToSection('contact')}>{t('contact')}</button>
-
-                        {/* More Dropdown */}
-                        <div className="relative group">
-                            <button>{t('more')}</button>
-                            <div
-                                className={`absolute hidden group-hover:block ${
-                                    isDarkMode ? 'bg-gray-800' : 'bg-white'
-                                } shadow-md rounded-md mt-2`}
-                            >
-                                <button
-                                    onClick={() => scrollToSection('blog')}
-                                    className="block px-4 py-2"
-                                >
-                                    {t('blog')}
-                                </button>
-                                <button
-                                    onClick={() => scrollToSection('inscription')}
-                                    className="block px-4 py-2"
-                                >
-                                    {t('inscription')}
-                                </button>
-                            </div>
-                        </div>
                     </div>
 
                     {/* Controls */}
                     <div className="flex items-center space-x-4">
                         {/* Dark Mode Toggle */}
-                        <button onClick={toggleTheme}>{isDarkMode ? '🌙' : '☀️'}</button>
+                        <button
+                            onClick={toggleTheme}
+                            className={`p-2 rounded-md ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
+                        >
+                            {isDarkMode ? '🌙' : '☀️'}
+                        </button>
 
                         {/* Language Switcher Dropdown */}
                         <div className="relative">
@@ -134,9 +117,31 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                                 </div>
                             )}
                         </div>
+
+                        {/* Mobile Menu Button */}
+                        <div className="md:hidden">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className={`text-2xl p-2 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
+                            >
+                                ☰
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+                <div className={`md:hidden bg-gray-800 text-white p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                    <button onClick={() => scrollToSection('home')} className="block py-2">{t('home')}</button>
+                    <button onClick={() => scrollToSection('about')} className="block py-2">{t('about')}</button>
+                    <button onClick={() => scrollToSection('cycles')} className="block py-2">{t('cycles')}</button>
+                    <button onClick={() => scrollToSection('whychooseus')} className="block py-2">{t('whychooseus')}</button>
+                    <button onClick={() => scrollToSection('testimonials')} className="block py-2">{t('testimonials')}</button>
+                    <button onClick={() => scrollToSection('contact')} className="block py-2">{t('contact')}</button>
+                </div>
+            )}
         </nav>
     );
 };
