@@ -54,21 +54,29 @@ const App = () => {
                     setIsDarkMode={setIsDarkMode}
                     language={language}
                     setLanguage={setLanguage}
+                    isLoading={isLoading} 
                 />
 
                 {/* Home Section */}
-                <Home isDarkMode={isDarkMode} onLoaded={() => setIsLoading(false)} />
+                <div id="home">
+                    <Home isDarkMode={isDarkMode} onLoaded={() => setIsLoading(false)} />
+                </div>
 
                 {/* Other Sections */}
-                <About isDarkMode={isDarkMode} />
-                {/* <WhyChooseUs />
-                <Cycles />
+                <div id="about">
+                    <About isDarkMode={isDarkMode} />
+                </div>
+
+                <div id="whychooseus">
+                    <WhyChooseUs />
+                </div>
+                {/* <Cycles /> */}
                 <Testimonials />
-                <ProfessorCard />
+                {/* <ProfessorCard /> */}
                 <GrandioseBenefits />
-                <Blog />
-                <Inscription />
-                <ContactUs /> */}
+                {/* <Blog /> */}
+                {/* <Inscription /> */}
+                <ContactUs />
             </div>
         </I18nextProvider>
     );
