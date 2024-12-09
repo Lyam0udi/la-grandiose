@@ -133,7 +133,12 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
 
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-                <div className={`md:hidden bg-gray-800 text-white p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                <div
+                    className={`md:hidden p-4 ${
+                        isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
+                    }`}
+                    style={{ maxWidth: '910px', margin: '0 auto' }}
+                >
                     <button onClick={() => scrollToSection('home')} className="block py-2">{t('home')}</button>
                     <button onClick={() => scrollToSection('about')} className="block py-2">{t('about')}</button>
                     <button onClick={() => scrollToSection('cycles')} className="block py-2">{t('cycles')}</button>
