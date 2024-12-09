@@ -1,4 +1,3 @@
-// resources/js/App.jsx
 import React, { useState, useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
@@ -10,7 +9,6 @@ import Cycles from './pages/Cycles';
 import GrandioseBenefits from './pages/GrandioseBenefits';
 import Home from './pages/Home';
 import Inscription from './pages/Inscription';
-import ProfessorCard from './pages/ProfessorCard';
 import Testimonials from './pages/Testimonials';
 import WhyChooseUs from './pages/WhyChooseUs';
 
@@ -47,36 +45,45 @@ const App = () => {
                 </div>
             )}
 
-            <div className={`${isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'}`}>
+            <div
+                className={`${
+                    isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'
+                }`}
+            >
                 {/* Navbar with Dark Mode and Language Switching */}
                 <Navbar
                     isDarkMode={isDarkMode}
                     setIsDarkMode={setIsDarkMode}
                     language={language}
                     setLanguage={setLanguage}
-                    isLoading={isLoading} 
+                    isLoading={isLoading}
                 />
 
-                {/* Home Section */}
-                <div id="home">
+                {/* Sections */}
+                <section id="home">
                     <Home isDarkMode={isDarkMode} onLoaded={() => setIsLoading(false)} />
-                </div>
-
-                {/* Other Sections */}
-                <div id="about">
+                </section>
+                <section id="about">
                     <About isDarkMode={isDarkMode} />
-                </div>
-
-                <div id="whychooseus">
+                </section>
+                <section id="cycles">
+                    <Cycles />
+                </section>
+                <section id="whychooseus">
                     <WhyChooseUs />
-                </div>
-                {/* <Cycles /> */}
-                <Testimonials />
-                {/* <ProfessorCard /> */}
-                <GrandioseBenefits />
-                {/* <Blog /> */}
-                {/* <Inscription /> */}
-                <ContactUs />
+                </section>
+                <section id="testimonials">
+                    <Testimonials />
+                </section>
+                <section id="contact">
+                    <ContactUs />
+                </section>
+                <section id="blog">
+                    <Blog />
+                </section>
+                <section id="inscription">
+                    <Inscription />
+                </section>
             </div>
         </I18nextProvider>
     );

@@ -1,35 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading }) => {
-    const { i18n, t } = useTranslation();
+    const { t } = useTranslation();
+    const [navbarBg, setNavbarBg] = useState('');
 
     const changeLanguage = (lang) => {
-        setLanguage(lang); // Update the state in App.jsx
-        i18n.changeLanguage(lang); // Reflect the change in i18next
+        setLanguage(lang);
     };
 
     const toggleTheme = () => {
-        setIsDarkMode((prevMode) => !prevMode); // This updates App.jsx's state
+        setIsDarkMode((prevMode) => !prevMode);
     };
 
     const scrollToSection = (id) => {
         const section = document.getElementById(id);
         if (section) {
             section.scrollIntoView({ behavior: 'smooth' });
+            window.history.pushState(null, null, `#${id}`); // Update URL
         }
     };
 
-    // Hide Navbar during loading
+    // Change Navbar Background on Scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setNavbarBg(isDarkMode ? 'bg-gray-800' : 'bg-gray-100');
+            } else {
+                setNavbarBg('');
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isDarkMode]);
+
     if (isLoading) {
         return null;
     }
 
     return (
         <nav
-            className={`${
-                isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'
-            } shadow-md fixed w-full top-0 z-50`}
+            className={`fixed w-full top-0 z-50 shadow-md transition-colors duration-300 ${
+                navbarBg || (isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800')
+            }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
@@ -43,58 +56,32 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         La Grandiose
                     </div>
 
-                    {/* Desktop Menu */}
+                    {/* Main Menu */}
                     <div className="hidden md:flex space-x-6">
-                        <button
-                            onClick={() => scrollToSection('home')}
-                            className="hover:text-skyBlue focus:outline-none"
-                        >
-                            {t('home')}
-                        </button>
-                        <button
-                            onClick={() => scrollToSection('about')}
-                            className="hover:text-vibrantGreen focus:outline-none"
-                        >
-                            {t('about')}
-                        </button>
-                        <button
-                            onClick={() => scrollToSection('whychooseus')}
-                            className="hover:text-vibrantGreen focus:outline-none"
-                        >
-                            {t('whychooseus')}
-                        </button>
-                        <button
-                            onClick={() => scrollToSection('cycles')}
-                            className="hover:text-normalRed focus:outline-none"
-                        >
-                            {t('cycles')}
-                        </button>
-                        <button
-                            onClick={() => scrollToSection('contact')}
-                            className="hover:text-normalYellow focus:outline-none"
-                        >
-                            {t('contact')}
-                        </button>
+                        <button onClick={() => scrollToSection('home')}>{t('home')}</button>
+                        <button onClick={() => scrollToSection('about')}>{t('about')}</button>
+                        <button onClick={() => scrollToSection('cycles')}>{t('cycles')}</button>
+                        <button onClick={() => scrollToSection('whychooseus')}>{t('whychooseus')}</button>
+                        <button onClick={() => scrollToSection('testimonials')}>{t('testimonials')}</button>
+                        <button onClick={() => scrollToSection('contact')}>{t('contact')}</button>
 
-                        {/* Dropdown Menu */}
+                        {/* More Dropdown */}
                         <div className="relative group">
-                            <button className="hover:text-skyBlue focus:outline-none">
-                                {t('more')}
-                            </button>
+                            <button>{t('more')}</button>
                             <div
                                 className={`absolute hidden group-hover:block ${
-                                    isDarkMode ? 'bg-darkBackground' : 'bg-lightBackground'
-                                } text-gray-800 dark:text-white shadow-md rounded-md mt-2`}
+                                    isDarkMode ? 'bg-gray-800' : 'bg-white'
+                                } shadow-md rounded-md mt-2`}
                             >
                                 <button
-                                    onClick={() => scrollToSection('testimonials')}
-                                    className="block px-4 py-2 hover:bg-vibrantGreen focus:outline-none"
+                                    onClick={() => scrollToSection('blog')}
+                                    className="block px-4 py-2"
                                 >
-                                    {t('testimonials')}
+                                    {t('blog')}
                                 </button>
                                 <button
                                     onClick={() => scrollToSection('inscription')}
-                                    className="block px-4 py-2 hover:bg-normalYellow focus:outline-none"
+                                    className="block px-4 py-2"
                                 >
                                     {t('inscription')}
                                 </button>
@@ -102,39 +89,24 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         </div>
                     </div>
 
-                    {/* Theme Toggle and Language Switcher */}
+                    {/* Controls */}
                     <div className="flex items-center space-x-4">
-                        {/* Theme Toggle */}
-                        <button onClick={toggleTheme} className="hover:text-skyBlue text-lg focus:outline-none">
-                            {isDarkMode ? '🌙' : '☀️'}
-                        </button>
+                        {/* Dark Mode Toggle */}
+                        <button onClick={toggleTheme}>{isDarkMode ? '🌙' : '☀️'}</button>
 
-                        {/* Language Switcher */}
+                        {/* Language Switch */}
                         <div className="flex space-x-2">
-                            <button
-                                onClick={() => changeLanguage('en')}
-                                className={`hover:text-skyBlue ${
-                                    language === 'en' ? 'font-bold' : ''
-                                } focus:outline-none`}
-                            >
-                                EN
-                            </button>
-                            <button
-                                onClick={() => changeLanguage('fr')}
-                                className={`hover:text-vibrantGreen ${
-                                    language === 'fr' ? 'font-bold' : ''
-                                } focus:outline-none`}
-                            >
-                                FR
-                            </button>
-                            <button
-                                onClick={() => changeLanguage('ar')}
-                                className={`hover:text-normalRed ${
-                                    language === 'ar' ? 'font-bold' : ''
-                                } focus:outline-none`}
-                            >
-                                AR
-                            </button>
+                            {['en', 'fr', 'ar'].map((lang) => (
+                                <button
+                                    key={lang}
+                                    onClick={() => changeLanguage(lang)}
+                                    className={`hover:underline ${
+                                        language === lang ? 'font-bold' : ''
+                                    }`}
+                                >
+                                    {lang.toUpperCase()}
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
