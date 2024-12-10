@@ -48,7 +48,18 @@
     "benefit_8_desc": "We encourage independence, empowering your child to take ownership of their learning journey.",
 
     "testimonials_title": "What Parents Are Saying",
-    "testimonials_label": "Testimonials from our satisfied parents"
+    "testimonials_label": "Testimonials from our satisfied parents",
+
+    "cycles_label": "Cycles",
+    "cycles_title": "Discover Our Cycles",
+    "cycle_1_title": "Powerful Beginnings",
+    "cycle_1_desc": "An introduction to powerful learning phases.",
+    "cycle_2_title": "Growth & Learning",
+    "cycle_2_desc": "Fostering growth and building foundational knowledge.",
+    "cycle_3_title": "Exploration & Innovation",
+    "cycle_3_desc": "Inspiring creativity and discovery in young minds.",
+    "cycle_4_title": "Mastery & Achievement",
+    "cycle_4_desc": "Preparing students for success and accomplishment."
 
 
 }
