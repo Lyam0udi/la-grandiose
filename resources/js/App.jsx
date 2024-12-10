@@ -70,7 +70,7 @@ const App = () => {
                     <Cycles />
                 </section>
                 <section id="whychooseus">
-                    <WhyChooseUs />
+                    <WhyChooseUs isDarkMode={isDarkMode} />
                 </section>
                 <section id="testimonials">
                     <Testimonials />
