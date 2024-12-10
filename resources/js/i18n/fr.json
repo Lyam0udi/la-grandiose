@@ -2,7 +2,7 @@
     "hero_title": "Bienvenue à La Grandiose",
     "hero_description": "Votre passerelle vers une éducation exceptionnelle et des opportunités infinies.",
     "inscription_button": "Rejoignez-nous maintenant",
-    "welcome": "Bienvenue dans notre application!",
+    "welcome": "Bienvenue dans notre application !",
     "home": "Accueil",
     "about": "À propos de nous",
     "cycles": "Cycles",
@@ -11,8 +11,9 @@
     "inscription": "Inscription",
     "whychooseus": "Pourquoi nous choisir",
     "more": "Plus",
-    "about_title": "Présentation de l’Établissement",
-    "about_paragraph_1": "Le groupe scolaire LA GRANDIOSE est une école primaire et maternelle dédiée à offrir une éducation et un enseignement de qualité dans un environnement chaleureux et bienveillant. Notre équipe pédagogique passionnée et expérimentée s'engage à favoriser le développement intellectuel, social et émotionnel de chaque enfant.",
-    "about_paragraph_2": "Nous sommes passionnés par les domaines de l’éducation, ainsi, nous mettons tous les moyens en œuvre pour construire et accompagner chaque élève vers l’excellence personnelle en explorant ses propres passions et intérêts. À la Grandiose, nous nous engageons à éduquer, enseigner et former des élèves citoyens capables de briller là où ils sont en adoptant des programmes innovants et ambitieux.",
-    "about_paragraph_3": "Nous sommes fiers de créer un environnement où chaque enfant peut grandir, apprendre et s'épanouir, tant sur le plan académique que personnel."
+    "about_title": "Découvrez l'école La Grandiose",
+    "about_paragraph_1": "À La Grandiose, nous offrons un environnement chaleureux où chaque enfant peut se développer académiquement et personnellement. Nous mettons l'accent sur l'inspiration des jeunes esprits pour qu'ils deviennent la meilleure version d'eux-mêmes.",
+    "about_paragraph_2": "Nous encourageons la créativité, la pensée critique et la collaboration grâce à des méthodes d'enseignement innovantes. Nos éducateurs expérimentés sont dédiés à guider les étudiants vers leurs passions et leurs objectifs futurs.",
+    "about_paragraph_3": "Rejoignez-nous pour vivre un environnement d'apprentissage qui forme des citoyens responsables et globaux, prêts à exceller dans toutes leurs entreprises.",
+    "about_section_label": "Section À propos"
 }
