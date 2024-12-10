@@ -7,7 +7,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/**/*.blade.php',
         './resources/**/*.js',
-        './resources/**/*.jsx', // Include JSX files
+        './resources/**/*.jsx',
         './resources/**/*.vue',
     ],
     theme: {
@@ -16,12 +16,16 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                skyBlue: '#87CEEB',  // Sky Blue
-                vibrantGreen: '#32CD32',  // Vibrant Green
-                normalRed: '#FF0000',  // Normal Red
-                normalYellow: '#FFD700',  // Normal Yellow
+                skyBlue: '#87CEEB',
+                vibrantGreen: '#32CD32',
+                normalRed: '#FF0000',
+                normalYellow: '#FFD700',
                 lightBackground: '#FFFFFF',
-                darkBackground: '#1F2937',  // Tailwind's gray-800
+                lightSecondary: '#F9FAFB', // New light secondary background
+                lightText: '#4B5563', // Tailwind's gray-600
+                darkBackground: '#1F2937', 
+                darkSecondary: '#374151', // Tailwind's gray-700
+                darkText: '#D1D5DB', // Tailwind's gray-300
             },
         },
     },
