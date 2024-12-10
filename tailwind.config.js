@@ -26,6 +26,17 @@ export default {
                 darkBackground: '#1F2937', 
                 darkSecondary: '#374151', // Tailwind's gray-700
                 darkText: '#D1D5DB', // Tailwind's gray-300
+
+                // New colors? (Must be review)
+                // primaryBlue: '#3B82F6', 
+                // secondaryBlue: '#60A5FA', 
+                // darkBg: '#1F2937', 
+                // lightBg: '#F9FAFB', 
+                // highlightYellow: '#F59E0B', 
+                // lightText: '#374151', 
+                // darkText: '#E5E7EB', 
+                // cardBgLight: '#FFFFFF', 
+                // cardBgDark: '#2D3748', 
             },
         },
     },

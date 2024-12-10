@@ -72,6 +72,9 @@ const App = () => {
                 <section id="whychooseus">
                     <WhyChooseUs isDarkMode={isDarkMode} />
                 </section>
+                <section id="grandiosebenefits">
+                    <GrandioseBenefits isDarkMode={isDarkMode} />
+                </section>
                 <section id="testimonials">
                     <Testimonials />
                 </section>
