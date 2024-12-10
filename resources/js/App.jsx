@@ -76,7 +76,7 @@ const App = () => {
                     <GrandioseBenefits isDarkMode={isDarkMode} />
                 </section>
                 <section id="testimonials">
-                    <Testimonials />
+                    <Testimonials isDarkMode={isDarkMode} />
                 </section>
                 <section id="contact">
                     <ContactUs />
