@@ -2,43 +2,64 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/**/*.blade.php',
-        './resources/**/*.js',
-        './resources/**/*.jsx',
-        './resources/**/*.vue',
-    ],
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-            colors: {
-                skyBlue: '#87CEEB',
-                vibrantGreen: '#32CD32',
-                normalRed: '#FF0000',
-                normalYellow: '#FFD700',
-                lightBackground: '#FFFFFF',
-                lightSecondary: '#F9FAFB', // New light secondary background
-                lightText: '#4B5563', // Tailwind's gray-600
-                darkBackground: '#1F2937', 
-                darkSecondary: '#374151', // Tailwind's gray-700
-                darkText: '#D1D5DB', // Tailwind's gray-300
+  content: [
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+    './storage/framework/views/*.php',
+    './resources/**/*.blade.php',
+    './resources/**/*.js',
+    './resources/**/*.jsx',
+    './resources/**/*.vue',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        // Primary brand colors
+        primaryBlue: '#3B82F6', // Main brand color
+        secondaryBlue: '#60A5FA', // Supporting color for hover or accents
 
-                // New colors? (Must be review)
-                // primaryBlue: '#3B82F6', 
-                // secondaryBlue: '#60A5FA', 
-                // darkBg: '#1F2937', 
-                // lightBg: '#F9FAFB', 
-                // highlightYellow: '#F59E0B', 
-                // lightText: '#374151', 
-                // darkText: '#E5E7EB', 
-                // cardBgLight: '#FFFFFF', 
-                // cardBgDark: '#2D3748', 
-            },
-        },
+        // Light Mode Colors
+        lightBackground: '#F9FAFB', // Main background
+        lightSecondary: '#FFFFFF', // Secondary section background
+        lightText: '#374151', // Primary text color
+        lightTextSecondary: '#6B7280', // Muted or secondary text
+        lightCard: '#FFFFFF', // Card background
+        lightBorder: '#E5E7EB', // Border color for light mode
+
+        // Dark Mode Colors
+        darkBackground: '#1F2937', // Main background
+        darkSecondary: '#2D3748', // Secondary section background
+        darkText: '#E5E7EB', // Primary text color
+        darkTextSecondary: '#A0AEC0', // Muted or secondary text
+        darkCard: '#2D3748', // Card background
+        darkBorder: '#4A5568', // Border color for dark mode
+
+        // Accent and utility colors
+        accentYellow: '#F59E0B', // Highlight color for attention
+        accentRed: '#EF4444', // Error or warning color
+        accentGreen: '#10B981', // Success or confirmation color
+        accentPurple: '#8B5CF6', // Optional vibrant accent
+
+        // Gradients
+        gradientLightStart: '#E0F2FE', // Starting point for light gradients
+        gradientLightEnd: '#90CDF4', // Ending point for light gradients
+        gradientDarkStart: '#2C5282', // Starting point for dark gradients
+        gradientDarkEnd: '#1A365D', // Ending point for dark gradients
+
+        // Button-specific colors
+        buttonPrimaryLight: '#3B82F6',
+        buttonPrimaryDark: '#60A5FA',
+        buttonHoverLight: '#2563EB',
+        buttonHoverDark: '#1D4ED8',
+        buttonDisabled: '#9CA3AF', // Disabled button state
+
+        // Section-specific overrides
+        sectionLightBackground: '#F3F4F6', // Subtle contrast for sections
+        sectionDarkBackground: '#1E293B', // Slightly lighter for sections in dark mode
+      },
     },
-    plugins: [],
+  },
+  plugins: [],
 };

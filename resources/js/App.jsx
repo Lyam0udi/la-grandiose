@@ -39,7 +39,7 @@ const App = () => {
     return (
         <I18nextProvider i18n={i18n}>
             {/* Display Global Loader */}
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
                     <div className="loader border-t-blue-500 border-4 border-gray-300 rounded-full w-16 h-16 animate-spin"></div>
                 </div>
@@ -49,14 +49,14 @@ const App = () => {
                 className={`${
                     isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'
                 }`}
-            >
+            > */}
                 {/* Navbar with Dark Mode and Language Switching */}
                 <Navbar
                     isDarkMode={isDarkMode}
                     setIsDarkMode={setIsDarkMode}
                     language={language}
                     setLanguage={setLanguage}
-                    isLoading={isLoading}
+                    // isLoading={isLoading}
                 />
 
                 {/* Sections */}
@@ -87,7 +87,7 @@ const App = () => {
                 <section id="inscription">
                     <Inscription />
                 </section>
-            </div>
+            {/* </div> */}
         </I18nextProvider>
     );
 };

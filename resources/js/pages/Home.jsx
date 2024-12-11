@@ -7,10 +7,9 @@ const Home = ({ isDarkMode, onLoaded }) => {
     const [imageIndex, setImageIndex] = useState(0);
     const [loadedImages, setLoadedImages] = useState({});
     const [currentImage, setCurrentImage] = useState('/images/placeholder.webp');
-    const sectionRef = useRef(null);
     const timerRef = useRef(null);
-    const isManualSwitching = useRef(false); // Track manual interactions
-    const touchStartX = useRef(0); // Track touch start position for tactile navigation
+    const isManualSwitching = useRef(false);
+    const touchStartX = useRef(0);
 
     const images = useMemo(() => [
         '/images/hero-bg1.webp',
@@ -20,14 +19,10 @@ const Home = ({ isDarkMode, onLoaded }) => {
         '/images/hero-bg5.webp',
     ], []);
 
-    // Preload adjacent images
     useEffect(() => {
-        const preloadAdjacentImages = (index) => {
-            const current = images[index];
-            const next = images[(index + 1) % images.length];
-            const prev = images[(index - 1 + images.length) % images.length];
-
-            [current, next, prev].forEach((src) => {
+        const preloadImages = (index) => {
+            [index, (index + 1) % images.length, (index - 1 + images.length) % images.length].forEach((idx) => {
+                const src = images[idx];
                 if (!loadedImages[src]) {
                     const img = new Image();
                     img.src = src;
@@ -37,123 +32,155 @@ const Home = ({ isDarkMode, onLoaded }) => {
                 }
             });
         };
-
-        preloadAdjacentImages(imageIndex);
+        preloadImages(imageIndex);
     }, [imageIndex, images, loadedImages]);
 
-    // Notify the parent when all images are loaded
     useEffect(() => {
-        const allImagesLoaded = images.every((src) => loadedImages[src]);
-        if (allImagesLoaded && onLoaded) {
+        if (Object.keys(loadedImages).length === images.length && onLoaded) {
             onLoaded();
         }
-    }, [images, loadedImages, onLoaded]);
+    }, [loadedImages, images, onLoaded]);
 
-    // Set the current image when fully loaded
     useEffect(() => {
         if (loadedImages[images[imageIndex]]) {
             setCurrentImage(images[imageIndex]);
         }
     }, [imageIndex, images, loadedImages]);
 
-    // Automatic rotation every 5000ms
     useEffect(() => {
-        const startTimer = () => {
-            timerRef.current = setInterval(() => {
-                if (!isManualSwitching.current) { // Skip rotation during manual switching
-                    setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-                }
-            }, 5000);
-        };
-
-        startTimer();
-        return () => clearInterval(timerRef.current); // Cleanup on unmount
+        timerRef.current = setInterval(() => {
+            if (!isManualSwitching.current) {
+                setImageIndex((prev) => (prev + 1) % images.length);
+            }
+        }, 5000);
+        return () => clearInterval(timerRef.current);
     }, [images]);
 
-    // Manual navigation
-    const handleManualChange = (direction) => {
-        isManualSwitching.current = true; // Indicate manual interaction
-        setImageIndex((prevIndex) =>
+    const handleManualSwitch = (direction) => {
+        isManualSwitching.current = true;
+        setImageIndex((prev) => 
             direction === 'next'
-                ? (prevIndex + 1) % images.length
-                : (prevIndex - 1 + images.length) % images.length
+                ? (prev + 1) % images.length
+                : (prev - 1 + images.length) % images.length
         );
-        setTimeout(() => (isManualSwitching.current = false), 5000); // Reset manual switching flag after 5 seconds
+        setTimeout(() => (isManualSwitching.current = false), 5000);
     };
 
-    // Handle touch gestures for tactile navigation
     const handleTouchStart = (e) => {
         touchStartX.current = e.touches[0].clientX;
     };
 
     const handleTouchEnd = (e) => {
-        const touchEndX = e.changedTouches[0].clientX;
-        const diff = touchEndX - touchStartX.current;
-
-        if (Math.abs(diff) > 50) { // Minimum swipe distance threshold
-            handleManualChange(diff > 0 ? 'prev' : 'next');
+        const diff = e.changedTouches[0].clientX - touchStartX.current;
+        if (Math.abs(diff) > 50) {
+            handleManualSwitch(diff > 0 ? 'prev' : 'next');
         }
     };
 
     return (
         <div
-            ref={sectionRef}
-            className={`home relative ${isDarkMode ? 'dark' : ''}`}
+            className={`relative h-screen transition-all ${
+                isDarkMode ? 'bg-gray-900' : 'bg-white'
+            }`}
             style={{
                 backgroundImage: `url(${currentImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                backgroundColor: isDarkMode ? '#000' : '#fff', // Fallback background
-                transition: 'background-image 1s ease-in-out',
+                transition: 'background-image 1s ease',
             }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Hero Section */}
-            <section
-                className="hero bg-cover bg-center h-screen text-white flex items-center justify-center transition-all duration-1000 ease-in-out"
-            >
-                {/* Dark Mode Overlay */}
-                <div
-                    className={`absolute inset-0 ${
-                        isDarkMode ? 'bg-black opacity-50' : 'bg-black opacity-30'
-                    }`}
-                ></div>
+            {/* Background Overlay */}
+            <div
+                className={`absolute inset-0 ${
+                    isDarkMode
+                        ? 'bg-black bg-opacity-60'
+                        : 'bg-white bg-opacity-50'
+                }`}
+            />
 
-                {/* Text Content */}
-                <div className="text-center relative z-10 px-4">
-                    <h1 className="text-5xl font-bold sm:text-4xl lg:text-6xl">{t('hero_title')}</h1>
-                    <p className="mt-4 text-xl sm:text-lg lg:text-2xl">{t('hero_description')}</p>
+            {/* Centralized Content Box */}
+            <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+                <div
+                    className={`p-8 rounded-lg shadow-lg ${
+                        isDarkMode
+                            ? 'bg-gray-800 bg-opacity-90 text-white'
+                            : 'bg-white bg-opacity-80 text-gray-900'
+                    }`}
+                >
+                    <h1 className="text-4xl sm:text-5xl font-extrabold">
+                        {t('hero_title')}
+                    </h1>
+                    <p className="mt-4 text-lg sm:text-xl">
+                        {t('hero_description')}
+                    </p>
                     <a
                         href="/inscription"
-                        className="mt-6 bg-vibrantGreen text-white py-3 px-6 rounded-full hover:bg-green-700 transition-colors inline-block"
+                        className={`mt-8 inline-block px-6 py-3 text-lg font-semibold rounded-full shadow-md transition-transform ${
+                            isDarkMode
+                                ? 'bg-indigo-500 text-white hover:scale-105'
+                                : 'bg-indigo-600 text-white hover:scale-105'
+                        }`}
                     >
                         {t('inscription_button')}
                     </a>
                 </div>
+            </div>
 
-                {/* Navigation Buttons */}
+            {/* Navigation Arrows */}
+            <div className="absolute inset-y-0 left-4 flex items-center">
                 <button
-                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'} p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none hidden md:block`}
-                    onClick={() => handleManualChange('prev')}
-                    aria-label="Previous Image"
+                    className={`p-2 rounded-full transition-all ${
+                        isDarkMode
+                            ? 'bg-gray-800 text-white hover:scale-110'
+                            : 'bg-gray-300 text-gray-900 hover:scale-110'
+                    }`}
+                    onClick={() => handleManualSwitch('prev')}
+                    aria-label={t('prev_image')}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M15.293 4.293a1 1 0 0 1 0 1.414L9.414 12l5.879 5.879a1 1 0 1 1-1.414 1.414l-6.5-6.5a1 1 0 0 1 0-1.414l6.5-6.5a1 1 0 0 1 1.414 0z" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                        />
                     </svg>
                 </button>
-
+            </div>
+            <div className="absolute inset-y-0 right-4 flex items-center">
                 <button
-                    className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'bg-white text-gray-800' : 'bg-gray-800 text-white'} p-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none hidden md:block`}
-                    onClick={() => handleManualChange('next')}
-                    aria-label="Next Image"
+                    className={`p-2 rounded-full transition-all ${
+                        isDarkMode
+                            ? 'bg-gray-800 text-white hover:scale-110'
+                            : 'bg-gray-300 text-gray-900 hover:scale-110'
+                    }`}
+                    onClick={() => handleManualSwitch('next')}
+                    aria-label={t('next_image')}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8.707 4.293a1 1 0 0 0 0 1.414L14.586 12l-5.879 5.879a1 1 0 0 0 1.414 1.414l6.5-6.5a1 1 0 0 0 0-1.414l-6.5-6.5a1 1 0 0 0-1.414 0z" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                        />
                     </svg>
                 </button>
-
-            </section>
+            </div>
         </div>
     );
 };

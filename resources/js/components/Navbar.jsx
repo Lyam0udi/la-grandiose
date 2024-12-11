@@ -59,7 +59,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                             <button
                                 key={item}
                                 onClick={() => scrollToSection(item)}
-                                className="hover:underline transition-all"
+                                className="hover:text-primaryBlue dark:hover:text-accentPurple transition-all"
                             >
                                 {t(item)}
                             </button>
@@ -71,7 +71,11 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         {/* Dark Mode Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="p-2 rounded-full focus:outline-none hover:bg-opacity-20 transition-all"
+                            className={`p-2 rounded-full focus:outline-none transition-all ${
+                                isDarkMode
+                                    ? 'hover:bg-darkSecondary text-darkText'
+                                    : 'hover:bg-lightSecondary text-lightText'
+                            }`}
                         >
                             {isDarkMode ? '🌙' : '☀️'}
                         </button>
@@ -81,7 +85,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                 className={`flex items-center justify-between px-3 py-1.5 rounded-md shadow-md text-sm ${
-                                    isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightSecondary text-lightText'
+                                    isDarkMode ? 'bg-darkCard text-darkText' : 'bg-lightCard text-lightText'
                                 }`}
                             >
                                 {language.toUpperCase()}
@@ -105,8 +109,8 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                                             onClick={() => changeLanguage(lang)}
                                             className={`block w-full text-left px-4 py-2 text-sm transition-all ${
                                                 language === lang
-                                                    ? 'bg-blue-500 text-white'
-                                                    : 'hover:bg-opacity-10'
+                                                    ? 'bg-accentGreen text-white'
+                                                    : 'hover:bg-gradientDarkEnd hover:text-lightText'
                                             }`}
                                         >
                                             {lang.toUpperCase()}
@@ -142,7 +146,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         <button
                             key={item}
                             onClick={() => scrollToSection(item)}
-                            className="block py-2 text-center transition-all hover:underline"
+                            className="block py-2 text-center transition-all hover:text-accentYellow"
                         >
                             {t(item)}
                         </button>
