@@ -61,6 +61,18 @@
     "cycle_4_title": "Maîtrise et Réalisation",
     "cycle_4_desc": "Préparer les élèves au succès et à l'accomplissement.",
 
+    "contactus_title": "Contactez-nous",
+    "contactus_getintouch": "Entrer en contact",
+    "contact_map_title": "Notre emplacement",
+    "contactus_form_title": "Envoyez-nous un message",
+    "contact_form_name": "Votre nom",
+    "contact_form_name_placeholder": "Entrez votre nom",
+    "contact_form_email": "Votre email",
+    "contact_form_email_placeholder": "Entrez votre email",
+    "contact_form_message": "Votre message",
+    "contact_form_message_placeholder": "Écrivez votre message ici",
+    "contact_form_submit": "Envoyer le message",
+
     "footer_brand": "La Grandiose",
     "footer_tagline": "Éduquer pour un avenir meilleur.",
     "footer_address": "Adresse",

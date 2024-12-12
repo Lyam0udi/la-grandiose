@@ -61,6 +61,18 @@
     "cycle_4_title": "Mastery & Achievement",
     "cycle_4_desc": "Preparing students for success and accomplishment.",
 
+    "contactus_title": "Contact Us",
+    "contactus_getintouch": "Get in Touch",
+    "contact_map_title": "Our Location",
+    "contactus_form_title": "Send Us a Message",
+    "contact_form_name": "Your Name",
+    "contact_form_name_placeholder": "Enter your name",
+    "contact_form_email": "Your Email",
+    "contact_form_email_placeholder": "Enter your email",
+    "contact_form_message": "Your Message",
+    "contact_form_message_placeholder": "Write your message here",
+    "contact_form_submit": "Send Message",
+
     "footer_brand": "La Grandiose",
     "footer_tagline": "Empowering Education for a Better Future.",
     "footer_address": "Address",

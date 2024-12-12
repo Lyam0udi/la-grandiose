@@ -84,14 +84,14 @@ const App = () => {
                     <Testimonials isDarkMode={isDarkMode} />
                 </section>
                 <section id="contact">
-                    <ContactUs />
+                    <ContactUs isDarkMode={isDarkMode} />
                 </section>
-                <section id="blog">
+                {/* <section id="blog">
                     <Blog />
                 </section>
                 <section id="inscription">
                     <Inscription />
-                </section>
+                </section> */}
                 <section id="footer">
                     <Footer isDarkMode={isDarkMode}/>
                 </section>

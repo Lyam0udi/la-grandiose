@@ -61,6 +61,18 @@
     "cycle_4_title": "الإتقان والإنجاز",
     "cycle_4_desc": "إعداد الطلاب للنجاح والإنجاز.",
 
+    "contactus_title": "اتصل بنا",
+    "contactus_getintouch": "ابق على تواصل",
+    "contact_map_title": "موقعنا",
+    "contactus_form_title": "أرسل لنا رسالة",
+    "contact_form_name": "اسمك",
+    "contact_form_name_placeholder": "أدخل اسمك",
+    "contact_form_email": "بريدك الإلكتروني",
+    "contact_form_email_placeholder": "أدخل بريدك الإلكتروني",
+    "contact_form_message": "رسالتك",
+    "contact_form_message_placeholder": "اكتب رسالتك هنا",
+    "contact_form_submit": "إرسال الرسالة",
+
     "footer_brand": "لا غرانديوز",
     "footer_tagline": "تعليم من أجل مستقبل أفضل.",
     "footer_address": "العنوان",
