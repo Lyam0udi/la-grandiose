@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Inscription from './pages/Inscription';
 import Testimonials from './pages/Testimonials';
 import WhyChooseUs from './pages/WhyChooseUs';
+import ProfessorCards from './pages/ProfessorCards';
 
 const App = () => {
     // Language State
@@ -67,13 +68,16 @@ const App = () => {
                     <About isDarkMode={isDarkMode} />
                 </section>
                 <section id="cycles">
-                    <Cycles />
+                    <Cycles isDarkMode={isDarkMode} />
                 </section>
                 <section id="whychooseus">
                     <WhyChooseUs isDarkMode={isDarkMode} />
                 </section>
                 <section id="grandiosebenefits">
                     <GrandioseBenefits isDarkMode={isDarkMode} />
+                </section>
+                <section id="professorCards">
+                    <ProfessorCards isDarkMode={isDarkMode} />
                 </section>
                 <section id="testimonials">
                     <Testimonials isDarkMode={isDarkMode} />

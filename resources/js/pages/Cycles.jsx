@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 const CycleCard = ({ cycle, isDarkMode }) => (
   <div
-    className={`bg-${isDarkMode ? 'cardBgDark' : 'cardBgLight'} p-6 rounded-lg shadow-lg transition-transform duration-500 transform hover:scale-105 hover:shadow-xl animate__animated animate__fadeIn`}
+    className={`p-6 rounded-lg shadow-lg transition-transform duration-500 transform hover:scale-105 hover:shadow-xl ${
+      isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightCard text-lightText'
+    } border ${
+      isDarkMode ? 'border-darkBorder' : 'border-lightBorder'
+    }`}
   >
     <div className="text-4xl mb-4">{cycle.icon}</div>
     <h3 className="text-2xl font-semibold mb-2">{cycle.title}</h3>
@@ -24,13 +28,17 @@ const Cycles = ({ isDarkMode }) => {
 
   return (
     <section
-      className={`py-20 ${isDarkMode ? 'bg-darkBg text-darkText' : 'bg-lightBg text-lightText'} transition-all duration-500`}
+      className={`py-20 ${
+        isDarkMode
+          ? 'bg-darkSecondary text-darkTextSecondary'
+          : 'bg-lightSecondary text-lightTextSecondary'
+      } transition-all duration-500`}
       aria-label={t('cycles_label')}
     >
       <div className="container mx-auto px-6 md:px-12">
         <h2
           className={`text-3xl sm:text-4xl font-bold text-center mb-12 ${
-            isDarkMode ? 'text-skyBlue' : 'text-vibrantGreen'
+            isDarkMode ? 'text-secondaryBlue' : 'text-primaryBlue'
           }`}
         >
           {t('cycles_title')}

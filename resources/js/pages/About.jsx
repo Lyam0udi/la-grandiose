@@ -33,7 +33,9 @@ const About = ({ isDarkMode }) => {
   return (
     <section
       className={`py-16 md:py-20 ${
-        isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'
+        isDarkMode
+          ? 'bg-sectionDarkBackground text-darkText'
+          : 'bg-sectionLightBackground text-lightText'
       } transition-colors duration-500`}
       aria-label={t('about_section_label')}
     >

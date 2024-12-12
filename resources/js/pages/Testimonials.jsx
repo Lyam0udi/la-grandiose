@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 const TestimonialCard = ({ testimonial, isDarkMode }) => (
   <div
     className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 ${
-      isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightBackground text-lightText'
-    } bg-opacity-90`}
+      isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightCard text-lightText'
+    }`}
   >
     <p className="text-lg text-center mb-4">{testimonial.message}</p>
     <div className="flex items-center justify-center space-x-4">
@@ -49,7 +49,9 @@ const Testimonials = ({ isDarkMode }) => {
   return (
     <section
       className={`py-20 ${
-        isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'
+        isDarkMode
+          ? 'bg-darkSecondary text-darkTextSecondary'
+          : 'bg-lightSecondary text-lightTextSecondary'
       } transition-all duration-500`}
       aria-label={t('testimonials_label')}
     >
@@ -57,7 +59,7 @@ const Testimonials = ({ isDarkMode }) => {
         {/* Section Title */}
         <h2
           className={`text-3xl sm:text-4xl font-bold text-center mb-12 ${
-            isDarkMode ? 'text-skyBlue' : 'text-vibrantGreen'
+            isDarkMode ? 'text-secondaryBlue' : 'text-primaryBlue'
           }`}
         >
           {t('testimonials_title')}
