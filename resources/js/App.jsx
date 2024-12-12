@@ -12,6 +12,7 @@ import Inscription from './pages/Inscription';
 import Testimonials from './pages/Testimonials';
 import WhyChooseUs from './pages/WhyChooseUs';
 import ProfessorCards from './pages/ProfessorCards';
+import Footer from './pages/Footer';
 
 const App = () => {
     // Language State
@@ -90,6 +91,9 @@ const App = () => {
                 </section>
                 <section id="inscription">
                     <Inscription />
+                </section>
+                <section id="footer">
+                    <Footer isDarkMode={isDarkMode}/>
                 </section>
             {/* </div> */}
         </I18nextProvider>

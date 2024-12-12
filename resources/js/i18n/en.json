@@ -59,7 +59,28 @@
     "cycle_3_title": "Exploration & Innovation",
     "cycle_3_desc": "Inspiring creativity and discovery in young minds.",
     "cycle_4_title": "Mastery & Achievement",
-    "cycle_4_desc": "Preparing students for success and accomplishment."
+    "cycle_4_desc": "Preparing students for success and accomplishment.",
+
+    "footer_brand": "La Grandiose",
+    "footer_tagline": "Empowering Education for a Better Future.",
+    "footer_address": "Address",
+    "footer_phone": "Phone",
+    "footer_email": "Email",
+    "footer_copyright": "© 2024 La Grandiose. All rights reserved.",
+    "social_media_website": "Visit our website",
+    "social_media_facebook": "Visit our Facebook page",
+    "social_media_instagram": "Visit our Instagram profile",
+    "social_media_linkedin": "Visit our LinkedIn profile",
+    "section_home": "Home",
+    "section_about": "About Us",
+    "section_cycles": "Cycles",
+    "section_whychooseus": "Why Choose Us",
+    "section_grandiosebenefits": "Grandiose Benefits",
+    "section_professors": "Professors",
+    "section_testimonials": "Testimonials",
+    "section_contact": "Contact Us",
+    "section_blog": "Blog",
+    "section_inscription": "Inscription"
 
 
 }
