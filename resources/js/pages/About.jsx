@@ -18,7 +18,7 @@ const AboutText = ({ t }) => (
 const AboutImage = () => (
   <div className="md:w-1/2 flex justify-center">
     <img
-      src="/images/about-school.jpg"
+      src="/images/about-school.webp"
       alt="School environment with students engaged in learning"
       className="rounded-lg shadow-lg max-w-full h-auto transition-transform duration-300 transform hover:scale-105"
       style={{ maxHeight: '400px', width: 'auto' }}
