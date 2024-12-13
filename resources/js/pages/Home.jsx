@@ -13,19 +13,19 @@ const Home = ({ isDarkMode, onLoaded }) => {
     const touchStartX = useRef(0); // Track touch start position for tactile navigation
 
     const images = useMemo(() => [
-        '/images/hero-bg1.webp',
-        '/images/hero-bg2.webp',
-        '/images/hero-bg3.webp',
-        '/images/hero-bg4.webp',
-        '/images/hero-bg5.webp',
+        { default: '/images/hero-bg1.webp' },
+        { default: '/images/hero-bg2.webp' },
+        { default: '/images/hero-bg3.webp' },
+        { default: '/images/hero-bg4.webp' },
+        { default: '/images/hero-bg5.webp' },
     ], []);
 
     // Preload adjacent images
     useEffect(() => {
         const preloadAdjacentImages = (index) => {
-            const current = images[index];
-            const next = images[(index + 1) % images.length];
-            const prev = images[(index - 1 + images.length) % images.length];
+            const current = images[index].default;
+            const next = images[(index + 1) % images.length].default;
+            const prev = images[(index - 1 + images.length) % images.length].default;
 
             [current, next, prev].forEach((src) => {
                 if (!loadedImages[src]) {
@@ -43,7 +43,7 @@ const Home = ({ isDarkMode, onLoaded }) => {
 
     // Notify the parent when all images are loaded
     useEffect(() => {
-        const allImagesLoaded = images.every((src) => loadedImages[src]);
+        const allImagesLoaded = images.every((src) => loadedImages[src.default]);
         if (allImagesLoaded && onLoaded) {
             onLoaded();
         }
@@ -51,8 +51,8 @@ const Home = ({ isDarkMode, onLoaded }) => {
 
     // Set the current image when fully loaded
     useEffect(() => {
-        if (loadedImages[images[imageIndex]]) {
-            setCurrentImage(images[imageIndex]);
+        if (loadedImages[images[imageIndex].default]) {
+            setCurrentImage(images[imageIndex].default);
         }
     }, [imageIndex, images, loadedImages]);
 
@@ -115,9 +115,7 @@ const Home = ({ isDarkMode, onLoaded }) => {
             >
                 {/* Dark Mode Overlay */}
                 <div
-                    className={`absolute inset-0 ${
-                        isDarkMode ? 'bg-black opacity-50' : 'bg-black opacity-30'
-                    }`}
+                    className={`absolute inset-0 ${isDarkMode ? 'bg-black opacity-50' : 'bg-black opacity-30'}`}
                 ></div>
 
                 {/* Text Content */}
