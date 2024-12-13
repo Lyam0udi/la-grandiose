@@ -1,87 +1,113 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const ProfessorCard = ({ professor, isDarkMode }) => (
   <div
-    className={`flex-shrink-0 w-full sm:w-80 p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 ${
+    className={`relative flex-shrink-0 w-64 h-80 p-4 rounded-lg shadow-lg transition-transform duration-500 ${
       isDarkMode ? 'bg-darkCard text-darkText' : 'bg-lightCard text-lightText'
     } border ${isDarkMode ? 'border-darkBorder' : 'border-lightBorder'}`}
   >
     <img
       src={professor.image}
-      alt={`${professor.name} - ${professor.matter}`}
-      className="rounded-lg w-full h-48 object-cover mb-4"
+      alt={professor.name}
+      className="w-full h-36 rounded-md object-cover mb-4"
     />
-    <h3 className="text-2xl font-semibold">{professor.name}</h3>
-    <p className="text-lg text-primaryBlue mb-2">{professor.matter}</p>
+    <h3 className="text-xl font-bold mb-2">{professor.name}</h3>
+    <p className="text-primaryBlue font-medium mb-1">{professor.subject}</p>
     <p className="text-sm leading-relaxed">{professor.bio}</p>
   </div>
 );
 
 const ProfessorCards = ({ isDarkMode }) => {
   const { t } = useTranslation();
-  const scrollRef = useRef();
+  const [startIndex, setStartIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(5); // Default for normal screens
 
-  // Professors Data (Mock Data)
   const professors = [
     {
-      name: 'Dr. Emily Carter',
-      matter: t('professor_matter_1'),
-      bio: t('professor_bio_1'),
-      image: '/images/professors/emily-carter.jpg',
+      name: t('professor_1_name'),
+      subject: t('professor_1_subject'),
+      bio: t('professor_1_bio'),
+      image: '/images/professors/professor1.jpg',
     },
     {
-      name: 'Dr. James Smith',
-      matter: t('professor_matter_2'),
-      bio: t('professor_bio_2'),
-      image: '/images/professors/james-smith.jpg',
+      name: t('professor_2_name'),
+      subject: t('professor_2_subject'),
+      bio: t('professor_2_bio'),
+      image: '/images/professors/professor2.jpg',
     },
     {
-      name: 'Dr. Sophia Wilson',
-      matter: t('professor_matter_3'),
-      bio: t('professor_bio_3'),
-      image: '/images/professors/sophia-wilson.jpg',
+      name: t('professor_3_name'),
+      subject: t('professor_3_subject'),
+      bio: t('professor_3_bio'),
+      image: '/images/professors/professor3.jpg',
     },
     {
-      name: 'Dr. Robert Brown',
-      matter: t('professor_matter_4'),
-      bio: t('professor_bio_4'),
-      image: '/images/professors/robert-brown.jpg',
+      name: t('professor_4_name'),
+      subject: t('professor_4_subject'),
+      bio: t('professor_4_bio'),
+      image: '/images/professors/professor4.jpg',
     },
     {
-      name: 'Dr. Olivia Johnson',
-      matter: t('professor_matter_5'),
-      bio: t('professor_bio_5'),
-      image: '/images/professors/olivia-johnson.jpg',
+      name: t('professor_5_name'),
+      subject: t('professor_5_subject'),
+      bio: t('professor_5_bio'),
+      image: '/images/professors/professor5.jpg',
     },
     {
-      name: 'Dr. William Garcia',
-      matter: t('professor_matter_6'),
-      bio: t('professor_bio_6'),
-      image: '/images/professors/william-garcia.jpg',
+      name: t('professor_6_name'),
+      subject: t('professor_6_subject'),
+      bio: t('professor_6_bio'),
+      image: '/images/professors/professor6.jpg',
     },
   ];
 
-  const scrollNext = () => {
-    if (scrollRef.current) {
-      const childWidth = scrollRef.current.firstChild.offsetWidth;
-      scrollRef.current.scrollBy({ left: childWidth, behavior: 'smooth' });
+  const updateVisibleCount = () => {
+    if (window.innerWidth < 640) {
+      setVisibleCount(3); // Small devices
+    } else {
+      setVisibleCount(5); // Larger screens
     }
   };
 
-  const scrollPrev = () => {
-    if (scrollRef.current) {
-      const childWidth = scrollRef.current.firstChild.offsetWidth;
-      scrollRef.current.scrollBy({ left: -childWidth, behavior: 'smooth' });
-    }
+  useEffect(() => {
+    updateVisibleCount();
+    window.addEventListener('resize', updateVisibleCount);
+    return () => window.removeEventListener('resize', updateVisibleCount);
+  }, []);
+
+  const getVisibleProfessors = () => {
+    const length = professors.length;
+    const endIndex = startIndex + visibleCount;
+    return [
+      ...professors.slice(startIndex % length, Math.min(endIndex, length)),
+      ...professors.slice(0, Math.max(0, endIndex - length)),
+    ];
   };
+
+  const handleNext = () => {
+    setStartIndex((prev) => (prev + 1) % professors.length);
+  };
+
+  const handlePrev = () => {
+    setStartIndex((prev) => (prev - 1 + professors.length) % professors.length);
+  };
+
+  const visibleProfessors = getVisibleProfessors();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section
       className={`py-16 ${
         isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'
       } transition-colors duration-500`}
-      aria-label={t('professor_section_label')}
+      aria-label={t('professors_section_title')}
     >
       <div className="container mx-auto px-6 sm:px-12">
         {/* Section Title */}
@@ -90,34 +116,37 @@ const ProfessorCards = ({ isDarkMode }) => {
             isDarkMode ? 'text-secondaryBlue' : 'text-primaryBlue'
           }`}
         >
-          {t('professor_section_title')}
+          {t('professors_section_title')}
         </h2>
 
-        {/* Scrollable Professor Cards */}
-        <div className="relative">
+        {/* Carousel */}
+        <div className="relative flex justify-center items-center">
           <button
-            onClick={scrollPrev}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-primaryBlue text-white p-3 rounded-full shadow-md hover:scale-110 transition-transform"
-            aria-label={t('scroll_prev')}
+            className={`absolute left-0 p-2 rounded-full ${
+              isDarkMode ? 'bg-darkCard text-darkText' : 'bg-lightCard text-lightText'
+            } shadow-md hover:scale-110 transition-transform`}
+            onClick={handlePrev}
           >
-            ◀
+            &#x276E;
           </button>
-          <div
-            ref={scrollRef}
-            className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth space-x-6 pb-4 scrollbar-hide"
-          >
-            {professors.map((professor, index) => (
-              <div key={index} className="snap-center">
-                <ProfessorCard professor={professor} isDarkMode={isDarkMode} />
-              </div>
+
+          <div className="flex gap-6 overflow-hidden w-full justify-center">
+            {visibleProfessors.map((professor, i) => (
+              <ProfessorCard
+                key={`${startIndex}-${i}`}
+                professor={professor}
+                isDarkMode={isDarkMode}
+              />
             ))}
           </div>
+
           <button
-            onClick={scrollNext}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-primaryBlue text-white p-3 rounded-full shadow-md hover:scale-110 transition-transform"
-            aria-label={t('scroll_next')}
+            className={`absolute right-0 p-2 rounded-full ${
+              isDarkMode ? 'bg-darkCard text-darkText' : 'bg-lightCard text-lightText'
+            } shadow-md hover:scale-110 transition-transform`}
+            onClick={handleNext}
           >
-            ▶
+            &#x276F;
           </button>
         </div>
       </div>
