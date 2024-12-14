@@ -44,48 +44,51 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
     };
 
     useEffect(() => {
-        document.addEventListener('click', closeDropdownOnClickOutside);
-
+        const sectionColors = {
+            home: { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' },
+            about: { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' },
+            cycles: { light: 'bg-lightSecondary text-lightText', dark: 'bg-darkSecondary text-darkText' },
+            whychooseus: { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' },
+            grandiosebenefits: { light: 'bg-lightSecondary text-lightText', dark: 'bg-darkSecondary text-darkText' },
+            professorCards: { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' },
+            testimonials: { light: 'bg-lightSecondary text-lightText', dark: 'bg-darkSecondary text-darkText' },
+            contact: { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' },
+        };
+    
         const observerOptions = {
             root: null,
-            rootMargin: '-50px',
-            threshold: 0.5,
+            rootMargin: '-50px 0px -90% 0px', // Change navbar after it fully passes section
+            threshold: 0,
         };
-
+    
+        let currentSection = null;
+    
         const observerCallback = (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    switch (entry.target.id) {
-                        case 'home':
-                        case 'about':
-                            setNavbarBg(isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText');
-                            break;
-                        case 'cycles':
-                            setNavbarBg(isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightSecondary text-lightText');
-                            break;
-                        case 'whychooseus':
-                        case 'testimonials':
-                            setNavbarBg(isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText');
-                            break;
-                        case 'grandiosebenefits':
-                            setNavbarBg(isDarkMode ? 'bg-darkCard text-darkText' : 'bg-lightCard text-lightText');
-                            break;
-                        default:
-                            setNavbarBg(isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText');
+                    const sectionId = entry.target.id;
+                    if (currentSection !== sectionId) {
+                        currentSection = sectionId;
+                        const sectionColor = sectionColors[sectionId] || { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' };
+                        setNavbarBg(isDarkMode ? sectionColor.dark : sectionColor.light);
                     }
                 }
             });
         };
-
+    
         const observer = new IntersectionObserver(observerCallback, observerOptions);
-        const sections = document.querySelectorAll('section');
+    
+        const sections = document.querySelectorAll('section[id]');
         sections.forEach((section) => observer.observe(section));
-
+    
+        document.addEventListener('click', closeDropdownOnClickOutside);
+    
         return () => {
             document.removeEventListener('click', closeDropdownOnClickOutside);
             sections.forEach((section) => observer.unobserve(section));
         };
     }, [isDarkMode]);
+    
 
     if (isLoading) {
         return null;
