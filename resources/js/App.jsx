@@ -15,21 +15,19 @@ import ProfessorCards from './pages/ProfessorCards';
 import Footer from './pages/Footer';
 
 const App = () => {
-    // Language State
-    const [language, setLanguage] = useState(i18n.language);
+    // Initialize dark mode based on localStorage or default to white theme
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const savedTheme = localStorage.getItem('isDarkMode');
+        return savedTheme ? JSON.parse(savedTheme) : false; // Default to white theme
+    });
 
-    // Dark Mode State
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    // Initialize language based on localStorage or default to a language
+    const [language, setLanguage] = useState(() => {
+        const savedLanguage = localStorage.getItem('language');
+        return savedLanguage || i18n.language || 'en'; // Default to English
+    });
 
-    // Loading State
-    const [isLoading, setIsLoading] = useState(true);
-
-    // Handle language changes
-    useEffect(() => {
-        i18n.changeLanguage(language);
-    }, [language]);
-
-    // Sync dark mode with the root <html> element
+    // Sync dark mode with the <html> element
     useEffect(() => {
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
@@ -38,64 +36,55 @@ const App = () => {
         }
     }, [isDarkMode]);
 
+    // Save dark mode preference in localStorage
+    useEffect(() => {
+        localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+    }, [isDarkMode]);
+
+    // Handle language changes and save preference in localStorage
+    useEffect(() => {
+        i18n.changeLanguage(language);
+        localStorage.setItem('language', language);
+    }, [language]);
+
     return (
         <I18nextProvider i18n={i18n}>
-            {/* Display Global Loader */}
-            {/* {isLoading && (
-                <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
-                    <div className="loader border-t-blue-500 border-4 border-gray-300 rounded-full w-16 h-16 animate-spin"></div>
-                </div>
-            )}
+            {/* Navbar with Dark Mode and Language Switching */}
+            <Navbar
+                isDarkMode={isDarkMode}
+                setIsDarkMode={setIsDarkMode}
+                language={language}
+                setLanguage={setLanguage}
+            />
 
-            <div
-                className={`${
-                    isDarkMode ? 'bg-darkBackground text-white' : 'bg-lightBackground text-gray-800'
-                }`}
-            > */}
-                {/* Navbar with Dark Mode and Language Switching */}
-                <Navbar
-                    isDarkMode={isDarkMode}
-                    setIsDarkMode={setIsDarkMode}
-                    language={language}
-                    setLanguage={setLanguage}
-                    // isLoading={isLoading}
-                />
-
-                {/* Sections */}
-                <section id="home">
-                    <Home isDarkMode={isDarkMode} onLoaded={() => setIsLoading(false)} />
-                </section>
-                <section id="about">
-                    <About isDarkMode={isDarkMode} />
-                </section>
-                <section id="cycles">
-                    <Cycles isDarkMode={isDarkMode} />
-                </section>
-                <section id="whychooseus">
-                    <WhyChooseUs isDarkMode={isDarkMode} />
-                </section>
-                <section id="grandiosebenefits">
-                    <GrandioseBenefits isDarkMode={isDarkMode} />
-                </section>
-                <section id="professorCards">
-                    <ProfessorCards isDarkMode={isDarkMode} />
-                </section>
-                <section id="testimonials">
-                    <Testimonials isDarkMode={isDarkMode} />
-                </section>
-                <section id="contact">
-                    <ContactUs isDarkMode={isDarkMode} />
-                </section>
-                {/* <section id="blog">
-                    <Blog />
-                </section>
-                <section id="inscription">
-                    <Inscription />
-                </section> */}
-                <section id="footer">
-                    <Footer isDarkMode={isDarkMode}/>
-                </section>
-            {/* </div> */}
+            {/* Sections */}
+            <section id="home">
+                <Home isDarkMode={isDarkMode} />
+            </section>
+            <section id="about">
+                <About isDarkMode={isDarkMode} />
+            </section>
+            <section id="cycles">
+                <Cycles isDarkMode={isDarkMode} />
+            </section>
+            <section id="whychooseus">
+                <WhyChooseUs isDarkMode={isDarkMode} />
+            </section>
+            <section id="grandiosebenefits">
+                <GrandioseBenefits isDarkMode={isDarkMode} />
+            </section>
+            <section id="professorCards">
+                <ProfessorCards isDarkMode={isDarkMode} />
+            </section>
+            <section id="testimonials">
+                <Testimonials isDarkMode={isDarkMode} />
+            </section>
+            <section id="contact">
+                <ContactUs isDarkMode={isDarkMode} />
+            </section>
+            <section id="footer">
+                <Footer isDarkMode={isDarkMode} />
+            </section>
         </I18nextProvider>
     );
 };
