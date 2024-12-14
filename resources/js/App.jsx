@@ -3,12 +3,10 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import Navbar from './components/Navbar';
 import About from './pages/About';
-import Blog from './pages/Blog';
 import ContactUs from './pages/ContactUs';
 import Cycles from './pages/Cycles';
 import GrandioseBenefits from './pages/GrandioseBenefits';
 import Home from './pages/Home';
-import Inscription from './pages/Inscription';
 import Testimonials from './pages/Testimonials';
 import WhyChooseUs from './pages/WhyChooseUs';
 import ProfessorCards from './pages/ProfessorCards';
@@ -46,6 +44,48 @@ const App = () => {
         i18n.changeLanguage(language);
         localStorage.setItem('language', language);
     }, [language]);
+
+    // Function to handle hash change and scroll to correct section
+    const handleScroll = () => {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const scrollPosition = window.scrollY;
+            const sectionId = section.getAttribute('id');
+
+            // Ensure the section ID is valid and check if the section is in view
+            if (sectionId && scrollPosition >= sectionTop - 100 && scrollPosition < sectionTop + sectionHeight - 100) {
+                // Update the URL hash without triggering reload
+                if (window.location.hash !== `#${sectionId}`) {
+                    window.history.pushState(null, '', `#${sectionId}`);
+                }
+            }
+        });
+    };
+
+    // Effect to handle URL hash change on page load or refresh
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            // Wait for the page to load, then scroll to the target section
+            const element = document.querySelector(hash);
+            if (element) {
+                window.scrollTo({
+                    top: element.offsetTop,
+                    behavior: 'smooth',
+                });
+            }
+        }
+    }, []); // Empty dependency array ensures this runs once on initial load
+
+    // Effect to monitor scroll position and change URL hash
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
         <I18nextProvider i18n={i18n}>
