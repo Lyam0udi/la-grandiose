@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FaHome } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 
-const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading }) => {
+const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
     const { t } = useTranslation();
     const [navbarBg, setNavbarBg] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState({ i18n: false, more: false });
@@ -54,15 +54,15 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
             testimonials: { light: 'bg-lightSecondary text-lightText', dark: 'bg-darkSecondary text-darkText' },
             contact: { light: 'bg-lightBackground text-lightText', dark: 'bg-darkBackground text-darkText' },
         };
-    
+
         const observerOptions = {
             root: null,
-            rootMargin: '-50px 0px -90% 0px', // Change navbar after it fully passes section
+            rootMargin: '-50px 0px -90% 0px',
             threshold: 0,
         };
-    
+
         let currentSection = null;
-    
+
         const observerCallback = (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -75,24 +75,19 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                 }
             });
         };
-    
+
         const observer = new IntersectionObserver(observerCallback, observerOptions);
-    
+
         const sections = document.querySelectorAll('section[id]');
         sections.forEach((section) => observer.observe(section));
-    
+
         document.addEventListener('click', closeDropdownOnClickOutside);
-    
+
         return () => {
             document.removeEventListener('click', closeDropdownOnClickOutside);
             sections.forEach((section) => observer.unobserve(section));
         };
     }, [isDarkMode]);
-    
-
-    if (isLoading) {
-        return null;
-    }
 
     return (
         <nav className={`fixed w-full top-0 z-50 shadow-lg transition-all duration-300 ${navbarBg}`}>
@@ -107,28 +102,38 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                         />
                     </div>
 
-                    <div className="hidden md:flex space-x-6">
-                        <button
-                            onClick={() => scrollToSection('home')}
+                    <div className="hidden lg:flex space-x-6">
+                        <a
+                            href="#home"
                             className="hover:underline transition-all"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                scrollToSection('home');
+                            }}
                         >
                             <FaHome className={`text-xl ${isDarkMode ? 'text-darkText' : 'text-lightText'}`} />
-                        </button>
+                        </a>
 
                         {['about', 'cycles', 'whychooseus', 'testimonials', 'contact'].map((item) => (
-                            <button
+                            <a
                                 key={item}
-                                onClick={() => scrollToSection(item)}
+                                href={`#${item}`}
                                 className="hover:underline transition-all"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    scrollToSection(item);
+                                }}
                             >
                                 {t(item)}
-                            </button>
+                            </a>
                         ))}
 
                         <div className="relative" ref={dropdownRefs.more}>
                             <button
                                 onClick={() => setIsDropdownOpen((prev) => ({ ...prev, more: !prev.more }))}
                                 className="hover:underline transition-all"
+                                aria-haspopup="true"
+                                aria-expanded={isDropdownOpen.more ? 'true' : 'false'}
                             >
                                 {t('more')} ▼
                             </button>
@@ -139,13 +144,17 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                                     }`}
                                 >
                                     {['blog', 'inscription'].map((item) => (
-                                        <button
+                                        <a
                                             key={item}
-                                            onClick={() => scrollToSection(item)}
+                                            href={`#${item}`}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                scrollToSection(item);
+                                            }}
                                             className="block px-4 py-2 text-sm hover:bg-accentGreen hover:text-white"
                                         >
                                             {t(item)}
-                                        </button>
+                                        </a>
                                     ))}
                                 </div>
                             )}
@@ -160,6 +169,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                                     ? 'hover:bg-darkSecondary text-darkText'
                                     : 'hover:bg-lightSecondary text-lightText'
                             }`}
+                            aria-label="Toggle Theme"
                         >
                             {isDarkMode ? '🌙' : '☀️'}
                         </button>
@@ -170,6 +180,8 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                                 className={`px-3 py-1.5 rounded-md text-sm ${
                                     isDarkMode ? 'bg-darkCard text-darkText' : 'bg-lightCard text-lightText'
                                 } hover:scale-110`}
+                                aria-haspopup="true"
+                                aria-expanded={isDropdownOpen.i18n ? 'true' : 'false'}
                             >
                                 {language.toUpperCase()} ▼
                             </button>
@@ -194,10 +206,11 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
                             )}
                         </div>
 
-                        <div className="md:hidden relative" ref={dropdownRefs.mobileMenu}>
+                        <div className="lg:hidden relative" ref={dropdownRefs.mobileMenu}>
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 className={`text-2xl ${isDarkMode ? 'text-darkText' : 'text-lightText'}`}
+                                aria-label="Toggle mobile menu"
                             >
                                 {isMobileMenuOpen ? <IoClose /> : '☰'}
                             </button>
@@ -208,21 +221,23 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage, isLoading })
 
             {isMobileMenuOpen && (
                 <div
-                    className={`md:hidden p-4 ${
+                    className={`lg:hidden p-4 ${
                         isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightSecondary text-lightText'
                     }`}
                 >
                     {['home', 'about', 'cycles', 'whychooseus', 'testimonials', 'contact', 'blog', 'inscription'].map((item) => (
-                        <button
+                        <a
                             key={item}
-                            onClick={() => {
+                            href={`#${item}`}
+                            onClick={(e) => {
+                                e.preventDefault();
                                 scrollToSection(item);
                                 setIsMobileMenuOpen(false);
                             }}
                             className="block py-2 text-center hover:underline"
                         >
                             {t(item)}
-                        </button>
+                        </a>
                     ))}
                 </div>
             )}
