@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import { Helmet } from 'react-helmet';
+import { FaArrowUp } from 'react-icons/fa';
 
 // Lazy load components with optimizations
 const Navbar = React.lazy(() => import(/* webpackChunkName: "navbar" */ './components/Navbar'));
@@ -114,6 +115,48 @@ const App = () => {
         };
     }, []);
 
+    // Scroll-to-Top Button
+    const ScrollToTopButton = ({ isDarkMode }) => {
+        const [isVisible, setIsVisible] = useState(false);
+    
+        // Toggle visibility based on scroll position
+        useEffect(() => {
+            const handleScroll = () => {
+                setIsVisible(window.scrollY > 100); // Show button after 100px scroll
+            };
+    
+            window.addEventListener('scroll', handleScroll);
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }, []);
+    
+        // Scroll to the top smoothly
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        };
+    
+        // Styling for the button
+        const buttonStyle = isDarkMode
+            ? 'bg-darkSecondary text-darkText hover:bg-accentGreen'
+            : 'bg-lightSecondary text-lightText hover:bg-accentGreen';
+    
+        return (
+            isVisible && (
+                <button
+                    onClick={scrollToTop}
+                    aria-label="Scroll to top"
+                    className={`fixed bottom-4 right-4 p-3 rounded-full shadow-md transition-transform transform hover:scale-110 ${buttonStyle}`}
+                >
+                    <FaArrowUp />
+                </button>
+            )
+        );
+    };
+
     return (
         <I18nextProvider i18n={i18n}>
             <Suspense
@@ -204,6 +247,9 @@ const App = () => {
                     <h2 id="footer-heading" className="sr-only">Footer Section</h2>
                     <Footer isDarkMode={isDarkMode} />
                 </section>
+
+                {/* Scroll-to-Top Button */}
+                <ScrollToTopButton isDarkMode={isDarkMode} />
             </Suspense>
         </I18nextProvider>
     );
