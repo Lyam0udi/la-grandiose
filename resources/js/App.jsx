@@ -118,6 +118,7 @@ const App = () => {
         };
     }, []);
 
+
     // Scroll-to-Top Button
     const ScrollToTopButton = ({ isDarkMode }) => {
         const [isVisible, setIsVisible] = useState(false);
@@ -133,7 +134,8 @@ const App = () => {
                 window.removeEventListener('scroll', handleScroll);
             };
         }, []);
-    
+
+
         // Scroll to the top smoothly
         const scrollToTop = () => {
             window.scrollTo({
@@ -205,70 +207,76 @@ const App = () => {
                     {/* Skip to content link for accessibility */}
                     {/* <a href="#home" className="skip-to-content">Skip to main content</a> */}
 
-                    {/* Navbar */}
-                    <Navbar
-                        isDarkMode={isDarkMode}
-                        setIsDarkMode={setIsDarkMode}
-                        language={language}
-                        setLanguage={setLanguage}
-                    />
+                    {/* Main Flex Container */}
+                    <div className="flex flex-col min-h-screen">
 
-                    <Routes>
-                        {/* Main Application with Sections */}
-                        <Route
-                            path="/"
-                            element={
-                                <>
-                                    <section id="home" role="region" aria-labelledby="home-heading" tabIndex={0}>
-                                        <h1 id="home-heading" className="sr-only">Home Section</h1>
-                                        <Home isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="about" role="region" aria-labelledby="about-heading" tabIndex={0}>
-                                        <h2 id="about-heading" className="sr-only">About Section</h2>
-                                        <About isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="cycles" role="region" aria-labelledby="cycles-heading" tabIndex={0}>
-                                        <h2 id="cycles-heading" className="sr-only">Cycles Section</h2>
-                                        <Cycles isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="whychooseus" role="region" aria-labelledby="whychooseus-heading" tabIndex={0}>
-                                        <h2 id="whychooseus-heading" className="sr-only">Why Choose Us Section</h2>
-                                        <WhyChooseUs isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="grandiosebenefits" role="region" aria-labelledby="grandiosebenefits-heading" tabIndex={0}>
-                                        <h2 id="grandiosebenefits-heading" className="sr-only">Grandiose Benefits Section</h2>
-                                        <GrandioseBenefits isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="professorCards" role="region" aria-labelledby="professorcards-heading" tabIndex={0}>
-                                        <h2 id="professorcards-heading" className="sr-only">Professor Cards Section</h2>
-                                        <ProfessorCards isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="testimonials" role="region" aria-labelledby="testimonials-heading" tabIndex={0}>
-                                        <h2 id="testimonials-heading" className="sr-only">Testimonials Section</h2>
-                                        <Testimonials isDarkMode={isDarkMode} />
-                                    </section>
-                                    <section id="contact" role="region" aria-labelledby="contact-heading" tabIndex={0}>
-                                        <h2 id="contact-heading" className="sr-only">Contact Us Section</h2>
-                                        <ContactUs isDarkMode={isDarkMode} />
-                                    </section>
-                                    
-                                </>
-                            }
+                        {/* Navbar */}
+                        <Navbar
+                            isDarkMode={isDarkMode}
+                            setIsDarkMode={setIsDarkMode}
+                            language={language}
+                            setLanguage={setLanguage}
                         />
 
-                        {/* Blog Page */}
-                        <Route path="/blog" element={<Blog isDarkMode={isDarkMode} />} />
+                        <Routes>
+                            {/* Main Application with Sections */}
+                            <Route
+                                path="/"
+                                element={
+                                    <>
+                                        <section id="home" role="region" aria-labelledby="home-heading" tabIndex={0}>
+                                            <h1 id="home-heading" className="sr-only">Home Section</h1>
+                                            <Home isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="about" role="region" aria-labelledby="about-heading" tabIndex={0}>
+                                            <h2 id="about-heading" className="sr-only">About Section</h2>
+                                            <About isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="cycles" role="region" aria-labelledby="cycles-heading" tabIndex={0}>
+                                            <h2 id="cycles-heading" className="sr-only">Cycles Section</h2>
+                                            <Cycles isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="whychooseus" role="region" aria-labelledby="whychooseus-heading" tabIndex={0}>
+                                            <h2 id="whychooseus-heading" className="sr-only">Why Choose Us Section</h2>
+                                            <WhyChooseUs isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="grandiosebenefits" role="region" aria-labelledby="grandiosebenefits-heading" tabIndex={0}>
+                                            <h2 id="grandiosebenefits-heading" className="sr-only">Grandiose Benefits Section</h2>
+                                            <GrandioseBenefits isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="professorCards" role="region" aria-labelledby="professorcards-heading" tabIndex={0}>
+                                            <h2 id="professorcards-heading" className="sr-only">Professor Cards Section</h2>
+                                            <ProfessorCards isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="testimonials" role="region" aria-labelledby="testimonials-heading" tabIndex={0}>
+                                            <h2 id="testimonials-heading" className="sr-only">Testimonials Section</h2>
+                                            <Testimonials isDarkMode={isDarkMode} />
+                                        </section>
+                                        <section id="contact" role="region" aria-labelledby="contact-heading" tabIndex={0}>
+                                            <h2 id="contact-heading" className="sr-only">Contact Us Section</h2>
+                                            <ContactUs isDarkMode={isDarkMode} />
+                                        </section>
+                                    </>
+                                }
+                            />
 
-                        {/* Inscription Page */}
-                        <Route path="/inscription" element={<Inscription isDarkMode={isDarkMode} />} />
-                    </Routes>
+                            {/* Blog Page */}
+                            <Route path="/blog" element={<Blog isDarkMode={isDarkMode} />} />
 
-                    {/* Scroll-to-Top Button */}
-                    <ScrollToTopButton isDarkMode={isDarkMode} />
-                    <section id="footer" role="region" aria-labelledby="footer-heading" tabIndex={0}>
-                        <h2 id="footer-heading" className="sr-only">Footer Section</h2>
-                        <Footer isDarkMode={isDarkMode} />
-                    </section>
+                            {/* Inscription Page */}
+                            <Route path="/inscription" element={<Inscription isDarkMode={isDarkMode} />} />
+                        </Routes>
+
+                        {/* Scroll-to-Top Button */}
+                        <ScrollToTopButton isDarkMode={isDarkMode} />
+
+                        {/* Footer */}
+                        <section role="region" aria-labelledby="footer-heading" tabIndex={0} className="mt-auto">
+                            <h2 id="footer-heading" className="sr-only">Footer Section</h2>
+                            <Footer isDarkMode={isDarkMode} />
+                        </section>
+
+                    </div>
                 </Suspense>
             </Router>
         </I18nextProvider>
