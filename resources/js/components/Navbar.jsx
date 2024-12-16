@@ -23,12 +23,9 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
         setIsDarkMode((prevMode) => !prevMode);
     };
 
-    const scrollToSection = (id) => {
-        const section = document.getElementById(id);
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-            window.history.pushState(null, null, `#${id}`);
-        }
+    const redirectToLandingPageWithHash = (id) => {
+        // Redirect to the landing page with the hash (e.g., /#about)
+        window.location.href = `http://localhost:8000/#${id}`;
     };
 
     const closeDropdownOnClickOutside = (e) => {
@@ -93,7 +90,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
         <nav className={`fixed w-full top-0 z-50 shadow-lg transition-all duration-300 ${navbarBg}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    <div className="cursor-pointer" onClick={() => scrollToSection('home')}>
+                    <div className="cursor-pointer" onClick={() => redirectToLandingPageWithHash('home')}>
                         <img
                             src="/images/logo.png"
                             alt="Logo"
@@ -108,7 +105,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
                             className="hover:underline transition-all"
                             onClick={(e) => {
                                 e.preventDefault();
-                                scrollToSection('home');
+                                redirectToLandingPageWithHash('home');
                             }}
                         >
                             <FaHome className={`text-xl ${isDarkMode ? 'text-darkText' : 'text-lightText'}`} />
@@ -121,7 +118,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
                                 className="hover:underline transition-all"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    scrollToSection(item);
+                                    redirectToLandingPageWithHash(item);
                                 }}
                             >
                                 {t(item)}
@@ -224,19 +221,26 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
                     {['home', 'about', 'cycles', 'whychooseus', 'testimonials', 'contact', 'blog', 'inscription'].map((item) => (
                         <a
                             key={item}
-                            href={`#${item}`}
+                            href={`#${item}`} // Anchor link for sections
                             onClick={(e) => {
-                                e.preventDefault();
-                                scrollToSection(item);
-                                setIsMobileMenuOpen(false);
+                                e.preventDefault(); // Prevent default anchor behavior
+                                if (item === 'blog' || item === 'inscription') {
+                                    // Redirect to blog or inscription pages
+                                    window.location.href = `/${item}`;
+                                } else {
+                                    // For other items, redirect to the landing page with a hash
+                                    redirectToLandingPageWithHash(item);
+                                }
+                                setIsMobileMenuOpen(false); // Close the mobile menu after a selection
                             }}
                             className="block py-2 text-center hover:underline"
                         >
-                            {t(item)}
+                            {t(item)} {/* This translates the item name */}
                         </a>
                     ))}
                 </div>
             )}
+
         </nav>
     );
 };
