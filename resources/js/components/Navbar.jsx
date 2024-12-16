@@ -146,11 +146,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
                                     {['blog', 'inscription'].map((item) => (
                                         <a
                                             key={item}
-                                            href={`#${item}`}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                scrollToSection(item);
-                                            }}
+                                            href={`/${item}`}
                                             className="block px-4 py-2 text-sm hover:bg-accentGreen hover:text-white"
                                         >
                                             {t(item)}
