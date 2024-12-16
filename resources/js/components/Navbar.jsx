@@ -5,7 +5,7 @@ import { IoClose } from 'react-icons/io5';
 
 const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
     const { t } = useTranslation();
-    const [navbarBg, setNavbarBg] = useState('');
+    const [navbarBg, setNavbarBg] = useState(isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText');
     const [isDropdownOpen, setIsDropdownOpen] = useState({ i18n: false, more: false });
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dropdownRefs = {
@@ -24,7 +24,6 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
     };
 
     const redirectToLandingPageWithHash = (id) => {
-        // Redirect to the landing page with the hash (e.g., /#about)
         window.location.href = `http://localhost:8000/#${id}`;
     };
 
@@ -84,6 +83,19 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
             document.removeEventListener('click', closeDropdownOnClickOutside);
             sections.forEach((section) => observer.unobserve(section));
         };
+    }, [isDarkMode]);
+
+    // Force update navbar background when theme changes
+    useEffect(() => {
+        // Update navbar background when theme changes
+        setNavbarBg(isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText');
+    }, [isDarkMode]);
+
+    // Fix for /blog and /inscription page when theme toggles
+    useEffect(() => {
+        if (window.location.pathname === '/blog' || window.location.pathname === '/inscription') {
+            setNavbarBg(isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText');
+        }
     }, [isDarkMode]);
 
     return (
@@ -214,33 +226,28 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
 
             {isMobileMenuOpen && (
                 <div
-                    className={`lg:hidden p-4 ${
-                        isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightSecondary text-lightText'
-                    }`}
+                    className={`lg:hidden p-4 ${isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightSecondary text-lightText'}`}
                 >
                     {['home', 'about', 'cycles', 'whychooseus', 'testimonials', 'contact', 'blog', 'inscription'].map((item) => (
                         <a
                             key={item}
-                            href={`#${item}`} // Anchor link for sections
+                            href={`#${item}`}
                             onClick={(e) => {
-                                e.preventDefault(); // Prevent default anchor behavior
+                                e.preventDefault();
                                 if (item === 'blog' || item === 'inscription') {
-                                    // Redirect to blog or inscription pages
                                     window.location.href = `/${item}`;
                                 } else {
-                                    // For other items, redirect to the landing page with a hash
                                     redirectToLandingPageWithHash(item);
                                 }
-                                setIsMobileMenuOpen(false); // Close the mobile menu after a selection
+                                setIsMobileMenuOpen(false);
                             }}
                             className="block py-2 text-center hover:underline"
                         >
-                            {t(item)} {/* This translates the item name */}
+                            {t(item)}
                         </a>
                     ))}
                 </div>
             )}
-
         </nav>
     );
 };
