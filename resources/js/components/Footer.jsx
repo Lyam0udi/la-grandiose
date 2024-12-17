@@ -8,10 +8,10 @@ const Footer = ({ isDarkMode }) => {
   const location = useLocation();
 
   const socialMediaLinks = [
-    { icon: <FaGlobe />, url: 'https://example.com', alt: t('social_media_website') },
-    { icon: <FaFacebookF />, url: 'https://facebook.com/example', alt: t('social_media_facebook') },
-    { icon: <FaInstagram />, url: 'https://instagram.com/example', alt: t('social_media_instagram') },
-    { icon: <FaLinkedinIn />, url: 'https://linkedin.com/in/example', alt: t('social_media_linkedin') },
+    // { icon: <FaGlobe />, url: 'https://example.com', alt: t('social_media_website') },
+    { icon: <FaLinkedinIn />, url: 'https://ma.linkedin.com/in/la-grandiose-groupe-scolaire-5b3032322', alt: t('social_media_linkedin') },
+    { icon: <FaFacebookF />, url: 'https://www.facebook.com/profile.php?id=61563338828390', alt: t('social_media_facebook') },
+    { icon: <FaInstagram />, url: 'https://www.instagram.com/g.s.lagrandiose?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==', alt: t('social_media_instagram') },
   ];
 
   const sections = [
