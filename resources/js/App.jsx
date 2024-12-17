@@ -165,21 +165,7 @@ const App = () => {
     return (
         <I18nextProvider i18n={i18n}>
             <Router>
-                <Suspense
-                    fallback={
-                        <div
-                            className="loading-spinner"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: '100vh',
-                            }}
-                        >
-                            <p>Loading...</p>
-                        </div>
-                    }
-                >
+                
                     <ContentReadyTracker onReady={() => setIsContentReady(true)} />
 
                     {/* SEO Meta Tags */}
@@ -217,6 +203,21 @@ const App = () => {
                             language={language}
                             setLanguage={setLanguage}
                         />
+                        <Suspense
+                            fallback={
+                                <div
+                                    className="loading-spinner"
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: '100vh',
+                                    }}
+                                >
+                                    <p>Loading...</p>
+                                </div>
+                            }
+                        >
 
                         <Routes>
                             {/* Main Application with Sections */}
@@ -269,7 +270,7 @@ const App = () => {
 
                         {/* Scroll-to-Top Button */}
                         <ScrollToTopButton isDarkMode={isDarkMode} />
-
+                </Suspense>
                         {/* Footer */}
                         <section role="region" aria-labelledby="footer-heading" tabIndex={0} className="mt-auto">
                             <h2 id="footer-heading" className="sr-only">Footer Section</h2>
@@ -277,7 +278,7 @@ const App = () => {
                         </section>
 
                     </div>
-                </Suspense>
+                
             </Router>
         </I18nextProvider>
     );
