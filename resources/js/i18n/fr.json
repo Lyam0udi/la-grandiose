@@ -116,5 +116,9 @@
     "section_testimonials": "Témoignages",
     "section_contact": "Nous contacter",
     "section_blog": "Blog",
-    "section_inscription": "Inscription"
+    "section_inscription": "Inscription",
+
+    "404": "404",
+    "oops_message": "Oups! La page que vous recherchez n'existe pas.",
+    "go_home": "Retour à l'accueil"
 }

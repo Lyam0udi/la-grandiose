@@ -116,6 +116,10 @@
     "section_testimonials": "الشهادات",
     "section_contact": "تواصل معنا",
     "section_blog": "مدونة",
-    "section_inscription": "التسجيل"
+    "section_inscription": "التسجيل",
+
+    "404": "٤٠٤",
+    "oops_message": "عذرًا! الصفحة التي تبحث عنها غير موجودة.",
+    "go_home": "الذهاب إلى الصفحة الرئيسية"
 
 }

@@ -116,7 +116,10 @@
     "section_testimonials": "Testimonials",
     "section_contact": "Contact Us",
     "section_blog": "Blog",
-    "section_inscription": "Inscription"
+    "section_inscription": "Inscription",
 
+    "404": "404",
+    "oops_message": "Oops! The page you're looking for does not exist.",
+    "go_home": "Go to Home"
 
 }
