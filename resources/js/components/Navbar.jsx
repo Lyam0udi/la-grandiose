@@ -24,7 +24,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
     };
 
     const redirectToLandingPageWithHash = (id) => {
-        window.location.href = `http://localhost:8000/#${id}`;
+        window.location.href = `/#${id}`;
     };
 
     const closeDropdownOnClickOutside = (e) => {
