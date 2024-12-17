@@ -100,13 +100,13 @@ const Footer = ({ isDarkMode }) => {
           {/* Contact Info */}
           <div className="text-sm text-center md:text-right">
             <p>
-              <strong>{t('footer_address')}</strong>: 123 Main Street, City, Country
+              <strong>{t('footer_address')}</strong>: Lotissement Amine N° 3, Av des Far, Sidi Bennour
             </p>
             <p>
-              <strong>{t('footer_phone')}</strong>: +123 456 789
+              <strong>{t('footer_phone')}</strong>: +212 661 219 481
             </p>
             <p>
-              <strong>{t('footer_email')}</strong>: example@gmail.com
+              <strong>{t('footer_email')}</strong>: Gslagrandiose@gmail.com
             </p>
           </div>
         </div>
