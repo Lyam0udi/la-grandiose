@@ -228,7 +228,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode, language, setLanguage }) => {
                 <div
                     className={`lg:hidden p-4 ${isDarkMode ? 'bg-darkSecondary text-darkText' : 'bg-lightSecondary text-lightText'}`}
                 >
-                    {['home', 'about', 'cycles', 'whychooseus', 'testimonials', 'contact', 'blog', 'inscription'].map((item) => (
+                    {['home', 'about', 'cycles', 'whychooseus', 'grandiosebenefits','professorCards' ,'testimonials', 'contact', 'blog', 'inscription'].map((item) => (
                         <a
                             key={item}
                             href={`#${item}`}
