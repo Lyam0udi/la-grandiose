@@ -205,7 +205,7 @@ const App = () => {
                     </Helmet>
 
                     {/* Skip to content link for accessibility */}
-                    {/* <a href="#home" className="skip-to-content">Skip to main content</a> */}
+                    <a href="#home" className="skip-to-content">Skip to main content</a>
 
                     {/* Main Flex Container */}
                     <div className="flex flex-col min-h-screen">
