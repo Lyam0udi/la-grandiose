@@ -7,15 +7,15 @@ import { FaArrowUp } from 'react-icons/fa';
 
 // Lazy load components with optimizations
 const Navbar = React.lazy(() => import(/* webpackChunkName: "navbar" */ './components/Navbar'));
-const About = React.lazy(() => import('./pages/About'));
-const ContactUs = React.lazy(() => import('./pages/ContactUs'));
-const Cycles = React.lazy(() => import('./pages/Cycles'));
-const GrandioseBenefits = React.lazy(() => import('./pages/GrandioseBenefits'));
-const Home = React.lazy(() => import(/* webpackPrefetch: true */ './pages/Home'));
-const Testimonials = React.lazy(() => import('./pages/Testimonials'));
-const WhyChooseUs = React.lazy(() => import('./pages/WhyChooseUs'));
-const ProfessorCards = React.lazy(() => import('./pages/ProfessorCards'));
-const Footer = React.lazy(() => import('./pages/Footer'));
+const About = React.lazy(() => import('./components/About'));
+const ContactUs = React.lazy(() => import('./components/ContactUs'));
+const Cycles = React.lazy(() => import('./components/Cycles'));
+const GrandioseBenefits = React.lazy(() => import('./components/GrandioseBenefits'));
+const Home = React.lazy(() => import(/* webpackPrefetch: true */ './components/Home'));
+const Testimonials = React.lazy(() => import('./components/Testimonials'));
+const WhyChooseUs = React.lazy(() => import('./components/WhyChooseUs'));
+const ProfessorCards = React.lazy(() => import('./components/ProfessorCards'));
+const Footer = React.lazy(() => import('./components/Footer'));
 const Blog = React.lazy(() => import('./pages/Blog')); // Lazy-loaded Blog page
 const Inscription = React.lazy(() => import('./pages/Inscription')); // Lazy-loaded Inscription page
 
