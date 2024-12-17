@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGlobe } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
 const Footer = ({ isDarkMode }) => {
   const { t } = useTranslation();
+  const location = useLocation();
 
   const socialMediaLinks = [
     { icon: <FaGlobe />, url: 'https://example.com', alt: t('social_media_website') },
@@ -21,12 +23,21 @@ const Footer = ({ isDarkMode }) => {
     { id: 'professorCards', label: t('section_professors') },
     { id: 'testimonials', label: t('section_testimonials') },
     { id: 'contact', label: t('section_contact') },
-    { id: 'blog', label: t('section_blog') },
-    { id: 'inscription', label: t('section_inscription') },
+    { id: 'blog', label: t('section_blog'), path: '/blog' },
+    { id: 'inscription', label: t('section_inscription'), path: '/inscription' },
   ];
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (id, path) => {
+    if (path) {
+      // Navigate to absolute path (e.g., /blog or /inscription)
+      window.location.href = path;
+    } else if (location.pathname === '/' || location.pathname === '/#') {
+      // Navigate directly to section on the same page
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to homepage and then to the specific section
+      window.location.href = `/#${id}`;
+    }
   };
 
   return (
@@ -41,7 +52,7 @@ const Footer = ({ isDarkMode }) => {
         {/* Brand Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
           {/* Updated Logo */}
-          <div className="cursor-pointer" onClick={() => scrollToSection('home')}>
+          <div className="cursor-pointer" onClick={() => handleNavigation('home')}>
             <img
               src="/images/logo.png"
               alt="La Grandiose Logo"
@@ -54,12 +65,12 @@ const Footer = ({ isDarkMode }) => {
             <ul className="flex flex-wrap gap-4 text-sm justify-center">
               {sections.map((section) => (
                 <li key={section.id}>
-                  <a
-                    href={`#${section.id}`}
+                  <button
+                    onClick={() => handleNavigation(section.id, section.path)}
                     className="hover:underline focus:outline-none focus:ring-2"
                   >
                     {section.label}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
