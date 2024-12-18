@@ -106,7 +106,7 @@ const Footer = ({ isDarkMode }) => {
               <strong>{t('footer_phone')}</strong>: +212 661 219 481
             </p>
             <p>
-              <strong>{t('footer_email')}</strong>: Gslagrandiose@gmail.com
+              <strong>{t('footer_email')}</strong>: gslagrandiose@gmail.com
             </p>
           </div>
         </div>
