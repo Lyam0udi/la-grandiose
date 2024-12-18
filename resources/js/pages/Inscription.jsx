@@ -178,20 +178,20 @@ const Inscription = ({ isDarkMode }) => {
             {
               title: t('maternelle_title'),
               content: [
-                'Photocopie de la carte d’identité nationale des 2 parents.',
-                'Fiche de santé.',
-                'Extrait d’acte de naissance de l’enfant.',
-                'Cinq (5) photos d’identité de l’enfant.'
+                t('maternelle_content_1'),
+                t('maternelle_content_2'),
+                t('maternelle_content_3'),
+                t('maternelle_content_4')
               ]
             },
             {
               title: t('primaire_title'),
               content: [
-                'Photocopie de la carte d’identité nationale des 2 parents.',
-                'Photocopie du carnet de santé de l’enfant.',
-                'Extrait d’acte de naissance de l’enfant.',
-                'Cinq (5) photos d’identité de l’enfant.',
-                'Relevé de notes de la dernière année scolaire.'
+                t('primaire_content_1'),
+                t('primaire_content_2'),
+                t('primaire_content_3'),
+                t('primaire_content_4'),
+                t('primaire_content_5')
               ]
             }
           ].map(({ title, content }, index) => (

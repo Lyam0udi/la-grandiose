@@ -145,10 +145,15 @@
     "next_year_option": "2024/2025 Academic Year",
     "required_documents_title": "Required Documents",
     "maternelle_title": "For Kindergarten",
-    "maternelle_documents": "Birth certificate, Vaccination record, Family ID copy",
+    "maternelle_content_1": "Photocopy of the national identity card of both parents.",
+    "maternelle_content_2": "Health record.",
+    "maternelle_content_3": "Extract from the child's birth certificate.",
+    "maternelle_content_4": "Five (5) passport photos of the child.",
     "primaire_title": "For Primary School",
-    "primaire_documents": "Report card of the previous year, ID card photo of the student, Birth certificate"
-
-
+    "primaire_content_1": "Photocopy of the national identity card of both parents.",
+    "primaire_content_2": "Photocopy of the child's health record.",
+    "primaire_content_3": "Extract from the child's birth certificate.",
+    "primaire_content_4": "Five (5) passport photos of the child.",
+    "primaire_content_5": "Report card from the last school year."
 
 }

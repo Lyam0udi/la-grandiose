@@ -145,8 +145,15 @@
     "next_year_option": "Année scolaire 2024/2025",
     "required_documents_title": "Documents requis",
     "maternelle_title": "Pour la Maternelle",
-    "maternelle_documents": "Certificat de naissance, Carnet de vaccination, Copie du livret de famille",
+    "maternelle_content_1": "Photocopie de la carte d’identité nationale des 2 parents.",
+    "maternelle_content_2": "Fiche de santé.",
+    "maternelle_content_3": "Extrait d’acte de naissance de l’enfant.",
+    "maternelle_content_4": "Cinq (5) photos d’identité de l’enfant.",
     "primaire_title": "Pour l'École Primaire",
-    "primaire_documents": "Bulletin de l'année précédente, Photo d'identité de l'élève, Certificat de naissance"
+    "primaire_content_1": "Photocopie de la carte d’identité nationale des 2 parents.",
+    "primaire_content_2": "Photocopie du carnet de santé de l’enfant.",
+    "primaire_content_3": "Extrait d’acte de naissance de l’enfant.",
+    "primaire_content_4": "Cinq (5) photos d’identité de l’enfant.",
+    "primaire_content_5": "Relevé de notes de la dernière année scolaire."
 
 }

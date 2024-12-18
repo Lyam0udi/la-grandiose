@@ -145,8 +145,15 @@
     "next_year_option": "العام الدراسي 2024/2025",
     "required_documents_title": "الوثائق المطلوبة",
     "maternelle_title": "لرياض الأطفال",
-    "maternelle_documents": "شهادة الميلاد، سجل التطعيمات، نسخة من بطاقة العائلة",
+    "maternelle_content_1": "صورة من بطاقة الهوية الوطنية للوالدين.",
+    "maternelle_content_2": "سجل الصحة.",
+    "maternelle_content_3": "نسخة من شهادة ميلاد الطفل.",
+    "maternelle_content_4": "خمس (5) صور جواز سفر للطفل.",
     "primaire_title": "للمدرسة الابتدائية",
-    "primaire_documents": "كشف علامات السنة السابقة، صورة هوية الطالب، شهادة الميلاد"
+    "primaire_content_1": "صورة من بطاقة الهوية الوطنية للوالدين.",
+    "primaire_content_2": "صورة من سجل صحة الطفل.",
+    "primaire_content_3": "نسخة من شهادة ميلاد الطفل.",
+    "primaire_content_4": "خمس (5) صور جواز سفر للطفل.",
+    "primaire_content_5": "كشف درجات السنة الدراسية الأخيرة."
 
 }
