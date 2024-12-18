@@ -120,5 +120,33 @@
 
     "404": "404",
     "oops_message": "Oups! La page que vous recherchez n'existe pas.",
-    "go_home": "Retour à l'accueil"
+    "go_home": "Retour à l'accueil",
+
+    "inscription_title": "Inscription des élèves",
+    "inscription_description": "Veuillez remplir le formulaire ci-dessous pour inscrire votre enfant dans notre établissement. Assurez-vous de fournir des informations exactes et complètes.",
+    "student_name_label": "Nom de l'élève",
+    "student_name_placeholder": "Entrez le nom complet de l'élève",
+    "school_level_label": "Niveau scolaire",
+    "current_school_label": "École actuelle",
+    "current_school_placeholder": "Entrez le nom de l'école actuelle",
+    "birth_date_label": "Date de naissance",
+    "guardian_name_label": "Nom du tuteur",
+    "guardian_name_placeholder": "Entrez le nom du tuteur",
+    "phone_label": "Numéro de téléphone",
+    "phone_placeholder": "Entrez le numéro de téléphone",
+    "email_label": "Adresse e-mail",
+    "email_placeholder": "Entrez l'adresse e-mail",
+    "message_label": "Message supplémentaire (Optionnel)",
+    "message_placeholder": "Écrivez toute information supplémentaire ici",
+    "submit_button": "Soumettre l'inscription",
+    "invalid_email_message": "Veuillez entrer une adresse e-mail valide.",
+    "form_submitted_message": "Merci ! Votre formulaire a été soumis.",
+    "select_option": "Sélectionnez une option",
+    "next_year_option": "Année scolaire 2024/2025",
+    "required_documents_title": "Documents requis",
+    "maternelle_title": "Pour la Maternelle",
+    "maternelle_documents": "Certificat de naissance, Carnet de vaccination, Copie du livret de famille",
+    "primaire_title": "Pour l'École Primaire",
+    "primaire_documents": "Bulletin de l'année précédente, Photo d'identité de l'élève, Certificat de naissance"
+
 }

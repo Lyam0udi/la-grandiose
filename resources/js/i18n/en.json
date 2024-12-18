@@ -120,6 +120,35 @@
 
     "404": "404",
     "oops_message": "Oops! The page you're looking for does not exist.",
-    "go_home": "Go to Home"
+    "go_home": "Go to Home",
+
+    "inscription_title": "Student Registration",
+    "inscription_description": "Please fill out the form below to enroll your child in our institution. Make sure to provide accurate and complete information.",
+    "student_name_label": "Student Name",
+    "student_name_placeholder": "Enter student's full name",
+    "school_level_label": "School Level",
+    "current_school_label": "Current School",
+    "current_school_placeholder": "Enter current school name",
+    "birth_date_label": "Birth Date",
+    "guardian_name_label": "Guardian's Name",
+    "guardian_name_placeholder": "Enter guardian's name",
+    "phone_label": "Phone Number",
+    "phone_placeholder": "Enter phone number",
+    "email_label": "Email Address",
+    "email_placeholder": "Enter email address",
+    "message_label": "Additional Message (Optional)",
+    "message_placeholder": "Write any additional information here",
+    "submit_button": "Submit Registration",
+    "invalid_email_message": "Please enter a valid email address.",
+    "form_submitted_message": "Thank you! Your form has been submitted.",
+    "select_option": "Select an option",
+    "next_year_option": "2024/2025 Academic Year",
+    "required_documents_title": "Required Documents",
+    "maternelle_title": "For Kindergarten",
+    "maternelle_documents": "Birth certificate, Vaccination record, Family ID copy",
+    "primaire_title": "For Primary School",
+    "primaire_documents": "Report card of the previous year, ID card photo of the student, Birth certificate"
+
+
 
 }

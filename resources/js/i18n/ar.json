@@ -120,6 +120,33 @@
 
     "404": "٤٠٤",
     "oops_message": "عذرًا! الصفحة التي تبحث عنها غير موجودة.",
-    "go_home": "الذهاب إلى الصفحة الرئيسية"
+    "go_home": "الذهاب إلى الصفحة الرئيسية",
+
+    "inscription_title": "تسجيل الطالب",
+    "inscription_description": "يرجى ملء النموذج أدناه لتسجيل طفلك في مؤسستنا. تأكد من تقديم معلومات دقيقة وكاملة.",
+    "student_name_label": "اسم الطالب",
+    "student_name_placeholder": "أدخل الاسم الكامل للطالب",
+    "school_level_label": "المستوى الدراسي",
+    "current_school_label": "المدرسة الحالية",
+    "current_school_placeholder": "أدخل اسم المدرسة الحالية",
+    "birth_date_label": "تاريخ الميلاد",
+    "guardian_name_label": "اسم الوصي",
+    "guardian_name_placeholder": "أدخل اسم الوصي",
+    "phone_label": "رقم الهاتف",
+    "phone_placeholder": "أدخل رقم الهاتف",
+    "email_label": "عنوان البريد الإلكتروني",
+    "email_placeholder": "أدخل عنوان البريد الإلكتروني",
+    "message_label": "رسالة إضافية (اختياري)",
+    "message_placeholder": "اكتب أي معلومات إضافية هنا",
+    "submit_button": "إرسال التسجيل",
+    "invalid_email_message": "يرجى إدخال عنوان بريد إلكتروني صالح.",
+    "form_submitted_message": "شكرًا لك! تم إرسال النموذج الخاص بك.",
+    "select_option": "اختر خيارًا",
+    "next_year_option": "العام الدراسي 2024/2025",
+    "required_documents_title": "الوثائق المطلوبة",
+    "maternelle_title": "لرياض الأطفال",
+    "maternelle_documents": "شهادة الميلاد، سجل التطعيمات، نسخة من بطاقة العائلة",
+    "primaire_title": "للمدرسة الابتدائية",
+    "primaire_documents": "كشف علامات السنة السابقة، صورة هوية الطالب، شهادة الميلاد"
 
 }
