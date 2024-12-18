@@ -27,6 +27,9 @@ const Inscription = ({ isDarkMode }) => {
     // Validate Names: Only Latin characters allowed
     if ((name === 'studentName' || name === 'guardianName') && /[^a-zA-Z\s]/.test(value)) return;
 
+    // Validate Schoolss: Only Latin characters allowed
+    if (name === 'currentSchool' && /[^a-zA-Z\s]/.test(value)) return;
+
     setFormData({ ...formData, [name]: value });
   };
 
