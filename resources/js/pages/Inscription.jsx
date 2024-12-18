@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { useTranslation } from 'react-i18next';
 
 const Inscription = ({ isDarkMode }) => {
@@ -27,7 +27,7 @@ const Inscription = ({ isDarkMode }) => {
     // Validate Names: Only Latin characters allowed
     if ((name === 'studentName' || name === 'guardianName') && /[^a-zA-Z\s]/.test(value)) return;
 
-    // Validate Schoolss: Only Latin characters allowed
+    // Validate Schools: Only Latin characters allowed
     if (name === 'currentSchool' && /[^a-zA-Z\s]/.test(value)) return;
 
     setFormData({ ...formData, [name]: value });
@@ -40,9 +40,7 @@ const Inscription = ({ isDarkMode }) => {
 
   return (
     <section
-      className={`py-16 ${
-        isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'
-      }`}
+      className={`py-16 mt-10 ${isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'}`}
     >
       <div className="container mx-auto px-6 sm:px-12">
         <h1
@@ -52,7 +50,7 @@ const Inscription = ({ isDarkMode }) => {
         >
           {t('inscription_title')}
         </h1>
-        <p className="text-center mb-12">{t('inscription_description')}</p>
+        <p className="text-center mb-12 max-w-3xl mx-auto">{t('inscription_description')}</p>
 
         {/* Form Section */}
         <form
@@ -60,7 +58,7 @@ const Inscription = ({ isDarkMode }) => {
           onSubmit={handleSubmit}
         >
           {/* Input Fields */}
-          {[
+          {[ 
             {
               label: t('student_name_label'),
               name: 'studentName',
@@ -111,12 +109,12 @@ const Inscription = ({ isDarkMode }) => {
               type: 'textarea'
             }
           ].map(({ label, name, placeholder, type, options }) => (
-            <div key={name} className="flex flex-col">
-              <label className="mb-2 font-medium">{label}</label>
+            <div key={name} className="flex flex-col mb-6">
+              <label className="mb-2 font-medium text-lg">{label}</label>
               {type === 'select' ? (
                 <select
                   name={name}
-                  className={`w-full px-4 py-2 rounded border ${
+                  className={`w-full px-4 py-3 rounded-lg border text-lg ${
                     isDarkMode
                       ? 'bg-darkCard border-darkBorder text-darkText placeholder-darkTextSecondary'
                       : 'bg-lightCard border-lightBorder text-lightText placeholder-lightTextSecondary'
@@ -134,7 +132,7 @@ const Inscription = ({ isDarkMode }) => {
               ) : type === 'textarea' ? (
                 <textarea
                   name={name}
-                  className={`w-full px-4 py-2 rounded border resize-none h-24 ${
+                  className={`w-full px-4 py-3 rounded-lg border text-lg resize-none h-24 ${
                     isDarkMode
                       ? 'bg-darkCard border-darkBorder text-darkText placeholder-darkTextSecondary'
                       : 'bg-lightCard border-lightBorder text-lightText placeholder-lightTextSecondary'
@@ -147,7 +145,7 @@ const Inscription = ({ isDarkMode }) => {
                 <input
                   name={name}
                   type={type}
-                  className={`w-full px-4 py-2 rounded border ${
+                  className={`w-full px-4 py-3 rounded-lg border text-lg ${
                     isDarkMode
                       ? 'bg-darkCard border-darkBorder text-darkText placeholder-darkTextSecondary'
                       : 'bg-lightCard border-lightBorder text-lightText placeholder-lightTextSecondary'
@@ -159,22 +157,25 @@ const Inscription = ({ isDarkMode }) => {
               )}
             </div>
           ))}
-          <button
-            type="submit"
-            className={`col-span-1 sm:col-span-2 py-3 px-6 rounded font-bold ${
-              isDarkMode
-                ? 'bg-buttonPrimaryDark text-lightText hover:bg-buttonHoverDark'
-                : 'bg-buttonPrimaryLight text-lightText hover:bg-buttonHoverLight'
-            }`}
-          >
-            {t('submit_button')}
-          </button>
+          
+          <div className="col-span-1 sm:col-span-2">
+            <button
+              type="submit"
+              className={`w-full py-3 px-6 rounded-lg font-bold text-lg ${
+                isDarkMode
+                  ? 'bg-buttonPrimaryDark text-lightText hover:bg-buttonHoverDark'
+                  : 'bg-buttonPrimaryLight text-lightText hover:bg-buttonHoverLight'
+              }`}
+            >
+              {t('submit_button')}
+            </button>
+          </div>
         </form>
 
         {/* Cards Section */}
         <h2 className="text-2xl font-bold mb-6">{t('required_documents_title')}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {[
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {[ 
             {
               title: t('maternelle_title'),
               content: [
@@ -197,7 +198,7 @@ const Inscription = ({ isDarkMode }) => {
           ].map(({ title, content }, index) => (
             <div
               key={index}
-              className={`p-6 rounded-lg border shadow ${
+              className={`p-6 rounded-lg border shadow-md ${
                 isDarkMode
                   ? 'bg-darkCard border-darkBorder text-darkText'
                   : 'bg-lightCard border-lightBorder text-lightText'
