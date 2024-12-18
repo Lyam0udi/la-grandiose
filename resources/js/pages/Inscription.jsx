@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; 
 import { useTranslation } from 'react-i18next';
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Inscription = ({ isDarkMode }) => {
   const { t } = useTranslation();
@@ -212,6 +213,47 @@ const Inscription = ({ isDarkMode }) => {
               </ul>
             </div>
           ))}
+        </div>
+
+        {/* Contact Information Section */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-semibold mb-6">{t('contactus_getintouch')}</h3>
+          <div className="space-y-6">
+            <div className="flex items-start">
+              <FaPhoneAlt className="text-primaryBlue text-2xl mr-4" />
+              <div>
+                <h4 className="font-semibold">{t('contact_phone_title')}</h4>
+                <p>{t('contact_phone_description')}</p>
+              </div>
+            </div>
+            <div className="flex items-start">
+              <FaEnvelope className="text-primaryBlue text-2xl mr-4" />
+              <div>
+                <h4 className="font-semibold">{t('contact_email_title')}</h4>
+                <p>{t('contact_email_description')}</p>
+              </div>
+            </div>
+            <div className="flex items-start">
+              <FaMapMarkerAlt className="text-primaryBlue text-2xl mr-4" />
+              <div>
+                <h4 className="font-semibold">{t('contact_address_title')}</h4>
+                <p>{t('contact_address_description')}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Map */}
+          <div className="mt-10">
+            <h3 className="text-xl font-semibold mb-4">{t('contact_map_title')}</h3>
+            {/* Replace the `src` value with the actual Google Maps embed URL */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=...your_map_url..."
+              title="Google Maps Location"
+              className="w-full h-64 rounded-lg shadow-md border-0"
+              allowFullScreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
         </div>
       </div>
     </section>
