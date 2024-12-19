@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react'; 
 import { I18nextProvider } from 'react-i18next';
+import { BrowserRouter as Router } from 'react-router-dom'; // Ensure Router wraps the app correctly
 import i18n from '../i18n';
 import { FaArrowUp } from 'react-icons/fa';
 
@@ -7,10 +8,13 @@ import { FaArrowUp } from 'react-icons/fa';
 const Navbar = React.lazy(() => import(/* webpackChunkName: "navbar" */ '../components/Navbar'));
 const Home = React.lazy(() => import(/* webpackPrefetch: true */ '../components/Home'));
 const About = React.lazy(() => import('../components/About'));
+const Cycles = React.lazy(() => import('../components/Cycles'));
 const ContactUs = React.lazy(() => import('../components/ContactUs'));
 const WhyChooseUs = React.lazy(() => import('../components/WhyChooseUs'));
 const GrandioseBenefits = React.lazy(() => import('../components/GrandioseBenefits'));
-// const Footer = React.lazy(() => import('../components/Footer'));
+const ProfessorCards = React.lazy(() => import('../components/ProfessorCards'));
+const Testimonials = React.lazy(() => import('../components/Testimonials'));
+const Footer = React.lazy(() => import('../components/Footer')); // Lazy-load Footer
 
 // Debounce utility for better performance
 const debounce = (func, wait) => {
@@ -144,52 +148,64 @@ const Welcome = () => {
 
     return (
         <I18nextProvider i18n={i18n}>
-            {/* Main Flex Container */}
-            <div className="flex flex-col min-h-screen">
-                {/* Navbar */}
-                <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} language={language} setLanguage={setLanguage} />
+            {/* Wrap with Router */}
+            <Router>
+                {/* Main Flex Container */}
+                <div className="flex flex-col min-h-screen">
+                    {/* Navbar */}
+                    <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} language={language} setLanguage={setLanguage} />
 
-                <Suspense
-                    fallback={
-                        <div
-                            className="loading-spinner"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: '100vh',
-                            }}
-                        >
-                            <p>Loading...</p>
-                        </div>
-                    }
-                >
-                    {/* Landing Page Sections */}
-                    <section id="home">
-                        <Home isDarkMode={isDarkMode} />
-                    </section>
-                    <section id="about">
-                        <About isDarkMode={isDarkMode} />
-                    </section>
-                    <section id="whychooseus">
-                        <WhyChooseUs isDarkMode={isDarkMode} />
-                    </section>
-                    <section id="grandiosebenefits">
-                        <GrandioseBenefits isDarkMode={isDarkMode} />
-                    </section>
-                    <section id="contact">
-                        <ContactUs isDarkMode={isDarkMode} />
-                    </section>
-                </Suspense>
+                    <Suspense
+                        fallback={
+                            <div
+                                className="loading-spinner"
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100vh',
+                                }}
+                            >
+                                <p>Loading...</p>
+                            </div>
+                        }
+                    >
+                        {/* Landing Page Sections */}
+                        <section id="home">
+                            <Home isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="about">
+                            <About isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="cycles">
+                            <Cycles isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="whychooseus">
+                            <WhyChooseUs isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="grandiosebenefits">
+                            <GrandioseBenefits isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="professorCards">
+                            <ProfessorCards isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="testimonials">
+                            <Testimonials isDarkMode={isDarkMode} />
+                        </section>
+                        <section id="contact">
+                            <ContactUs isDarkMode={isDarkMode} />
+                        </section>
+                    </Suspense>
 
-                {/* Scroll-to-Top Button */}
-                <ScrollToTopButton isDarkMode={isDarkMode} />
+                    {/* Scroll-to-Top Button */}
+                    <ScrollToTopButton isDarkMode={isDarkMode} />
 
-                {/* Footer */}
-                {/* <section className="mt-auto">
-                    <Footer isDarkMode={isDarkMode} />
-                </section> */}
-            </div>
+                    {/* Footer */}
+                    <section className="mt-auto">
+                        <Footer isDarkMode={isDarkMode} />
+                    </section>
+                </div>
+            </Router>
         </I18nextProvider>
     );
 };
