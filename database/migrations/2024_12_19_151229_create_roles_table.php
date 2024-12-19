@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cycles', function (Blueprint $table) {
+        // Create the 'roles' table
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();  // Add the 'name' column
             $table->timestamps();
         });
     }
@@ -22,6 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cycles');
+        // Drop the 'roles' table
+        Schema::dropIfExists('roles');
     }
 };

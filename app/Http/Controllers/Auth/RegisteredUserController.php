@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -28,24 +29,31 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        // Check if there are already 4 admin users
+        $adminRole = Role::where('name', 'admin')->first();
+        if (User::where('role_id', $adminRole->id)->count() >= 4) {
+            abort(403, 'Registration is disabled after 4 admins.');
+        }
+
+        // Validation and user creation logic
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => $adminRole->id,
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(RouteServiceProvider::HOME);
     }
 }
