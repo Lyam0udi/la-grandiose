@@ -4,7 +4,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -12,6 +12,15 @@ export default function Login({ status, canResetPassword }) {
         password: '',
         remember: false,
     });
+
+    // Access the flash data from the page using usePage hook
+    const { flash } = usePage();
+
+    // Log the flash data to the console for debugging purposes
+    console.log('Flash data:', flash);
+
+    // Get the flash message from the flash data
+    const message = flash ? flash : null;
 
     const submit = (e) => {
         e.preventDefault();
@@ -24,6 +33,13 @@ export default function Login({ status, canResetPassword }) {
     return (
         <GuestLayout>
             <Head title="Log in" />
+
+            {/* Display the flash message if it exists */}
+            {message && (
+                <div className="mb-4 text-sm font-medium text-red-600">
+                    {message}
+                </div>
+            )}
 
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">

@@ -11,8 +11,17 @@ class RolesSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
-        Role::create(['name' => 'admin']);
+        // Create the 'admin' and 'user' roles
+        Role::updateOrCreate(
+            ['name' => 'admin'],
+            ['name' => 'admin']
+        );
+
+        Role::updateOrCreate(
+            ['name' => 'user'],
+            ['name' => 'user']
+        );
     }
 }
