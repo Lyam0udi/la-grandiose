@@ -16,9 +16,6 @@ export default function Login({ status, canResetPassword }) {
     // Access the flash data from the page using usePage hook
     const { flash } = usePage();
 
-    // Log the flash data to the console for debugging purposes
-    console.log('Flash data:', flash);
-
     // Get the flash message from the flash data
     const message = flash ? flash : null;
 
