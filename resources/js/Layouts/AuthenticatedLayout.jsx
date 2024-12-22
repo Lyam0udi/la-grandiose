@@ -12,15 +12,22 @@ export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');  // Light/Dark theme state
+    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('isDarkMode') === 'true');  // Read dark mode from local storage
     const [language, setLanguage] = useState(i18n.language || 'en');  // Language state
+
+    // Effect to update the class based on the dark mode state
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        localStorage.setItem('isDarkMode', isDarkMode);  // Persist the state in local storage
+    }, [isDarkMode]);
 
     // Toggle between dark and light theme
     const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);  // Save theme preference
-        document.documentElement.classList.toggle('dark', newTheme === 'dark');
+        setIsDarkMode(!isDarkMode);  // Toggle dark mode state
     };
 
     // Change language
@@ -30,14 +37,14 @@ export default function AuthenticatedLayout({ header, children }) {
     };
 
     return (
-        <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}`}>
-            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}`}>
+            <nav className={`border-b ${isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-100 bg-white'}`}>
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <ApplicationLogo className={`block h-9 w-auto fill-current ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`} />
                                 </Link>
                             </div>
 
@@ -57,7 +64,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 onClick={toggleTheme}
                                 className="text-xl px-2 py-1 rounded-md transition-all hover:text-gray-500 dark:hover:text-gray-300"
                             >
-                                {theme === 'dark' ? <FaSun /> : <FaMoon />}
+                                {isDarkMode ? <FaSun /> : <FaMoon />}
                             </button>
 
                             {/* Language Dropdown */}
@@ -67,7 +74,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
+                                                className={`inline-flex items-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 ${isDarkMode ? 'bg-gray-800 text-gray-400 hover:text-gray-300' : 'bg-white text-gray-500 hover:text-gray-700'}`}
                                             >
                                                 {language.toUpperCase()} ▼
                                             </button>
@@ -94,7 +101,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
+                                                className={`inline-flex items-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 ${isDarkMode ? 'bg-gray-800 text-gray-400 hover:text-gray-300' : 'bg-white text-gray-500 hover:text-gray-700'}`}
                                             >
                                                 {user.name}
                                                 <svg
@@ -173,7 +180,7 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
+                <header className={`${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-800'} shadow`}>
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>
