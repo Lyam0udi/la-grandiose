@@ -1,40 +1,50 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next'; // Import the i18n hook
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next'; // i18n hook for language management
 import { FaMoon, FaSun } from 'react-icons/fa'; // For theme toggle icons
 
-export default function AuthenticatedLayout({ header, children }) {
-    const { t, i18n } = useTranslation(); // i18n translation hook
+const AuthenticatedLayout = ({ header, children }) => {
+    const { t, i18n } = useTranslation(); // i18n hook for language management
     const user = usePage().props.auth.user;
 
+    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('isDarkMode') === 'true'); // Dark mode state
+    const [language, setLanguage] = useState(localStorage.getItem('language') || 'en'); // Language state
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('isDarkMode') === 'true'); // Read dark mode from local storage
-    const [language, setLanguage] = useState(i18n.language || 'en'); // Language state
 
-    // Effect to update the class based on the dark mode state
+    const dropdownRefs = {
+        i18n: useRef(),
+        mobileMenu: useRef(),
+    };
+
+    // Handle theme toggle
+    const toggleTheme = () => {
+        setIsDarkMode((prevMode) => !prevMode);
+    };
+
+    // Change language and update localStorage
+    const changeLanguage = (lang) => {
+        setLanguage(lang);
+        i18n.changeLanguage(lang); // Change language in i18n
+    };
+
+    // Save dark mode state to localStorage
     useEffect(() => {
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-        localStorage.setItem('isDarkMode', isDarkMode); // Persist the state in local storage
+        localStorage.setItem('isDarkMode', isDarkMode); // Persist the dark mode state
     }, [isDarkMode]);
 
-    // Toggle between dark and light theme
-    const toggleTheme = () => {
-        setIsDarkMode(!isDarkMode); // Toggle dark mode state
-    };
-
-    // Change language
-    const changeLanguage = (lang) => {
-        setLanguage(lang);
-        i18n.changeLanguage(lang); // Change language using i18n
-    };
+    // Save language preference to localStorage
+    useEffect(() => {
+        localStorage.setItem('language', language); // Persist the language preference
+    }, [language]);
 
     return (
         <div className={`min-h-screen ${isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'}`}>
@@ -52,7 +62,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
-                                    isDarkMode={isDarkMode} // Pass isDarkMode to NavLink
+                                    isDarkMode={isDarkMode}
                                 >
                                     {t('dashboard')}
                                 </NavLink>
@@ -69,8 +79,8 @@ export default function AuthenticatedLayout({ header, children }) {
                             </button>
 
                             {/* Language Dropdown */}
-                            <div className="relative ms-3">
-                                <Dropdown isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown */}
+                            <div className="relative ms-3" ref={dropdownRefs.i18n}>
+                                <Dropdown isDarkMode={isDarkMode}>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
@@ -82,12 +92,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                         </span>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown Content */}
+                                    <Dropdown.Content isDarkMode={isDarkMode}>
                                         {['en', 'fr', 'ar'].map((lang) => (
                                             <Dropdown.Link
                                                 key={lang}
                                                 onClick={() => changeLanguage(lang)}
-                                                isDarkMode={isDarkMode} // Pass isDarkMode to Dropdown Link
+                                                isDarkMode={isDarkMode}
                                             >
                                                 {lang.toUpperCase()}
                                             </Dropdown.Link>
@@ -98,7 +108,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             {/* User Dropdown */}
                             <div className="relative ms-3">
-                                <Dropdown isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown */}
+                                <Dropdown isDarkMode={isDarkMode}>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
@@ -122,7 +132,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         </span>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown Content */}
+                                    <Dropdown.Content isDarkMode={isDarkMode}>
                                         <Dropdown.Link href={route('profile.edit')} isDarkMode={isDarkMode}>
                                             {t('profile')}
                                         </Dropdown.Link>
@@ -192,4 +202,6 @@ export default function AuthenticatedLayout({ header, children }) {
             <main>{children}</main>
         </div>
     );
-}
+};
+
+export default AuthenticatedLayout;
