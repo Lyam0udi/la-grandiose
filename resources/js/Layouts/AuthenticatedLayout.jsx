@@ -4,16 +4,16 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next';  // i18n hook for language management
-import { FaMoon, FaSun } from 'react-icons/fa';  // For theme toggle icons
+import { useTranslation } from 'react-i18next'; // i18n hook for language management
+import { FaMoon, FaSun } from 'react-icons/fa'; // For theme toggle icons
 
 export default function AuthenticatedLayout({ header, children }) {
-    const { t, i18n } = useTranslation();  // i18n translation hook
+    const { t, i18n } = useTranslation(); // i18n translation hook
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('isDarkMode') === 'true');  // Read dark mode from local storage
-    const [language, setLanguage] = useState(i18n.language || 'en');  // Language state
+    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('isDarkMode') === 'true'); // Read dark mode from local storage
+    const [language, setLanguage] = useState(i18n.language || 'en'); // Language state
 
     // Effect to update the class based on the dark mode state
     useEffect(() => {
@@ -22,29 +22,29 @@ export default function AuthenticatedLayout({ header, children }) {
         } else {
             document.documentElement.classList.remove('dark');
         }
-        localStorage.setItem('isDarkMode', isDarkMode);  // Persist the state in local storage
+        localStorage.setItem('isDarkMode', isDarkMode); // Persist the state in local storage
     }, [isDarkMode]);
 
     // Toggle between dark and light theme
     const toggleTheme = () => {
-        setIsDarkMode(!isDarkMode);  // Toggle dark mode state
+        setIsDarkMode(!isDarkMode); // Toggle dark mode state
     };
 
     // Change language
     const changeLanguage = (lang) => {
         setLanguage(lang);
-        i18n.changeLanguage(lang);  // Change language using i18n
+        i18n.changeLanguage(lang); // Change language using i18n
     };
 
     return (
-        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}`}>
-            <nav className={`border-b ${isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-100 bg-white'}`}>
+        <div className={`min-h-screen ${isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'}`}>
+            <nav className={`border-b ${isDarkMode ? 'border-darkSecondary bg-darkBackground' : 'border-lightSecondary bg-lightBackground'}`}>
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className={`block h-9 w-auto fill-current ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`} />
+                                    <ApplicationLogo className={`block h-9 w-auto fill-current ${isDarkMode ? 'text-darkText' : 'text-lightText'}`} />
                                 </Link>
                             </div>
 
@@ -52,6 +52,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
+                                    isDarkMode={isDarkMode} // Pass isDarkMode to NavLink
                                 >
                                     {t('dashboard')}
                                 </NavLink>
@@ -62,30 +63,31 @@ export default function AuthenticatedLayout({ header, children }) {
                             {/* Theme Toggle Button */}
                             <button
                                 onClick={toggleTheme}
-                                className="text-xl px-2 py-1 rounded-md transition-all hover:text-gray-500 dark:hover:text-gray-300"
+                                className="text-xl px-2 py-1 rounded-md transition-all hover:bg-darkSecondary dark:hover:bg-lightSecondary"
                             >
                                 {isDarkMode ? <FaSun /> : <FaMoon />}
                             </button>
 
                             {/* Language Dropdown */}
                             <div className="relative ms-3">
-                                <Dropdown>
+                                <Dropdown isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown */}
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className={`inline-flex items-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 ${isDarkMode ? 'bg-gray-800 text-gray-400 hover:text-gray-300' : 'bg-white text-gray-500 hover:text-gray-700'}`}
+                                                className={`inline-flex items-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 ${isDarkMode ? 'bg-darkSecondary text-darkText hover:text-lightText' : 'bg-lightSecondary text-lightText hover:text-darkText'}`}
                                             >
                                                 {language.toUpperCase()} ▼
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content>
+                                    <Dropdown.Content isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown Content */}
                                         {['en', 'fr', 'ar'].map((lang) => (
                                             <Dropdown.Link
                                                 key={lang}
                                                 onClick={() => changeLanguage(lang)}
+                                                isDarkMode={isDarkMode} // Pass isDarkMode to Dropdown Link
                                             >
                                                 {lang.toUpperCase()}
                                             </Dropdown.Link>
@@ -96,12 +98,12 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             {/* User Dropdown */}
                             <div className="relative ms-3">
-                                <Dropdown>
+                                <Dropdown isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown */}
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className={`inline-flex items-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 ${isDarkMode ? 'bg-gray-800 text-gray-400 hover:text-gray-300' : 'bg-white text-gray-500 hover:text-gray-700'}`}
+                                                className={`inline-flex items-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 ${isDarkMode ? 'bg-darkSecondary text-darkText hover:text-lightText' : 'bg-lightSecondary text-lightText hover:text-darkText'}`}
                                             >
                                                 {user.name}
                                                 <svg
@@ -120,11 +122,11 @@ export default function AuthenticatedLayout({ header, children }) {
                                         </span>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>
+                                    <Dropdown.Content isDarkMode={isDarkMode}> {/* Pass isDarkMode to Dropdown Content */}
+                                        <Dropdown.Link href={route('profile.edit')} isDarkMode={isDarkMode}>
                                             {t('profile')}
                                         </Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                                        <Dropdown.Link href={route('logout')} method="post" as="button" isDarkMode={isDarkMode}>
                                             {t('log_out')}
                                         </Dropdown.Link>
                                     </Dropdown.Content>
@@ -138,7 +140,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 onClick={() =>
                                     setShowingNavigationDropdown((previousState) => !previousState)
                                 }
-                                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"
+                                className="inline-flex items-center justify-center rounded-md p-2 text-darkText hover:bg-darkSecondary focus:bg-darkSecondary dark:text-lightText dark:hover:bg-lightSecondary dark:focus:bg-lightSecondary"
                             >
                                 <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -165,13 +167,13 @@ export default function AuthenticatedLayout({ header, children }) {
                 {showingNavigationDropdown && (
                     <div className="sm:hidden">
                         <div className="space-y-1 pb-3 pt-2">
-                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')} isDarkMode={isDarkMode}>
                                 {t('dashboard')}
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('profile.edit')}>
+                            <ResponsiveNavLink href={route('profile.edit')} isDarkMode={isDarkMode}>
                                 {t('profile')}
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('logout')} method="post" as="button">
+                            <ResponsiveNavLink href={route('logout')} method="post" as="button" isDarkMode={isDarkMode}>
                                 {t('log_out')}
                             </ResponsiveNavLink>
                         </div>
@@ -180,7 +182,7 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className={`${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-800'} shadow`}>
+                <header className={`${isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'} shadow`}>
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>
