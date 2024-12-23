@@ -154,6 +154,18 @@
     "primaire_content_2": "Photocopie du carnet de santé de l’enfant.",
     "primaire_content_3": "Extrait d’acte de naissance de l’enfant.",
     "primaire_content_4": "Cinq (5) photos d’identité de l’enfant.",
-    "primaire_content_5": "Relevé de notes de la dernière année scolaire."
+    "primaire_content_5": "Relevé de notes de la dernière année scolaire.",
+
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "log_out": "Déconnexion",
+    "scholar_year": "Année scolaire",
+    "professors": "Professeurs",
+    "blogs": "Blogs",
+    "categories": "Catégories",
+    "inscriptions": "Inscriptions",
+    "graphs": "Graphiques",
+    "collapse_sidebar": "Réduire la barre latérale",
+    "expand_sidebar": "Développer la barre latérale"
 
 }

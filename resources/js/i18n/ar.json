@@ -154,6 +154,18 @@
     "primaire_content_2": "صورة من سجل صحة الطفل.",
     "primaire_content_3": "نسخة من شهادة ميلاد الطفل.",
     "primaire_content_4": "خمس (5) صور جواز سفر للطفل.",
-    "primaire_content_5": "كشف درجات السنة الدراسية الأخيرة."
+    "primaire_content_5": "كشف درجات السنة الدراسية الأخيرة.",
+
+    "dashboard": "لوحة التحكم",
+    "profile": "الملف الشخصي",
+    "log_out": "تسجيل الخروج",
+    "scholar_year": "السنة الدراسية",
+    "professors": "الأساتذة",
+    "blogs": "المدونات",
+    "categories": "التصنيفات",
+    "inscriptions": "التسجيلات",
+    "graphs": "الرسوم البيانية",
+    "collapse_sidebar": "طي الشريط الجانبي",
+    "expand_sidebar": "توسيع الشريط الجانبي"
 
 }
