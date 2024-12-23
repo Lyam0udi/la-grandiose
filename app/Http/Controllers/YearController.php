@@ -10,31 +10,36 @@ use Illuminate\Http\Request;
 
 class YearController extends Controller
 {
-    // Show the current year
-    public function index()
+    // Show the current year page
+    public function show()
     {
-        $year = Year::first();  // Get the current year (only one record in the table)
-        return Inertia::render('Year', [
-            'year' => $year
+        $currentYear = Year::first(); // Get the current year from the database
+        return Inertia::render('YearPage', [
+            'currentYear' => $currentYear
         ]);
     }
 
-    // Update the current year
+    // Update the year in the database
     public function update(Request $request)
     {
-        $request->validate([
-            'year' => 'required|integer|digits:4',  // Ensure it's a valid 4-digit year
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'startYear' => 'required|integer|min:1900|max:2100',  // Valid year range
+            'endYear' => 'required|integer|min:1900|max:2100',
         ]);
 
-        $year = Year::first();  // Assuming there is only one year record
+        // Update or create the year entry
+        $year = Year::first(); // Fetch the first (or only) year entry
 
         if (!$year) {
-            $year = Year::create(['year' => $request->year]);  // If no year is set, create a new one
-        } else {
-            $year->update(['year' => $request->year]);  // Update the existing year
+            // If no year entry exists, create one
+            $year = new Year();
         }
 
-        return redirect()->route('year.index')->with('success', 'Year updated successfully!');
+        $year->startYear = $validated['startYear'];  // Set the start year
+        $year->endYear = $validated['endYear'];      // Set the end year
+        $year->save();  // Save the year data to the database
+
+        return redirect()->route('year.show');  // Redirect to the show page after updating
     }
 }
-

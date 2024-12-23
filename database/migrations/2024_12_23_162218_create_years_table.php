@@ -12,7 +12,8 @@ class CreateYearsTable extends Migration
     {
         Schema::create('years', function (Blueprint $table) {
             $table->id();
-            $table->integer('year'); // Store the year as an integer
+            $table->integer('startYear'); // Store the start year as an integer
+            $table->integer('endYear');   // Store the end year as an integer
             $table->timestamps();
         });
     }

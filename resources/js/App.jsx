@@ -11,12 +11,11 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.jsx`,
-            import.meta.glob('./Pages/**/*.jsx'),
+            `./Pages/${name}.jsx`,  // Path to your page components (react components)
+            import.meta.glob('./Pages/**/*.jsx'),  // Globbing all .jsx files in Pages
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
-
         root.render(<App {...props} />);
     },
     progress: {

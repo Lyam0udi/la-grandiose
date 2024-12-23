@@ -46,7 +46,7 @@ export default function Sidebar() {
                     expanded={isExpanded}
                 />
                 <SidebarLink
-                    to="/scholar-year"
+                    to="/year"
                     icon={<FaCogs />}
                     label={t('scholar_year')}
                     expanded={isExpanded}

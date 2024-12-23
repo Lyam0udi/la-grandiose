@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YearController;
 use Inertia\Inertia;
+use App\Models\Year;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -16,7 +17,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    // Fetch the current year (assuming you have a Year model that holds the year)
+    $year = Year::first(); // Or fetch it the way it suits your project
+
+    return Inertia::render('Dashboard', [
+        'year' => $year ? $year->year : 'No Year Set',
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -25,9 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Routes for Year management
 Route::middleware(['auth'])->group(function () {
-    Route::get('/year', [YearController::class, 'index'])->name('year.index');  // To view the current year
-    Route::post('/year', [YearController::class, 'update'])->name('year.update');  // To update the year
+    Route::get('/year', [YearController::class, 'show'])->name('year.show');  // Use 'show' method instead of 'index'
+    Route::post('/year', [YearController::class, 'update'])->name('year.update');  // For updating the year
 });
 
 require __DIR__.'/auth.php';
