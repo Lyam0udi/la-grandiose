@@ -18,7 +18,6 @@ const AuthenticatedLayout = ({ header, children }) => {
 
     const dropdownRefs = {
         i18n: useRef(),
-        mobileMenu: useRef(),
     };
 
     // Handle theme toggle
@@ -53,7 +52,7 @@ const AuthenticatedLayout = ({ header, children }) => {
             <Sidebar isDarkMode={isDarkMode} />
 
             {/* Main Content */}
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col">
                 <nav className={`border-b ${isDarkMode ? 'border-darkSecondary bg-darkBackground' : 'border-lightSecondary bg-lightBackground'}`}>
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex h-16 justify-between">
@@ -178,6 +177,23 @@ const AuthenticatedLayout = ({ header, children }) => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Mobile Menu */}
+                    {showingNavigationDropdown && (
+                        <div className="sm:hidden">
+                            <div className="space-y-1 pb-3 pt-2">
+                                <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')} isDarkMode={isDarkMode}>
+                                    {t('dashboard')}
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('profile.edit')} isDarkMode={isDarkMode}>
+                                    {t('profile')}
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('logout')} method="post" as="button" isDarkMode={isDarkMode}>
+                                    {t('log_out')}
+                                </ResponsiveNavLink>
+                            </div>
+                        </div>
+                    )}
                 </nav>
 
                 {header && (
@@ -188,7 +204,7 @@ const AuthenticatedLayout = ({ header, children }) => {
                     </header>
                 )}
 
-                <main>{children}</main>
+                <main className="flex-grow">{children}</main>
             </div>
         </div>
     );
