@@ -11,14 +11,14 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.jsx`,  // Path to your page components (react components)
-            import.meta.glob('./Pages/**/*.jsx'),  // Globbing all .jsx files in Pages
+            `./Pages/${name}.jsx`,  // Map React pages correctly
+            import.meta.glob('./Pages/**/*.jsx'), // Glob all .jsx pages
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
         root.render(<App {...props} />);
     },
     progress: {
-        color: '#4B5563',
+        color: '#4B5563', // Progress bar color
     },
 });

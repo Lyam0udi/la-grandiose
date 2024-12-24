@@ -26,33 +26,37 @@ class ProfessorController extends Controller
     // Store a newly created professor
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'photo' => 'nullable|image|max:2048',
-            'translations.*.locale' => 'required|string',
+        $request->validate([
+            'photo' => 'required|image|max:2048',
             'translations.*.name' => 'required|string|max:255',
             'translations.*.study_material' => 'required|string|max:255',
-            'translations.*.description' => 'required|string',
+            'translations.*.description' => 'nullable|string',
         ]);
 
+        // Save the professor
         $professor = new Professor();
-
         if ($request->hasFile('photo')) {
-            $professor->photo = $request->file('photo')->store('professors', 'public');
+            $professor->photo = $request->file('photo')->store('professors_photos', 'public');
         }
-
         $professor->save();
 
-        foreach ($validated['translations'] as $translation) {
-            $professor->translations()->create($translation);
+        foreach ($request->input('translations') as $locale => $translation) {
+            $professor->translations()->create([
+                'locale' => $locale,
+                'name' => $translation['name'],
+                'study_material' => $translation['study_material'],
+                'description' => $translation['description'],
+            ]);
         }
 
-        return redirect()->route('professor.index');
+        return redirect()->route('professor.index')->with('success', 'Professor added successfully!');
     }
+
 
     // Show the form for editing a professor
     public function edit(Professor $professor)
     {
-        $locales = ['en', 'fr', 'es']; // Supported languages
+        $locales = ['en', 'fr', 'ar']; // Supported languages
         $translations = $professor->translations->keyBy('locale'); // Organize by locale
         return Inertia::render('ProfessorForm', ['professor' => $professor, 'locales' => $locales, 'translations' => $translations]);
     }
@@ -60,29 +64,38 @@ class ProfessorController extends Controller
     // Update an existing professor
     public function update(Request $request, Professor $professor)
     {
-        $validated = $request->validate([
+        $request->validate([
             'photo' => 'nullable|image|max:2048',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string|max:255',
             'translations.*.study_material' => 'required|string|max:255',
-            'translations.*.description' => 'required|string',
+            'translations.*.description' => 'nullable|string',
         ]);
 
+        // Update the professor
         if ($request->hasFile('photo')) {
-            $professor->photo = $request->file('photo')->store('professors', 'public');
+            // Optionally delete the old photo
+            if ($professor->photo) {
+                \Storage::disk('public')->delete($professor->photo);
+            }
+            $professor->photo = $request->file('photo')->store('professors_photos', 'public');
         }
-
         $professor->save();
 
-        foreach ($validated['translations'] as $translation) {
+        // Update translations
+        foreach ($request->input('translations') as $locale => $translation) {
             $professor->translations()->updateOrCreate(
-                ['locale' => $translation['locale']],
-                $translation
+                ['locale' => $locale],
+                [
+                    'name' => $translation['name'],
+                    'study_material' => $translation['study_material'],
+                    'description' => $translation['description'],
+                ]
             );
         }
 
-        return redirect()->route('professor.index');
+        return redirect()->route('professor.index')->with('success', 'Professor updated successfully!');
     }
+
 
     // Delete a professor
     public function destroy(Professor $professor)

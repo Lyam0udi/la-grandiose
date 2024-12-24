@@ -4,10 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YearController;
+use App\Http\Controllers\ProfessorController;
 use Inertia\Inertia;
 use App\Models\Year;
-use App\Http\Controllers\ProfessorController;
-
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -19,9 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    // Fetch the current year (assuming you have a Year model that holds the year)
-    $year = Year::first(); // Or fetch it the way it suits your project
-
+    $year = Year::first(); // Fetch the current year, if available
     return Inertia::render('Dashboard', [
         'year' => $year ? $year->year : 'No Year Set',
     ]);
@@ -35,18 +32,18 @@ Route::middleware('auth')->group(function () {
 
 // Routes for Year management
 Route::middleware(['auth'])->group(function () {
-    Route::get('/year', [YearController::class, 'show'])->name('year.show');  // Use 'show' method instead of 'index'
-    Route::post('/year', [YearController::class, 'update'])->name('year.update');  // For updating the year
+    Route::get('/year', [YearController::class, 'show'])->name('year.show');  // Show the year management page
+    Route::post('/year', [YearController::class, 'update'])->name('year.update');  // Update the year
 });
 
+// Routes for Professor management
 Route::middleware(['auth'])->group(function () {
-    Route::get('/professors', [ProfessorController::class, 'index'])->name('professor.index');
-    Route::get('/professors/create', [ProfessorController::class, 'create'])->name('professor.create');
-    Route::post('/professors', [ProfessorController::class, 'store'])->name('professor.store');
-    Route::get('/professors/{professor}/edit', [ProfessorController::class, 'edit'])->name('professor.edit');
-    Route::put('/professors/{professor}', [ProfessorController::class, 'update'])->name('professor.update');
-    Route::delete('/professors/{professor}', [ProfessorController::class, 'destroy'])->name('professor.destroy');
+    Route::get('/professors', [ProfessorController::class, 'index'])->name('professor.index'); // List all professors
+    Route::get('/professors/create', [ProfessorController::class, 'create'])->name('professor.create'); // Form to create
+    Route::post('/professors', [ProfessorController::class, 'store'])->name('professor.store'); // Store new professor
+    Route::get('/professors/{professor}/edit', [ProfessorController::class, 'edit'])->name('professor.edit'); // Edit form
+    Route::put('/professors/{professor}', [ProfessorController::class, 'update'])->name('professor.update'); // Update professor
+    Route::delete('/professors/{professor}', [ProfessorController::class, 'destroy'])->name('professor.destroy'); // Delete professor
 });
-
 
 require __DIR__.'/auth.php';
