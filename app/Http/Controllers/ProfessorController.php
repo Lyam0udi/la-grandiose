@@ -19,7 +19,7 @@ class ProfessorController extends Controller
     // Show the form for creating a new professor
     public function create()
     {
-        $locales = ['en', 'fr', 'es']; // Supported languages
+        $locales = ['en', 'fr', 'ar']; // Supported languages
         return Inertia::render('ProfessorForm', ['locales' => $locales]);
     }
 

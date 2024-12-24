@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YearController;
 use Inertia\Inertia;
 use App\Models\Year;
+use App\Http\Controllers\ProfessorController;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -36,5 +38,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/year', [YearController::class, 'show'])->name('year.show');  // Use 'show' method instead of 'index'
     Route::post('/year', [YearController::class, 'update'])->name('year.update');  // For updating the year
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/professors', [ProfessorController::class, 'index'])->name('professor.index');
+    Route::get('/professors/create', [ProfessorController::class, 'create'])->name('professor.create');
+    Route::post('/professors', [ProfessorController::class, 'store'])->name('professor.store');
+    Route::get('/professors/{professor}/edit', [ProfessorController::class, 'edit'])->name('professor.edit');
+    Route::put('/professors/{professor}', [ProfessorController::class, 'update'])->name('professor.update');
+    Route::delete('/professors/{professor}', [ProfessorController::class, 'destroy'])->name('professor.destroy');
+});
+
 
 require __DIR__.'/auth.php';
