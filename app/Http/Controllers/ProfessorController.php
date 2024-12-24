@@ -40,6 +40,7 @@ class ProfessorController extends Controller
         }
         $professor->save();
 
+        // Save translations
         foreach ($request->input('translations') as $locale => $translation) {
             $professor->translations()->create([
                 'locale' => $locale,
@@ -51,7 +52,6 @@ class ProfessorController extends Controller
 
         return redirect()->route('professor.index')->with('success', 'Professor added successfully!');
     }
-
 
     // Show the form for editing a professor
     public function edit(Professor $professor)
@@ -96,12 +96,14 @@ class ProfessorController extends Controller
         return redirect()->route('professor.index')->with('success', 'Professor updated successfully!');
     }
 
-
     // Delete a professor
     public function destroy(Professor $professor)
     {
+        // Optionally delete the photo before removing the professor
+        if ($professor->photo) {
+            \Storage::disk('public')->delete($professor->photo);
+        }
         $professor->delete();
         return redirect()->route('professor.index');
     }
 }
-

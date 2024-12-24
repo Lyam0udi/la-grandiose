@@ -30,7 +30,10 @@ export default function ProfessorManagement({ professors }) {
                                         <thead>
                                             <tr>
                                                 <th className="border px-4 py-2">ID</th>
+                                                <th className="border px-4 py-2">Photo</th>
                                                 <th className="border px-4 py-2">Name ({locale})</th>
+                                                <th className="border px-4 py-2">Study Material ({locale})</th>
+                                                <th className="border px-4 py-2">Description ({locale})</th>
                                                 <th className="border px-4 py-2">Actions</th>
                                             </tr>
                                         </thead>
@@ -44,9 +47,26 @@ export default function ProfessorManagement({ professors }) {
                                                     <tr key={professor.id}>
                                                         <td className="border px-4 py-2">{professor.id}</td>
                                                         <td className="border px-4 py-2">
+                                                            {professor.photo ? (
+                                                                <img
+                                                                    src={`/storage/${professor.photo}`}
+                                                                    alt={translation?.name || 'Professor Photo'}
+                                                                    className="h-16 w-16 object-cover rounded-md"
+                                                                />
+                                                            ) : (
+                                                                <span>No photo</span>
+                                                            )}
+                                                        </td>
+                                                        <td className="border px-4 py-2">
                                                             {translation?.name || 'No translation'}
                                                         </td>
                                                         <td className="border px-4 py-2">
+                                                            {translation?.study_material || 'No translation'}
+                                                        </td>
+                                                        <td className="border px-4 py-2">
+                                                            {translation?.description || 'No translation'}
+                                                        </td>
+                                                        <td className="border px-4 py-2 flex space-x-2">
                                                             <Link
                                                                 href={route('professor.edit', professor.id)}
                                                                 className="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
@@ -57,7 +77,7 @@ export default function ProfessorManagement({ professors }) {
                                                                 as="button"
                                                                 href={route('professor.destroy', professor.id)}
                                                                 method="delete"
-                                                                className="ml-2 px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                                                className="px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700"
                                                             >
                                                                 Delete
                                                             </Link>
