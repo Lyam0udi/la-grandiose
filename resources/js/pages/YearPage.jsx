@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../i18n';
 
 export default function YearPage({ currentYear }) {
     // Initialize form with default values if currentYear is not available
@@ -31,6 +33,7 @@ export default function YearPage({ currentYear }) {
     }, [currentYear]);
 
     return (
+        <I18nextProvider i18n={i18n}>
         <AuthenticatedLayout>
             <Head title="Year Management" />
             <div className="py-12">
@@ -89,5 +92,6 @@ export default function YearPage({ currentYear }) {
                 </div>
             </div>
         </AuthenticatedLayout>
+        </I18nextProvider>
     );
 }
