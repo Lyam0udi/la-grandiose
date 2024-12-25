@@ -10,10 +10,10 @@ class CreateTestimonialTranslationsTable extends Migration
     {
         Schema::create('testimonial_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('testimonial_id');
+            $table->unsignedBigInteger('testimonial_id');  // Foreign key referencing testimonials table
             $table->string('locale'); // Language code (e.g., 'en', 'fr')
-            $table->string('name');
-            $table->text('description');
+            $table->string('name');  // Name of the testimonial in the given language
+            $table->text('description');  // Description of the testimonial in the given language
             $table->timestamps();
 
             // Foreign key constraint

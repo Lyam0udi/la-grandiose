@@ -22,17 +22,27 @@ class TestimonialController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the data being sent from the front-end
         $request->validate([
             'emoticon' => 'nullable|string|max:255',
-            'is_parent' => 'required|boolean',
+            'is_student' => 'required|in:Student,Parent', // Changed to match the front-end
             'translations.*.name' => 'required|string|max:255',
             'translations.*.description' => 'required|string',
         ]);
 
-        $testimonial = Testimonial::create($request->only(['emoticon', 'is_parent']));
+        // Create the testimonial entry in the database
+        $testimonial = Testimonial::create([
+            'emoticon' => $request->emoticon,
+            'is_student' => $request->is_student === 'Student', // Storing as boolean
+        ]);
 
+        // Create translations for each locale
         foreach ($request->translations as $locale => $data) {
-            $testimonial->translations()->create(array_merge($data, ['locale' => $locale]));
+            $testimonial->translations()->create([
+                'locale' => $locale,
+                'name' => $data['name'],
+                'description' => $data['description'],
+            ]);
         }
 
         return redirect()->route('testimonials.index')->with('success', 'Testimonial created successfully.');
@@ -41,25 +51,34 @@ class TestimonialController extends Controller
     public function edit(Testimonial $testimonial)
     {
         $locales = config('app.supported_locales');
-        $testimonial->load('translations');
+        $testimonial->load('translations'); // Load the translations for the testimonial
         return inertia('TestimonialForm', ['testimonial' => $testimonial, 'locales' => $locales]);
     }
 
     public function update(Request $request, Testimonial $testimonial)
     {
+        // Validate the data being sent from the front-end
         $request->validate([
             'emoticon' => 'nullable|string|max:255',
-            'is_parent' => 'required|boolean',
+            'is_student' => 'required|in:Student,Parent', // Changed to match the front-end
             'translations.*.name' => 'required|string|max:255',
             'translations.*.description' => 'required|string',
         ]);
 
-        $testimonial->update($request->only(['emoticon', 'is_parent']));
+        // Update the testimonial entry in the database
+        $testimonial->update([
+            'emoticon' => $request->emoticon,
+            'is_student' => $request->is_student === 'Student', // Storing as boolean
+        ]);
 
+        // Update or create translations for each locale
         foreach ($request->translations as $locale => $data) {
-            $translation = $testimonial->translations()->updateOrCreate(
-                ['locale' => $locale],
-                $data
+            $testimonial->translations()->updateOrCreate(
+                ['locale' => $locale], // Check if translation exists for the locale
+                [
+                    'name' => $data['name'],
+                    'description' => $data['description'],
+                ]
             );
         }
 
@@ -68,8 +87,8 @@ class TestimonialController extends Controller
 
     public function destroy(Testimonial $testimonial)
     {
+        // Delete the testimonial and its translations
         $testimonial->delete();
         return redirect()->route('testimonials.index')->with('success', 'Testimonial deleted successfully.');
     }
 }
-

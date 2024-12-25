@@ -10,8 +10,8 @@ class CreateTestimonialsTable extends Migration
     {
         Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->string('emoticon')->nullable();
-            $table->boolean('is_parent')->default(false); // True for parent, false for student
+            $table->string('emoticon')->nullable();  // Store emoticons
+            $table->boolean('is_student')->default(true); // True for student, false for parent
             $table->timestamps(); // Adds created_at and updated_at
         });
     }

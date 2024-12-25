@@ -11,8 +11,8 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.jsx`,  // Map React pages correctly
-            import.meta.glob('./Pages/**/*.jsx'), // Glob all .jsx pages
+            `./Pages/${name}.jsx`, // Map React pages correctly
+            import.meta.glob('./Pages/**/*.jsx'), // Glob all .jsx pages, including Testimonial pages
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
