@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\ProfessorController;
+use App\Http\Controllers\CycleController;
+
 use Inertia\Inertia;
 use App\Models\Year;
 
@@ -46,7 +48,14 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/professors/{professor}', [ProfessorController::class, 'destroy'])->name('professor.destroy'); // Delete professor
 });
 
-Route::resource('cycles', CycleController::class);
-
+// Routes for Cycle management (similar to professor routes)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cycles', [CycleController::class, 'index'])->name('cycle.index'); // List all cycles
+    Route::get('/cycles/create', [CycleController::class, 'create'])->name('cycle.create'); // Form to create a cycle
+    Route::post('/cycles', [CycleController::class, 'store'])->name('cycle.store'); // Store new cycle
+    Route::get('/cycles/{cycle}/edit', [CycleController::class, 'edit'])->name('cycle.edit'); // Edit cycle form
+    Route::put('/cycles/{cycle}', [CycleController::class, 'update'])->name('cycle.update'); // Update cycle
+    Route::delete('/cycles/{cycle}', [CycleController::class, 'destroy'])->name('cycle.destroy'); // Delete cycle
+});
 
 require __DIR__.'/auth.php';

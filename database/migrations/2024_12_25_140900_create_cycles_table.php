@@ -4,32 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateCyclesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::create('cycles', function (Blueprint $table) {
             $table->id();
-            $table->json('name'); // Store translations as JSON
-            $table->json('description'); // Store translations as JSON
-            $table->string('photo')->nullable();
-            $table->json('more_details')->nullable(); // Array of translated points
-            $table->string('level_range');
-            $table->integer('duration');
-            $table->string('age_range');
-            $table->timestamps(); // created_at and updated_at
+            $table->string('photo')->nullable(); // File path for the cycle's photo
+            $table->integer('duration'); // Duration of the cycle (in years, for example)
+            $table->integer('age_range'); // Minimum age for the cycle
+            $table->timestamps();
         });
     }
 
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('cycles');
     }
-};
+}
