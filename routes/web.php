@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\CycleController;
+use App\Http\Controllers\TestimonialController;
 
 use Inertia\Inertia;
 use App\Models\Year;
@@ -57,5 +58,15 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/cycles/{cycle}', [CycleController::class, 'update'])->name('cycle.update'); // Update cycle
     Route::delete('/cycles/{cycle}', [CycleController::class, 'destroy'])->name('cycle.destroy'); // Delete cycle
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
+    Route::get('testimonials/create', [TestimonialController::class, 'create'])->name('testimonials.create');
+    Route::post('testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
+    Route::get('testimonials/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('testimonials.edit');
+    Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('testimonials.update');
+    Route::delete('testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');
+});
+
 
 require __DIR__.'/auth.php';
