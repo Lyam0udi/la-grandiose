@@ -46,4 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/professors/{professor}', [ProfessorController::class, 'destroy'])->name('professor.destroy'); // Delete professor
 });
 
+Route::resource('cycles', CycleController::class);
+
+
 require __DIR__.'/auth.php';
