@@ -68,5 +68,23 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('blogs', [BlogController::class, 'store'])->name('blogs.store');
+    Route::get('blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    Route::put('blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+});
+
 
 require __DIR__.'/auth.php';
