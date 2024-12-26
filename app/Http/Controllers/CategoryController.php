@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return inertia('Categories/Create');
+        return inertia('CategoryForm');
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $category->load('translations');
-        return inertia('Categories/Edit', ['category' => $category]);
+        return inertia('CategoryForm', ['category' => $category]);
     }
 
     public function update(Request $request, Category $category)

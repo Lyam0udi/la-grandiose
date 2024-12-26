@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../i18n';
 
-export default function CategoryForm({ category = null, locales }) {
+export default function CategoryForm({ category = null, locales = [] }) {
     const { data, setData, post, put, processing, errors } = useForm({
         translations: locales.reduce((acc, locale) => {
             acc[locale] = { name: '' };

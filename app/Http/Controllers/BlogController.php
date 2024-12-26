@@ -17,7 +17,7 @@ class BlogController extends Controller
     public function create()
     {
         $categories = Category::with('translations')->get();
-        return inertia('CategoryForm/Create', ['categories' => $categories]);
+        return inertia('BlogForm', ['categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -52,7 +52,7 @@ class BlogController extends Controller
     {
         $categories = Category::with('translations')->get();
         $blog->load('translations');
-        return inertia('Blogs/Edit', ['blog' => $blog, 'categories' => $categories]);
+        return inertia('BlogForm', ['blog' => $blog, 'categories' => $categories]);
     }
 
     public function update(Request $request, Blog $blog)
