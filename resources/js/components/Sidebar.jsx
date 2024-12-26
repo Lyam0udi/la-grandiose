@@ -70,15 +70,15 @@ export default function Sidebar() {
                     expanded={isExpanded}
                 />
                 <SidebarLink
-                    to="/blogs"
-                    icon={<FaBook />}
-                    label={t('blogs')}
-                    expanded={isExpanded}
-                />
-                <SidebarLink
                     to="/categories"
                     icon={<FaBook />}
                     label={t('categories')}
+                    expanded={isExpanded}
+                />
+                <SidebarLink
+                    to="/blogs"
+                    icon={<FaBook />}
+                    label={t('blogs')}
                     expanded={isExpanded}
                 />
                 <SidebarLink

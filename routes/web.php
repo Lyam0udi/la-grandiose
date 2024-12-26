@@ -7,6 +7,9 @@ use App\Http\Controllers\YearController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\CycleController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BlogController;
+
 
 use Inertia\Inertia;
 use App\Models\Year;
