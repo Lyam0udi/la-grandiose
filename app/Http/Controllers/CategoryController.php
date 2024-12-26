@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('translations')->get();
-        return inertia('Categories/Index', ['categories' => $categories]);
+        return inertia('CategoryManagement', ['categories' => $categories]);
     }
 
     public function create()

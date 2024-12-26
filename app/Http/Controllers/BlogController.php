@@ -11,13 +11,13 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::with('category.translations', 'translations')->get();
-        return inertia('Blogs/Index', ['blogs' => $blogs]);
+        return inertia('BlogManagement', ['blogs' => $blogs]);
     }
 
     public function create()
     {
         $categories = Category::with('translations')->get();
-        return inertia('Blogs/Create', ['categories' => $categories]);
+        return inertia('CategoryForm/Create', ['categories' => $categories]);
     }
 
     public function store(Request $request)
