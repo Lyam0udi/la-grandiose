@@ -26,6 +26,7 @@ class CategoryController extends Controller
             'translations.*.name' => 'required|string|max:255',
         ]);
 
+        
         $category = Category::create();
 
         foreach ($request->translations as $translation) {
