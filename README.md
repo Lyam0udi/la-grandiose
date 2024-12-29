@@ -7,13 +7,13 @@ More details comming soon ...
 ## Project Structure : 
 
 ### Pages :   
-#### Landing Page :
-#### Blogging Page :
-#### Inscription Page :
-#### Register Page :
-#### LogIn Page :
-#### Frgotten Password Page :
-#### Dashboard :
-#### DashboardCrud Pages :
-#### Profile Page :
-#### 404 Page :
+#### + Landing Page :
+#### + Blogging Page :
+#### + Inscription Page :
+#### + Register Page :
+#### + LogIn Page :
+#### + Frgotten Password Page :
+#### + Dashboard :
+#### + DashboardCrud Pages :
+#### + Profile Page :
+#### + 404 Page :
