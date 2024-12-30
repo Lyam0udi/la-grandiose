@@ -8,26 +8,15 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('category_translations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->string('locale')->index();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->timestamps();
-
-            $table->unique(['category_id', 'locale']);
+            $table->id(); // Primary key
+            $table->string('slug')->unique(); // URL-friendly identifier
+            $table->timestamps(); // created_at and updated_at
+            $table->softDeletes(); // deleted_at for soft deletion
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('category_translations');
         Schema::dropIfExists('categories');
     }
 };

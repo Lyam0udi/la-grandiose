@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CategoryTranslation extends Model
 {
-    use HasFactory;
+    public $timestamps = true; // Enable created_at and updated_at
 
-    protected $fillable = ['locale', 'name', 'slug'];
-    public $timestamps = true;
+    // Allow mass assignment for these fields (without 'slug')
+    protected $fillable = ['category_id', 'locale', 'name'];
+
+    /**
+     * Relationship: A translation belongs to a category.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
-
