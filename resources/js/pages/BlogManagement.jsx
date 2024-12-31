@@ -47,72 +47,77 @@ export default function BlogManagement({ blogs, flash }) {
                                 </div>
 
                                 <div className="overflow-x-auto w-full">
-                                    {blogs.length === 0 ? (
+                                    {/* Check if blogs is an array before trying to map */}
+                                    {Array.isArray(blogs) && blogs.length === 0 ? (
                                         <p className="text-lg text-center">No blogs available.</p>
                                     ) : (
-                                        <table className="min-w-full table-auto border-separate border-spacing-0">
-                                            <thead className="bg-gray-700 text-white">
-                                                <tr>
-                                                    <th className="px-4 py-3 text-left font-semibold">ID</th>
-                                                    <th className="px-4 py-3 text-left font-semibold">Title ({language})</th>
-                                                    <th className="px-4 py-3 text-left font-semibold">Category ({language})</th>
-                                                    <th className="px-4 py-3 text-left font-semibold">Slug</th>
-                                                    <th className="px-4 py-3 text-left font-semibold">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="bg-white dark:bg-gray-800">
-                                                {blogs.map((blog) => {
-                                                    const blogTranslation = blog.translations.find(
-                                                        (t) => t.locale === language
-                                                    );
-                                                    const categoryTranslation = blog.category.translations.find(
-                                                        (t) => t.locale === language
-                                                    );
+                                        Array.isArray(blogs) && blogs.length > 0 ? (
+                                            <table className="min-w-full table-auto border-separate border-spacing-0">
+                                                <thead className="bg-gray-700 text-white">
+                                                    <tr>
+                                                        <th className="px-4 py-3 text-left font-semibold">ID</th>
+                                                        <th className="px-4 py-3 text-left font-semibold">Title ({language})</th>
+                                                        <th className="px-4 py-3 text-left font-semibold">Category ({language})</th>
+                                                        <th className="px-4 py-3 text-left font-semibold">Slug</th>
+                                                        <th className="px-4 py-3 text-left font-semibold">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="bg-white dark:bg-gray-800">
+                                                    {blogs.map((blog) => {
+                                                        const blogTranslation = blog.translations.find(
+                                                            (t) => t.locale === language
+                                                        );
+                                                        const categoryTranslation = blog.category.translations.find(
+                                                            (t) => t.locale === language
+                                                        );
 
-                                                    return (
-                                                        <tr
-                                                            key={blog.id}
-                                                            className="border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                                        >
-                                                            <td className="px-4 py-3">{blog.id}</td>
-                                                            <td className="px-4 py-3">
-                                                                {blogTranslation ? (
-                                                                    blogTranslation.title
-                                                                ) : (
-                                                                    <span className="text-red-500">
-                                                                        Translation missing ({language})
-                                                                    </span>
-                                                                )}
-                                                            </td>
-                                                            <td className="px-4 py-3">
-                                                                {categoryTranslation ? (
-                                                                    categoryTranslation.name
-                                                                ) : (
-                                                                    <span className="text-red-500">
-                                                                        Translation missing ({language})
-                                                                    </span>
-                                                                )}
-                                                            </td>
-                                                            <td className="px-4 py-3">{blog.slug || 'N/A'}</td>
-                                                            <td className="px-4 py-3 flex space-x-2 justify-center">
-                                                                <Link
-                                                                    href={route('blogs.edit', blog.id)}
-                                                                    className="px-4 py-2 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600"
-                                                                >
-                                                                    Edit
-                                                                </Link>
-                                                                <button
-                                                                    onClick={() => handleDelete(blog.id)}
-                                                                    className="px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700"
-                                                                >
-                                                                    Delete
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    );
-                                                })}
-                                            </tbody>
-                                        </table>
+                                                        return (
+                                                            <tr
+                                                                key={blog.id}
+                                                                className="border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                            >
+                                                                <td className="px-4 py-3">{blog.id}</td>
+                                                                <td className="px-4 py-3">
+                                                                    {blogTranslation ? (
+                                                                        blogTranslation.title
+                                                                    ) : (
+                                                                        <span className="text-red-500">
+                                                                            Translation missing ({language})
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="px-4 py-3">
+                                                                    {categoryTranslation ? (
+                                                                        categoryTranslation.name
+                                                                    ) : (
+                                                                        <span className="text-red-500">
+                                                                            Translation missing ({language})
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="px-4 py-3">{blog.slug || 'N/A'}</td>
+                                                                <td className="px-4 py-3 flex space-x-2 justify-center">
+                                                                    <Link
+                                                                        href={route('blogs.edit', blog.id)}
+                                                                        className="px-4 py-2 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600"
+                                                                    >
+                                                                        Edit
+                                                                    </Link>
+                                                                    <button
+                                                                        onClick={() => handleDelete(blog.id)}
+                                                                        className="px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700"
+                                                                    >
+                                                                        Delete
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        ) : (
+                                            <p className="text-lg text-center">Blogs data is not available or invalid.</p>
+                                        )
                                     )}
                                 </div>
                             </div>

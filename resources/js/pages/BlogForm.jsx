@@ -1,40 +1,52 @@
-import { useForm } from '@inertiajs/react'; 
+import { useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../i18n';
+import { debounce } from 'lodash'; // Import debounce for optimization
 
-export default function BlogForm({ blog = null, categories, locales }) {
-    const { data, setData, post, put, processing, errors } = useForm({
+export default function BlogForm({ blog = null, categories = [], locales = ['en', 'fr', 'ar'] }) {
+    const safeLocales = Array.isArray(locales) ? locales : ['en', 'fr', 'ar'];
+
+    const { data, setData, post, put, processing, errors, clearErrors } = useForm({
+        slug: blog ? blog.slug : '', // Pre-fill slug if blog exists
         title: blog ? blog.title : '',
-        content: blog ? blog.content : '',
         category_id: blog ? blog.category_id : '',
+        content: blog ? blog.content : '',
         image: null,
-        translations: locales.reduce((acc, locale) => {
+        translations: safeLocales.reduce((acc, locale) => {
             acc[locale] = {
-                title: '',
-                content: '',
+                title: blog ? (blog.translations.find(t => t.locale === locale)?.title || '') : '',
+                content: blog ? (blog.translations.find(t => t.locale === locale)?.content || '') : '',
             };
             return acc;
         }, {}),
     });
 
+    // Track if slug is taken and suggested slug
+    const [slugTaken, setSlugTaken] = useState(false);
+    const [suggestedSlug, setSuggestedSlug] = useState(data.slug || '');
+
+    // Pre-fill data for editing
     useEffect(() => {
-        if (blog) {
+        if (blog && blog.id) {
             setData({
-                title: blog.title || '',
-                content: blog.content || '',
-                category_id: blog.category_id || '',
-                translations: locales.reduce((acc, locale) => {
+                slug: blog.slug,
+                title: blog.title,
+                category_id: blog.category_id,
+                content: blog.content,
+                translations: safeLocales.reduce((acc, locale) => {
                     const translation = blog.translations.find((t) => t.locale === locale);
                     acc[locale] = translation || { title: '', content: '' };
                     return acc;
                 }, {}),
             });
+            setSuggestedSlug(blog.slug); // Initialize the suggested slug
         }
-    }, [blog, locales]);
+    }, [blog, safeLocales]);
 
+    // Handle input changes for translations (title, content)
     const handleChange = (locale, field, value) => {
         setData((prevData) => ({
             ...prevData,
@@ -46,18 +58,80 @@ export default function BlogForm({ blog = null, categories, locales }) {
                 },
             },
         }));
+
+        // If it's a new blog and the English title is changed, auto-generate slug
+        if (!blog && locale === 'en') {
+            const name = value.trim();
+            if (name) {
+                const generatedSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                setSuggestedSlug(generatedSlug); // Update slug while typing
+                setData('slug', generatedSlug);  // Set the slug value to generated slug
+                clearErrors('slug'); // Clear errors if slug is being updated
+
+                // Check if the generated slug is unique while typing
+                checkSlugUniqueness(generatedSlug);
+            }
+        } else if (blog && locale === 'en') {
+            // If blog is being edited, generate slug based on the title change
+            const name = value.trim();
+            if (name) {
+                const generatedSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                setSuggestedSlug(generatedSlug);
+                setData('slug', generatedSlug);
+                checkSlugUniqueness(generatedSlug); // Check uniqueness after title change
+            }
+        }
     };
 
+    // Check if slug is unique in real-time (debounced)
+    const checkSlugUniqueness = debounce((slug) => {
+        if (!blog || data.slug !== blog.slug) {
+            axios
+                .get(route('blogs.checkSlug', { slug })) // Make sure to create this route
+                .then(response => {
+                    if (response.data.exists) {
+                        setSlugTaken(true); // Slug is taken, append "-tmp"
+                        setSuggestedSlug(`${slug}-tmp`); // Append temporary suffix
+                        setData('slug', `${slug}-tmp`); // Update slug field
+                    } else {
+                        setSlugTaken(false); // Slug is available
+                    }
+                })
+                .catch((error) => {
+                    console.error('Slug uniqueness check failed:', error);
+                });
+        }
+    }, 500); // 500ms debounce to avoid making too many requests
+
+    // Form submission handling
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Check if all translation titles are provided
+        let valid = true;
+        safeLocales.forEach((locale) => {
+            if (!data.translations[locale]?.title) {
+                valid = false;
+                errors[`translations.${locale}.title`] = 'This field is required';
+            }
+        });
+
+        if (!valid) {
+            setData({ ...data });
+            return;
+        }
+
+        // Submit the form
         if (blog) {
             put(route('blogs.update', blog.id), {
+                data,
                 onSuccess: () => {
                     alert('Blog updated successfully!');
                 },
             });
         } else {
             post(route('blogs.store'), {
+                data,
                 onSuccess: () => {
                     alert('Blog added successfully!');
                 },
@@ -90,9 +164,7 @@ export default function BlogForm({ blog = null, categories, locales }) {
                                             <option value="">Select a category</option>
                                             {categories.map((category) => (
                                                 <option key={category.id} value={category.id}>
-                                                    {category.translations.find(
-                                                        (t) => t.locale === 'en'
-                                                    )?.name || 'Unnamed Category'}
+                                                    {category.translations.find(t => t.locale === 'en')?.name || 'Unnamed Category'}
                                                 </option>
                                             ))}
                                         </select>
@@ -105,8 +177,8 @@ export default function BlogForm({ blog = null, categories, locales }) {
                                     <div className="mt-4">
                                         <label htmlFor="title">Title</label>
                                         <input
-                                            type="text"
                                             id="title"
+                                            type="text"
                                             value={data.title || ''}
                                             onChange={(e) => setData('title', e.target.value)}
                                             className="block w-full p-2 border rounded-md mt-1"
@@ -129,7 +201,7 @@ export default function BlogForm({ blog = null, categories, locales }) {
                                     </div>
 
                                     {/* Translations */}
-                                    {locales.map((locale) => (
+                                    {safeLocales.map((locale) => (
                                         <div key={locale} className="mt-6">
                                             <h3 className="text-lg font-semibold">{locale.toUpperCase()}</h3>
                                             <div className="mt-2">
@@ -170,13 +242,31 @@ export default function BlogForm({ blog = null, categories, locales }) {
                                     <div className="mt-4">
                                         <label htmlFor="image">Image</label>
                                         <input
-                                            type="file"
                                             id="image"
+                                            type="file"
                                             onChange={(e) => setData('image', e.target.files[0])}
                                             className="block w-full p-2 border rounded-md mt-1"
                                         />
                                         {errors.image && <p className="text-red-500 text-sm">{errors.image}</p>}
                                     </div>
+
+                                    {/* Slug (auto-generated) */}
+                                    <div className="mt-4">
+                                        <label htmlFor="slug" className="block text-sm font-medium">
+                                            Slug (auto-generated)
+                                        </label>
+                                        <input
+                                            id="slug"
+                                            type="text"
+                                            value={suggestedSlug}
+                                            readOnly
+                                            className="block w-full p-2 border rounded-md mt-1 bg-gray-100 cursor-not-allowed"
+                                        />
+                                    </div>
+
+                                    {slugTaken && (
+                                        <p className="text-red-500 text-sm mt-2">Slug is already taken. It has been updated to include a temporary suffix.</p>
+                                    )}
 
                                     <button
                                         type="submit"
