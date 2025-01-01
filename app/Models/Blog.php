@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Blog extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['category_id', 'slug', 'image', 'post_date'];
+    protected $fillable = ['category_id', 'slug', 'image'];
     protected $with = ['translations', 'category'];
 
     /**
@@ -38,28 +39,17 @@ class Blog extends Model
     }
 
     /**
-     * Ensure the slug is unique and properly formatted when saving.
+     * Boot method to handle slug replacement logic.
      */
-    public static function boot()
+    protected static function boot()
     {
         parent::boot();
 
-        // Automatically generate slug if not provided
-        static::saving(function ($blog) {
-            // If the slug doesn't exist, create it based on the title
-            if (empty($blog->slug)) {
-                $locale = app()->getLocale();
-                $title = $blog->getTranslation($locale)?->title ?? 'blog-' . $blog->id;
-                $blog->slug = \Str::slug($title);
-            }
-        });
-
-        // After saving the blog, fix the slug if it contains '-tmp'
+        // Handle slug replacement after saving
         static::saved(function ($blog) {
-            // If the slug contains '-tmp', replace it with '-blogid'
-            if (str_contains($blog->slug, '-tmp')) {
-                $blog->slug = preg_replace('/-tmp$/', '-' . $blog->id, $blog->slug);
-                $blog->save();  // Save again to update the slug in the database
+            if (Str::endsWith($blog->slug, '-tmp')) {
+                $blog->slug = Str::replaceLast('-tmp', '-' . $blog->id, $blog->slug);
+                $blog->saveQuietly(); // Avoid triggering another save event
             }
         });
     }

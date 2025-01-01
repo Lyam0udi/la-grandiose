@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-use App\Models\BlogTranslation;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str; // Import this!
+
 
 class BlogController extends Controller
 {
@@ -15,7 +16,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::with(['translations', 'category.translations'])->paginate(10); // Paginate for better dashboard performance
+        $blogs = Blog::with(['translations', 'category.translations'])->paginate(10);
         return inertia('BlogManagement', compact('blogs'));
     }
 
@@ -33,31 +34,60 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the incoming data
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
+            'slug' => 'nullable|string|max:255',
             'image' => 'required|image|max:2048',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|in:ar,en,fr',
-            'translations.*.title' => 'required|string|max:255',
-            'translations.*.content' => 'required|string',
+            'translations.ar.title' => 'required|string|max:255',
+            'translations.ar.content' => 'required|string',
+            'translations.en.title' => 'required|string|max:255',
+            'translations.en.content' => 'required|string',
+            'translations.fr.title' => 'required|string|max:255',
+            'translations.fr.content' => 'required|string',
         ]);
 
-        // Store image
-        $imagePath = $request->file('image')->store('blogs', 'public');
+        try {
+            // Start a database transaction
+            \DB::beginTransaction();
 
-        // Create the blog
-        $blog = Blog::create([
-            'category_id' => $validated['category_id'],
-            'image' => $imagePath,
-            'post_date' => now(),
-        ]);
+            // Handle image upload
+            $imagePath = $request->file('image')->store('blogs', 'public');
 
-        // Create translations
-        foreach ($validated['translations'] as $translation) {
-            $blog->translations()->create($translation);
+            // Create the blog with a temporary slug
+            $blog = Blog::create([
+                'category_id' => $validated['category_id'],
+                'slug' => $validated['slug'] ?? 'tmp-blog-' . time() . '-tmp',
+                'image' => $imagePath,
+            ]);
+
+            // Replace "-tmp" in the slug with "-blogid"
+            $blog->slug = Str::replaceLast('-tmp', '-' . $blog->id, $blog->slug);
+            $blog->saveQuietly();
+
+            // Save translations
+            foreach ($validated['translations'] as $locale => $translation) {
+                $blog->translations()->create([
+                    'locale' => $locale,
+                    'title' => $translation['title'],
+                    'content' => $translation['content'],
+                ]);
+            }
+
+            // Commit transaction
+            \DB::commit();
+
+            return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
+        } catch (\Exception $e) {
+            // Rollback transaction on failure
+            \DB::rollBack();
+
+            // Log error for debugging
+            \Log::error('Blog creation failed: ' . $e->getMessage());
+
+            return redirect()->back()->withErrors('An error occurred while creating the blog.');
         }
-
-        return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
     }
 
     /**
@@ -84,9 +114,8 @@ class BlogController extends Controller
             'translations.*.content' => 'required|string',
         ]);
 
-        // Update image if provided
+        // Update the image if provided
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($blog->image) {
                 Storage::disk('public')->delete($blog->image);
             }
@@ -94,11 +123,10 @@ class BlogController extends Controller
             $blog->image = $imagePath;
         }
 
-        $blog->update([
-            'category_id' => $validated['category_id'],
-        ]);
+        // Update the blog
+        $blog->update(['category_id' => $validated['category_id']]);
 
-        // Update translations
+        // Update or create translations
         foreach ($validated['translations'] as $translation) {
             $blog->translations()->updateOrCreate(
                 ['locale' => $translation['locale']],
@@ -114,12 +142,12 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        // Delete image
         if ($blog->image) {
             Storage::disk('public')->delete($blog->image);
         }
-
+        $blog->translations()->delete();
         $blog->delete();
+
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
     }
 }

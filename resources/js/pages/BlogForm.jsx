@@ -27,6 +27,7 @@ export default function BlogForm({ blog = null, categories = [], locales = ['en'
     // Track if slug is taken and suggested slug
     const [slugTaken, setSlugTaken] = useState(false);
     const [suggestedSlug, setSuggestedSlug] = useState(data.slug || '');
+    const [selectedCategory, setSelectedCategory] = useState(blog ? blog.category_id : '');
 
     // Pre-fill data for editing
     useEffect(() => {
@@ -103,6 +104,15 @@ export default function BlogForm({ blog = null, categories = [], locales = ['en'
         }
     }, 500); // 500ms debounce to avoid making too many requests
 
+    // Update selected category title based on language change
+    const handleCategoryChange = (e) => {
+        const categoryId = e.target.value;
+        setSelectedCategory(categoryId);
+
+        setData('category_id', categoryId);  // Update the category ID
+        clearErrors('category_id');  // Clear any category-related errors
+    };
+
     // Form submission handling
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -157,16 +167,23 @@ export default function BlogForm({ blog = null, categories = [], locales = ['en'
                                         <label htmlFor="category_id">Category</label>
                                         <select
                                             id="category_id"
-                                            value={data.category_id || ''}
-                                            onChange={(e) => setData('category_id', e.target.value)}
+                                            value={selectedCategory}
+                                            onChange={handleCategoryChange}
                                             className="block w-full p-2 border rounded-md mt-1"
                                         >
                                             <option value="">Select a category</option>
-                                            {categories.map((category) => (
-                                                <option key={category.id} value={category.id}>
-                                                    {category.translations.find(t => t.locale === 'en')?.name || 'Unnamed Category'}
-                                                </option>
-                                            ))}
+                                            {categories.map((category) => {
+                                                const translatedCategory = category.translations.find(
+                                                    (t) => t.locale === i18n.language
+                                                );
+                                                return (
+                                                    <option key={category.id} value={category.id}>
+                                                        {translatedCategory
+                                                            ? translatedCategory.name
+                                                            : category.name}
+                                                    </option>
+                                                );
+                                            })}
                                         </select>
                                         {errors.category_id && (
                                             <p className="text-red-500 text-sm">{errors.category_id}</p>

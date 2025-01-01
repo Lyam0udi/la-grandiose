@@ -1,4 +1,4 @@
-import { Link, useForm } from '@inertiajs/react'; // Import useForm hook
+import { Link, useForm } from '@inertiajs/react'; // Import useForm hook 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { I18nextProvider } from 'react-i18next';
@@ -47,11 +47,11 @@ export default function BlogManagement({ blogs, flash }) {
                                 </div>
 
                                 <div className="overflow-x-auto w-full">
-                                    {/* Check if blogs is an array before trying to map */}
-                                    {Array.isArray(blogs) && blogs.length === 0 ? (
+                                    {/* Check if blogs is an array and handle pagination */}
+                                    {Array.isArray(blogs.data) && blogs.data.length === 0 ? (
                                         <p className="text-lg text-center">No blogs available.</p>
                                     ) : (
-                                        Array.isArray(blogs) && blogs.length > 0 ? (
+                                        Array.isArray(blogs.data) && blogs.data.length > 0 ? (
                                             <table className="min-w-full table-auto border-separate border-spacing-0">
                                                 <thead className="bg-gray-700 text-white">
                                                     <tr>
@@ -63,7 +63,7 @@ export default function BlogManagement({ blogs, flash }) {
                                                     </tr>
                                                 </thead>
                                                 <tbody className="bg-white dark:bg-gray-800">
-                                                    {blogs.map((blog) => {
+                                                    {blogs.data.map((blog) => {
                                                         const blogTranslation = blog.translations.find(
                                                             (t) => t.locale === language
                                                         );
@@ -120,6 +120,49 @@ export default function BlogManagement({ blogs, flash }) {
                                         )
                                     )}
                                 </div>
+
+                             
+                                {/* Display pagination if available */}
+                                <div className="mt-4">
+                                    {blogs.links && (
+                                        <div className="flex justify-center space-x-4">
+                                            {/* Previous Button */}
+                                            {blogs.links[0]?.url && (
+                                                <Link
+                                                    href={blogs.links[0].url}
+                                                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center"
+                                                >
+                                                    <i className="fas fa-chevron-left mr-2"></i> Previous
+                                                </Link>
+                                            )}
+
+                                            {/* Page Number Buttons */}
+                                            {blogs.links.slice(1, -1).map((link) => (
+                                                <Link
+                                                    key={link.label}
+                                                    href={link.url}
+                                                    className={`px-4 py-2 ${
+                                                        link.active ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'
+                                                    } rounded-md hover:bg-blue-600 hover:text-white`}
+                                                >
+                                                    {link.label}
+                                                </Link>
+                                            ))}
+
+                                            {/* Next Button */}
+                                            {blogs.links[blogs.links.length - 1]?.url && (
+                                                <Link
+                                                    href={blogs.links[blogs.links.length - 1].url}
+                                                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center"
+                                                >
+                                                    Next <i className="fas fa-chevron-right ml-2"></i>
+                                                </Link>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
