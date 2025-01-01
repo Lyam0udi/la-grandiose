@@ -56,6 +56,7 @@ export default function BlogManagement({ blogs, flash }) {
                                                 <thead className="bg-gray-700 text-white">
                                                     <tr>
                                                         <th className="px-4 py-3 text-left font-semibold">ID</th>
+                                                        <th className="px-4 py-3 text-left font-semibold">Image</th> {/* Added Image column */}
                                                         <th className="px-4 py-3 text-left font-semibold">Title ({language})</th>
                                                         <th className="px-4 py-3 text-left font-semibold">Category ({language})</th>
                                                         <th className="px-4 py-3 text-left font-semibold">Slug</th>
@@ -77,6 +78,20 @@ export default function BlogManagement({ blogs, flash }) {
                                                                 className="border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                                             >
                                                                 <td className="px-4 py-3">{blog.id}</td>
+
+                                                                {/* Display the image */}
+                                                                <td className="px-4 py-3">
+                                                                    {blog.image ? (
+                                                                        <img
+                                                                            src={`/storage/${blog.image}`} // Assuming image is stored in the public disk
+                                                                            alt="Blog Image"
+                                                                            className="w-16 h-16 object-cover rounded-md"
+                                                                        />
+                                                                    ) : (
+                                                                        <span className="text-red-500">No image</span>
+                                                                    )}
+                                                                </td>
+
                                                                 <td className="px-4 py-3">
                                                                     {blogTranslation ? (
                                                                         blogTranslation.title
@@ -121,7 +136,6 @@ export default function BlogManagement({ blogs, flash }) {
                                     )}
                                 </div>
 
-                             
                                 {/* Display pagination if available */}
                                 <div className="mt-4">
                                     {blogs.links && (
@@ -161,8 +175,6 @@ export default function BlogManagement({ blogs, flash }) {
                                         </div>
                                     )}
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

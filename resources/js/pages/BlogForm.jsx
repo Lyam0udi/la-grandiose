@@ -190,33 +190,6 @@ export default function BlogForm({ blog = null, categories = [], locales = ['en'
                                         )}
                                     </div>
 
-                                    {/* Title */}
-                                    <div className="mt-4">
-                                        <label htmlFor="title">Title</label>
-                                        <input
-                                            id="title"
-                                            type="text"
-                                            value={data.title || ''}
-                                            onChange={(e) => setData('title', e.target.value)}
-                                            className="block w-full p-2 border rounded-md mt-1"
-                                        />
-                                        {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
-                                    </div>
-
-                                    {/* Content */}
-                                    <div className="mt-4">
-                                        <label htmlFor="content">Content</label>
-                                        <textarea
-                                            id="content"
-                                            value={data.content || ''}
-                                            onChange={(e) => setData('content', e.target.value)}
-                                            className="block w-full p-2 border rounded-md mt-1"
-                                        />
-                                        {errors.content && (
-                                            <p className="text-red-500 text-sm">{errors.content}</p>
-                                        )}
-                                    </div>
-
                                     {/* Translations */}
                                     {safeLocales.map((locale) => (
                                         <div key={locale} className="mt-6">
