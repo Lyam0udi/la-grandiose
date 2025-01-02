@@ -23,6 +23,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/inscription', function () {
+    return Inertia::render('Inscription', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('inscription');
+
+
 Route::get('/dashboard', function () {
     $year = Year::first(); // Fetch the current year, if available
     return Inertia::render('Dashboard', [

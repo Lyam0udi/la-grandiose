@@ -33,7 +33,7 @@ const Welcome = () => {
 
     const [language, setLanguage] = useState(() => {
         const savedLanguage = localStorage.getItem('language');
-        return savedLanguage || i18n.language || 'en';
+        return savedLanguage || i18n.language || 'fr';
     });
 
     const [isContentReady, setIsContentReady] = useState(false); // Track if lazy components are loaded
