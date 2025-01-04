@@ -36,6 +36,9 @@ Route::get('/blog', function () {
         'canRegister' => Route::has('register'),
     ]);
 })->name('blog');
+Route::get('blog', [BlogController::class, 'blogIndex'])->name('blog.index');
+Route::get('api/blogs', [BlogController::class, 'blogData'])->name('api.blogs');
+
 
 
 Route::get('/dashboard', function () {

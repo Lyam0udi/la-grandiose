@@ -20,6 +20,18 @@ class BlogController extends Controller
         return inertia('BlogManagement', compact('blogs'));
     }
 
+    public function blogIndex() { // Frontend view
+        $blogs = Blog::with(['translations', 'category.translations'])->paginate(10);
+        return inertia('Blog', ['blogs' => $blogs]);
+    }
+
+    public function blogData()
+    {
+        $blogs = Blog::with(['translations', 'category.translations'])->paginate(10);
+        return response()->json(['blogs' => $blogs]);
+    }
+
+
     /**
      * Show the form for creating a new blog.
      */
