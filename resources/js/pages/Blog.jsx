@@ -2,16 +2,16 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { FaSearch, FaTimes } from 'react-icons/fa'; // Add search and close icons
 
 import i18n from '../i18n';
 import axios from 'axios';
 
-// Lazy-load Navbar and Footer
-const Navbar = React.lazy(() => import(/* webpackChunkName: "navbar" */ '../components/Navbar'));
+const Navbar = React.lazy(() => import('../components/Navbar'));
 const Footer = React.lazy(() => import('../components/Footer'));
 
 const Blog = () => {
-  const { t } = useTranslation(); // Access translation hook directly
+  const { t } = useTranslation();
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('isDarkMode');
     return savedTheme ? JSON.parse(savedTheme) : false;
@@ -19,37 +19,31 @@ const Blog = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedDateFilter, setSelectedDateFilter] = useState('');
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 5;
 
-  // Fetch language from localStorage or default to 'fr'
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') || 'fr'; // Default to 'fr' if not found
+    const savedLanguage = localStorage.getItem('language') || 'fr';
     if (savedLanguage !== i18n.language) {
-      i18n.changeLanguage(savedLanguage); // Change language if different from saved
+      i18n.changeLanguage(savedLanguage);
     }
-  }, []); // Run only on mount
+  }, []);
 
-  // Sync language changes to localStorage and i18n
   const handleLanguageChange = (language) => {
-    localStorage.setItem('language', language); // Save language in localStorage
-    i18n.changeLanguage(language); // Change language in i18n
+    localStorage.setItem('language', language);
+    i18n.changeLanguage(language);
   };
 
-  // Save dark mode setting to localStorage
   useEffect(() => {
     localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
-  // Fetch blogs from the backend when language or page changes
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/blogs');
-        console.log('API Response:', response.data);
-
-        // Process the blog data based on the current language
         const formattedBlogs = response.data.blogs.data.map((blog) => {
           const translation = blog.translations.find(t => t.locale === i18n.language) || {};
           const categoryTranslation = blog.category.translations.find(t => t.locale === i18n.language) || {};
@@ -70,98 +64,157 @@ const Blog = () => {
         setBlogs(formattedBlogs);
       } catch (error) {
         console.error('Error fetching blogs:', error);
-        setBlogs([]); // Fallback to an empty array in case of an error
+        setBlogs([]);
       }
     };
 
     fetchData();
-  }, [i18n.language]); // Refetch blogs whenever the language changes
+  }, [i18n.language]);
 
-  // Filtered posts based on search query and category
-  const filteredPosts = blogs.filter(post => {
-    return (
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (selectedCategory ? post.category.name === selectedCategory : true)
-    );
-  });
+  const applyDateFilter = (blogs) => {
+    const now = new Date();
+    return blogs.filter((post) => {
+      const postDate = new Date(post.created_at);
+      switch (selectedDateFilter) {
+        case '24h':
+          return now - postDate <= 24 * 60 * 60 * 1000;
+        case 'week':
+          return now - postDate <= 7 * 24 * 60 * 60 * 1000;
+        case 'month':
+          return now - postDate <= 30 * 24 * 60 * 60 * 1000;
+        case 'year':
+          return now - postDate <= 365 * 24 * 60 * 60 * 1000;
+        default:
+          return true;
+      }
+    });
+  };
 
-  // Paginate posts
+  const filteredPosts = applyDateFilter(
+    blogs.filter((post) => {
+      return (
+        (post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.content.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        (selectedCategory ? post.category.name === selectedCategory : true)
+      );
+    })
+  );
+
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const currentPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
+  const handleDateFilterChange = (e) => setSelectedDateFilter(e.target.value);
   const handlePageChange = (pageNum) => setCurrentPage(pageNum);
+  const clearSearch = () => setSearchQuery('');
 
   return (
     <I18nextProvider i18n={i18n}>
       <Router>
-        <div className="flex flex-col min-h-screen">
-          {/* Navbar */}
+        <div className={`flex flex-col min-h-screen ${isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'}`}>
           <Navbar
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
             language={i18n.language}
-            setLanguage={handleLanguageChange} // Pass language change handler to Navbar
+            setLanguage={handleLanguageChange}
           />
 
-          <section className={`py-16 mt-10 ${isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightBackground text-lightText'}`}>
+          <section className="py-16 mt-10">
             <div className="container mx-auto px-6 sm:px-12">
-              {/* Search Bar */}
-              <div className="mb-8 flex justify-between items-center">
-                <input
-                  type="text"
-                  placeholder={t('search_posts')}  // Translated text
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="w-full sm:w-1/2 p-3 border rounded-md text-lg"
-                />
+              {/* Search & Filters */}
+              <div className="mb-8 flex gap-4 items-center">
+                <div className="relative flex items-center w-full sm:w-1/2 space-x-2">
+                  {/* Search Icon as Placeholder */}
+                  <input
+                    type="text"
+                    placeholder={searchQuery === '' ? `${t('search_posts')}` : ''}
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className={`w-full pl-10 pr-10 p-3 border rounded-md text-lg ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-900'} focus:ring focus:ring-blue-500`}
+                  />
+                  {/* Search Icon shown only when input is empty */}
+                  {searchQuery === '' && (
+                    <FaSearch className="absolute left-3 text-gray-500" />
+                  )}
+                  {/* Clear Button */}
+                  {searchQuery && (
+                    <FaTimes
+                      className="absolute right-3 cursor-pointer text-gray-500"
+                      onClick={clearSearch}
+                    />
+                  )}
+                </div>
+
+                {/* Category Dropdown */}
                 <select
                   value={selectedCategory}
                   onChange={handleCategoryChange}
-                  className="ml-4 p-3 border rounded-md text-lg"
+                  className={`p-3 border rounded-md text-lg w-1/4 ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-900'} focus:ring focus:ring-blue-500`}
                 >
                   <option value="">{t('all_categories')}</option>
                   {blogs
-                    .map(post => post.category.name)
+                    .map((post) => post.category.name)
                     .filter((value, index, self) => self.indexOf(value) === index)
                     .map((category, index) => (
-                      <option key={index} value={category}>{category}</option>
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
                     ))}
+                </select>
+
+                {/* Date Filter Dropdown */}
+                <select
+                  value={selectedDateFilter}
+                  onChange={handleDateFilterChange}
+                  className={`p-3 border rounded-md text-lg w-1/4 ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-900'} focus:ring focus:ring-blue-500`}
+                >
+                  <option value="">{t('all_dates')}</option>
+                  <option value="24h">{t('last_24_hours')}</option>
+                  <option value="week">{t('last_week')}</option>
+                  <option value="month">{t('last_month')}</option>
+                  <option value="year">{t('last_year')}</option>
                 </select>
               </div>
 
-              {/* Blog Posts List */}
+              {/* Blog Cards */}
               <div className="space-y-8">
-                {currentPosts.map(post => (
-                  <div key={post.id} className="flex flex-col sm:flex-row bg-lightCard p-6 rounded-lg shadow-md">
-                    {post.image_url ? (
-                      <img 
-                        src={post.image_url} 
-                        alt={post.title} 
-                        className="w-full sm:w-1/4 h-48 object-cover rounded-lg mb-6 sm:mb-0 sm:mr-6" 
-                      />
-                    ) : (
-                      <div className="w-full sm:w-1/4 h-48 bg-gray-300 rounded-lg mb-6 sm:mb-0 sm:mr-6 flex items-center justify-center">
-                        <span className="text-gray-500">No Image</span>
+                {currentPosts.map((post) => (
+                  <div
+                    key={post.id}
+                    className={`p-6 rounded-lg shadow-lg flex flex-col sm:flex-row gap-6 transition-transform duration-300 hover:scale-105 ${isDarkMode ? 'bg-gray-900 text-gray-200' : 'bg-white text-gray-900'}`}
+                  >
+                    {post.image_url && (
+                      <div className="flex-shrink-0 w-full sm:w-1/3 h-64 overflow-hidden rounded-lg">
+                        <img
+                          src={post.image_url}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     )}
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-semibold mb-4">{post.title}</h3>
-                      <p className="text-lg mb-4">{post.content}</p>
-                      <a href={`/blog/${post.slug}`} className="text-primaryBlue">{t('read_more')}</a>
+                    <div className="flex-grow">
+                      <div className="flex justify-between text-sm text-gray-500 mb-2">
+                        <span>{post.category.name}</span>
+                        <span>{new Date(post.created_at).toLocaleDateString()}</span>
+                      </div>
+                      <h3 className="text-3xl font-bold mb-4">{post.title}</h3>
+                      <p className="text-lg mb-4 line-clamp-4">{post.content}</p>
+                      <a href={`/blog/${post.slug}`} className="text-blue-500 hover:underline">
+                        {t('read_more')}
+                      </a>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Pagination */}
-              <div className="mt-8 flex justify-center space-x-4">
+              <div className="mt-12 flex justify-center space-x-4">
                 {[...Array(totalPages)].map((_, index) => (
                   <button
                     key={index}
                     onClick={() => handlePageChange(index + 1)}
-                    className={`p-2 ${currentPage === index + 1 ? 'bg-primaryBlue text-white' : 'bg-lightCard text-primaryBlue'} rounded-md`}
+                    className={`px-4 py-2 text-lg rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-blue-500'}`}
                   >
                     {index + 1}
                   </button>
@@ -170,7 +223,6 @@ const Blog = () => {
             </div>
           </section>
 
-          {/* Footer */}
           <Suspense fallback={<div>Loading...</div>}>
             <Footer isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
           </Suspense>
