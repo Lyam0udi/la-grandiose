@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str; // Import this!
+use Inertia\Inertia;
 
 
 class BlogController extends Controller
@@ -30,6 +31,30 @@ class BlogController extends Controller
         $blogs = Blog::with(['translations', 'category.translations'])->paginate(10);
         return response()->json(['blogs' => $blogs]);
     }
+
+    /// single blog page
+    public function blogDetails($slug)
+    {
+        // Fetch the blog using the slug
+        $blog = Blog::where('slug', $slug)->with('translations', 'category.translations')->firstOrFail();
+
+        // Pass the blog data to Inertia view
+        return Inertia::render('BlogDetails', [
+            'slug' => $slug, // Pass slug to the React component
+            'blog' => $blog, // Pass the blog data
+        ]);
+    }
+    /// single blog page
+    public function blogDetailsData($slug) {
+        // Fetch the blog by slug with translations and category
+        $blog = Blog::with(['translations', 'category.translations'])
+                    ->where('slug', $slug)
+                    ->firstOrFail();  // Fail if not found
+        
+        // Return the blog data in JSON format
+        return response()->json(['blog' => $blog]);
+    }
+    
 
 
     /**

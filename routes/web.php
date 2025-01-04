@@ -30,14 +30,16 @@ Route::get('/inscription', function () {
     ]);
 })->name('inscription');
 
-Route::get('/blog', function () {
-    return Inertia::render('Blog', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name('blog');
+// Route::get('/blog', function () {
+//     return Inertia::render('Blog', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//     ]);
+// })->name('blog');
 Route::get('blog', [BlogController::class, 'blogIndex'])->name('blog.index');
 Route::get('api/blogs', [BlogController::class, 'blogData'])->name('api.blogs');
+Route::get('blog/{slug}', [BlogController::class, 'blogDetails'])->name('blog.details'); // For Inertia view
+Route::get('api/blog/{slug}', [BlogController::class, 'blogDetailsData'])->name('api.blog.details'); // For API data
 
 
 

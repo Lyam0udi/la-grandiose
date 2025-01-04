@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 const Footer = ({ isDarkMode }) => {
   const { t } = useTranslation();
-  const location = useLocation();
+  // const location = useLocation();
 
   const socialMediaLinks = [
     // { icon: <FaGlobe />, url: 'https://example.com', alt: t('social_media_website') },
