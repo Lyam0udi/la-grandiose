@@ -166,6 +166,15 @@
     "inscriptions": "Inscriptions",
     "graphs": "Graphs",
     "collapse_sidebar": "Collapse Sidebar",
-    "expand_sidebar": "Expand Sidebar"
+    "expand_sidebar": "Expand Sidebar",
+
+    "search_posts": "Search posts",
+    "all_categories": "All Categories",
+    "all_dates": "All Dates",
+    "last_24_hours": "Last 24 hours",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year",
+    "read_more": "Read more"
 
 }

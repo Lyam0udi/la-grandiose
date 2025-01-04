@@ -166,6 +166,15 @@
     "inscriptions": "التسجيلات",
     "graphs": "الرسوم البيانية",
     "collapse_sidebar": "طي الشريط الجانبي",
-    "expand_sidebar": "توسيع الشريط الجانبي"
+    "expand_sidebar": "توسيع الشريط الجانبي",
+    
+    "search_posts": "ابحث عن المقالات",
+    "all_categories": "جميع الفئات",
+    "all_dates": "جميع التواريخ",
+    "last_24_hours": "آخر 24 ساعة",
+    "last_week": "الأسبوع الماضي",
+    "last_month": "الشهر الماضي",
+    "last_year": "العام الماضي",
+    "read_more": "اقرأ المزيد"
 
 }

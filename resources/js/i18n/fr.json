@@ -166,6 +166,15 @@
     "inscriptions": "Inscriptions",
     "graphs": "Graphiques",
     "collapse_sidebar": "Réduire la barre latérale",
-    "expand_sidebar": "Développer la barre latérale"
+    "expand_sidebar": "Développer la barre latérale",
+
+    "search_posts": "Rechercher des articles",
+    "all_categories": "Toutes les catégories",
+    "all_dates": "Toutes les dates",
+    "last_24_hours": "Dernières 24 heures",
+    "last_week": "Dernière semaine",
+    "last_month": "Dernier mois",
+    "last_year": "Dernière année",
+    "read_more": "Lire la suite"
 
 }
