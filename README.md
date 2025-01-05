@@ -17,3 +17,7 @@ More ReadMe details comming soon ...
 #### + DashboardCrud Pages :
 #### + Profile Page :
 #### + 404 Page :
+
+## Learning 
+
+Axios, Redux, Ajax, Swiper, PHPUnit, SofteDelete in Laravel, Use of Slug, SEO (meta tags), i18n, Data Structure for Translation in Web Apps, Lighthoouse norms, Suspece, Routing in React, TailwindCSS config...
