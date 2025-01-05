@@ -35,15 +35,24 @@ class BlogController extends Controller
     /// single blog page
     public function blogDetails($slug)
     {
-        // Fetch the blog using the slug
-        $blog = Blog::where('slug', $slug)->with('translations', 'category.translations')->firstOrFail();
+        // Fetch the current blog using the slug
+        $blog = Blog::where('slug', $slug)
+                    ->with('translations', 'category.translations')
+                    ->firstOrFail();
 
-        // Pass the blog data to Inertia view
+        // Fetch other blogs for the carousel
+        $allBlogs = Blog::with('translations', 'category.translations')
+                        ->where('slug', '!=', $slug) // Exclude the current blog
+                        ->get();
+
+        // Pass both the blog and allBlogs data to the view
         return Inertia::render('BlogDetails', [
             'slug' => $slug, // Pass slug to the React component
             'blog' => $blog, // Pass the blog data
+            'allBlogs' => $allBlogs, // Pass all blogs for the carousel
         ]);
     }
+
     /// single blog page
     public function blogDetailsData($slug) {
         // Fetch the blog by slug with translations and category
