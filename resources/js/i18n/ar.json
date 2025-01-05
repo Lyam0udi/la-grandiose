@@ -96,6 +96,12 @@
     "contact_form_message": "رسالتك",
     "contact_form_message_placeholder": "اكتب رسالتك هنا",
     "contact_form_submit": "إرسال الرسالة",
+    "contact_phone_title": "هاتف",
+    "contact_phone_description": "يمكنك الاتصال بنا عبر الهاتف على الرقم أدناه.",
+    "contact_email_title": "البريد الإلكتروني",
+    "contact_email_description": "لأي استفسارات، يمكنك مراسلتنا عبر البريد الإلكتروني.",
+    "contact_address_title": "العنوان",
+    "contact_address_description": "يمكنك إيجادنا في العنوان التالي.",
 
     "footer_brand": "لا غرانديوز",
     "footer_tagline": "تعليم من أجل مستقبل أفضل.",

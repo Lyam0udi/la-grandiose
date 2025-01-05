@@ -96,6 +96,12 @@
     "contact_form_message": "Votre message",
     "contact_form_message_placeholder": "Écrivez votre message ici",
     "contact_form_submit": "Envoyer le message",
+    "contact_phone_title": "Téléphone",
+    "contact_phone_description": "Vous pouvez nous joindre par téléphone au numéro ci-dessous.",
+    "contact_email_title": "E-mail",
+    "contact_email_description": "Pour toute question, n'hésitez pas à nous envoyer un e-mail.",
+    "contact_address_title": "Adresse",
+    "contact_address_description": "Trouvez-nous à l'adresse suivante.",
 
     "footer_brand": "La Grandiose",
     "footer_tagline": "Éduquer pour un avenir meilleur.",
