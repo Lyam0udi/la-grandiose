@@ -22,6 +22,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/api/professors/landing', [ProfessorController::class, 'getProfessorsForLandingPage']);
+
 
 Route::get('/inscription', function () {
     return Inertia::render('Inscription', [

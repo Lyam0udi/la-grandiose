@@ -106,4 +106,13 @@ class ProfessorController extends Controller
         $professor->delete();
         return redirect()->route('professor.index');
     }
+
+    public function getProfessorsForLandingPage(Request $request)
+    {
+        // Fetch professors with all translations
+        $professors = Professor::with('translations')->get();
+
+        return response()->json($professors);  // Return as JSON for React to use
+    }
+
 }

@@ -1,18 +1,18 @@
-import React, { useState, useEffect, Suspense } from 'react'; 
+import React, { useState, useEffect, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom'; // Ensure Router wraps the app correctly
 import i18n from '../i18n';
 import { FaArrowUp } from 'react-icons/fa';
 
 // Lazy load components with optimizations
-const Navbar = React.lazy(() => import(/* webpackChunkName: "navbar" */ '../components/Navbar'));
-const Home = React.lazy(() => import(/* webpackPrefetch: true */ '../components/Home'));
+const Navbar = React.lazy(() => import('../components/Navbar'));
+const Home = React.lazy(() => import('../components/Home'));
 const About = React.lazy(() => import('../components/About'));
 const Cycles = React.lazy(() => import('../components/Cycles'));
 const ContactUs = React.lazy(() => import('../components/ContactUs'));
 const WhyChooseUs = React.lazy(() => import('../components/WhyChooseUs'));
 const GrandioseBenefits = React.lazy(() => import('../components/GrandioseBenefits'));
-const ProfessorCards = React.lazy(() => import('../components/ProfessorCards'));
+const ProfessorCards = React.lazy(() => import('../components/ProfessorCards')); // Import ProfessorCards
 const Testimonials = React.lazy(() => import('../components/Testimonials'));
 const Footer = React.lazy(() => import('../components/Footer')); // Lazy-load Footer
 
@@ -37,6 +37,23 @@ const Welcome = () => {
     });
 
     const [isContentReady, setIsContentReady] = useState(false); // Track if lazy components are loaded
+    const [professorsData, setProfessorsData] = useState([]); // State for professors data
+
+    // Fetch professors data from the API
+    useEffect(() => {
+        const fetchProfessors = async () => {
+            try {
+                const response = await fetch('/api/professors/landing');
+                const data = await response.json();
+                console.log('Fetched professors data:', data); // Log the fetched data
+                setProfessorsData(data); // Set data to the state
+            } catch (error) {
+                console.error('Error fetching professors data:', error);
+            }
+        };
+
+        fetchProfessors();
+    }, []); // Empty dependency array means this runs only once on component mount
 
     // Update dark mode class on document
     useEffect(() => {
@@ -187,7 +204,8 @@ const Welcome = () => {
                             <GrandioseBenefits isDarkMode={isDarkMode} />
                         </section>
                         <section id="professorCards">
-                            <ProfessorCards isDarkMode={isDarkMode} />
+                            {/* Pass professorsData to ProfessorCards */}
+                            <ProfessorCards professorsData={professorsData} isDarkMode={isDarkMode} />
                         </section>
                         <section id="testimonials">
                             <Testimonials isDarkMode={isDarkMode} />
