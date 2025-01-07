@@ -23,6 +23,7 @@ Route::get('/', function () {
     ]);
 });
 Route::get('/api/professors/landing', [ProfessorController::class, 'getProfessorsForLandingPage']);
+Route::get('/api/testimonials/landing', [TestimonialController::class, 'getTestimonialsForLandingPage']);
 
 
 Route::get('/inscription', function () {

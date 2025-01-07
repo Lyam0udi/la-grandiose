@@ -91,4 +91,30 @@ class TestimonialController extends Controller
         $testimonial->delete();
         return redirect()->route('testimonials.index')->with('success', 'Testimonial deleted successfully.');
     }
+
+    // Method purpose : display data in the landing page
+    public function getTestimonialsForLandingPage(Request $request)
+    {
+        $locale = app()->getLocale(); // Get the current locale
+
+        // Fetch testimonials with translations for the current locale
+        $testimonials = Testimonial::with(['translations' => function ($query) use ($locale) {
+            $query->where('locale', $locale);
+        }])->get();
+
+        // Map and format testimonials for better API response
+        $formattedTestimonials = $testimonials->map(function ($testimonial) {
+            $translation = $testimonial->translations->first();
+            return [
+                'id' => $testimonial->id,
+                'emoticon' => $testimonial->emoticon,
+                'is_student' => $testimonial->is_student ? 'Student' : 'Parent',
+                'name' => $translation->name ?? 'Name not available',
+                'description' => $translation->description ?? 'Description not available',
+            ];
+        });
+
+        return response()->json($formattedTestimonials);
+    }
+
 }
