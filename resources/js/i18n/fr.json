@@ -51,8 +51,11 @@
     "benefit_8_title": "Indépendant",
     "benefit_8_desc": "Nous encourageons l'indépendance, permettant à votre enfant de prendre en charge son parcours d'apprentissage.",
 
-    "testimonials_title": "Ce que disent les parents",
-    "testimonials_label": "Témoignages de nos parents satisfaits",
+    "student": "Elève",
+    "guardian": "Tuteur",
+    "loading_message": "Chargement des témoignages...",
+    "testimonials_label": "Témoignages",
+    "testimonials_title": "Ce que disent nos élèves et parents",
 
     "cycles_label": "Cycles",
     "cycles_title": "Découvrez Nos Cycles",

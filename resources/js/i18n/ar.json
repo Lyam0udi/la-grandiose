@@ -51,8 +51,11 @@
     "benefit_8_title": "مستقلاً",
     "benefit_8_desc": "نحن نشجع الاستقلالية، مما يمكّن طفلك من تحمل مسؤولية رحلة تعلمه.",
 
-    "testimonials_title": "ماذا يقول الآباء",
-    "testimonials_label": "شهادات من أولياء الأمور الراضين",
+    "student": "تلميذ",
+    "guardian": "ولي الأمر",
+    "loading_message": "تحميل الشهادات...",
+    "testimonials_label": "الشهادات",
+    "testimonials_title": "ماذا يقول طلابنا وأولياء الأمور",
 
     "cycles_label": "الدورات",
     "cycles_title": "اكتشف دوراتنا",

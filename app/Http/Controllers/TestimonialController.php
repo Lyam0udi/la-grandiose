@@ -95,14 +95,18 @@ class TestimonialController extends Controller
     // Method purpose : display data in the landing page
     public function getTestimonialsForLandingPage()
     {
-        $testimonials = Testimonial::with('translations')->get();
+        // Get the 5 most recently updated testimonials
+        $testimonials = Testimonial::with('translations')
+            ->orderBy('updated_at', 'desc') // Sort by the last updated date
+            ->take(5) // Limit to the 5 latest testimonials
+            ->get();
 
         // Map all testimonials with their translations
         $formattedTestimonials = $testimonials->map(function ($testimonial) {
             return [
                 'id' => $testimonial->id,
                 'emoticon' => $testimonial->emoticon,
-                'is_student' => $testimonial->is_student ? 'Student' : 'Parent',
+                'is_student' => $testimonial->is_student,
                 'translations' => $testimonial->translations->mapWithKeys(function ($translation) {
                     return [
                         $translation->locale => [
@@ -116,6 +120,5 @@ class TestimonialController extends Controller
 
         return response()->json($formattedTestimonials);
     }
-
 
 }

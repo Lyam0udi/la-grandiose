@@ -51,8 +51,12 @@
     "benefit_8_title": "Independent",
     "benefit_8_desc": "We encourage independence, empowering your child to take ownership of their learning journey.",
 
-    "testimonials_title": "What Parents Are Saying",
-    "testimonials_label": "Testimonials from our satisfied parents",
+    "student": "Student",
+    "guardian": "Guardian",
+    "loading_message": "Loading testimonials...",
+    "testimonials_label": "Testimonials",
+    "testimonials_title": "What Our Students and Parents Say",
+    
 
     "cycles_label": "Cycles",
     "cycles_title": "Discover Our Cycles",

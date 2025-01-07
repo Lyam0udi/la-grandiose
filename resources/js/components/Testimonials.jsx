@@ -2,22 +2,30 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-const TestimonialCard = ({ testimonial, isDarkMode }) => (
-  <div
-    className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 mb-8 ${
-      isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightCard text-lightText'
-    }`}
-  >
-    <p className="text-lg text-center mb-4">{testimonial.description}</p>
-    <div className="flex items-center justify-center space-x-4">
-      <div className="text-4xl">{testimonial.emoticon}</div>
-      <div>
-        <h4 className="font-semibold">{testimonial.name}</h4>
-        <p className="text-sm text-gray-500">{testimonial.is_student}</p>
+const TestimonialCard = ({ testimonial, isDarkMode }) => {
+  const { t } = useTranslation();  // Use the t() function for translation
+
+  return (
+    <div
+      className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 mb-8 ${
+        isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightCard text-lightText'
+      }`}
+    >
+      <p className="text-lg text-center mb-4">{testimonial.description}</p>
+      <div className="flex items-center justify-center space-x-4">
+        <div className="text-4xl">{testimonial.emoticon}</div>
+        <div>
+          <h4 className="font-semibold">{testimonial.name}</h4>
+          <p className="text-sm text-gray-500">
+            {testimonial.is_student
+              ? t('student')
+              : t('guardian')} 
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Testimonials = ({ isDarkMode }) => {
   const { t, i18n } = useTranslation();
@@ -53,11 +61,7 @@ const Testimonials = ({ isDarkMode }) => {
   if (loading) {
     return (
       <div
-        className={`py-20 ${
-          isDarkMode
-            ? 'bg-darkSecondary text-darkTextSecondary'
-            : 'bg-lightSecondary text-lightTextSecondary'
-        } transition-all duration-500`}
+        className={`py-20 ${isDarkMode ? 'bg-darkSecondary text-darkTextSecondary' : 'bg-lightSecondary text-lightTextSecondary'} transition-all duration-500`}
       >
         <div className="container mx-auto px-6 md:px-12">
           <p className="text-center text-lg">{t('loading_message')}</p>
@@ -68,11 +72,7 @@ const Testimonials = ({ isDarkMode }) => {
 
   return (
     <section
-      className={`py-20 ${
-        isDarkMode
-          ? 'bg-darkSecondary text-darkTextSecondary'
-          : 'bg-lightSecondary text-lightTextSecondary'
-      } transition-all duration-500`}
+      className={`py-20 ${isDarkMode ? 'bg-darkSecondary text-darkTextSecondary' : 'bg-lightSecondary text-lightTextSecondary'} transition-all duration-500`}
       aria-label={t('testimonials_label')}
     >
       <div className="container mx-auto px-6 md:px-12">
