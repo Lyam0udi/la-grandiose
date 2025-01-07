@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const TestimonialCard = ({ testimonial, isDarkMode }) => (
   <div
-    className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 ${
+    className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 mb-8 ${
       isDarkMode ? 'bg-darkBackground text-darkText' : 'bg-lightCard text-lightText'
     }`}
   >
@@ -20,7 +20,7 @@ const TestimonialCard = ({ testimonial, isDarkMode }) => (
 );
 
 const Testimonials = ({ isDarkMode }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +28,18 @@ const Testimonials = ({ isDarkMode }) => {
     const fetchTestimonials = async () => {
       try {
         const response = await axios.get('/api/testimonials/landing');
-        setTestimonials(response.data);
+        const language = i18n.language;
+
+        // Map testimonials to include translations based on the current language
+        const formattedTestimonials = response.data.map((testimonial) => ({
+          id: testimonial.id,
+          emoticon: testimonial.emoticon,
+          is_student: testimonial.is_student,
+          name: testimonial.translations[language]?.name || 'Name not available',
+          description: testimonial.translations[language]?.description || 'Description not available',
+        }));
+
+        setTestimonials(formattedTestimonials);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching testimonials:', error);
@@ -37,7 +48,7 @@ const Testimonials = ({ isDarkMode }) => {
     };
 
     fetchTestimonials();
-  }, []);
+  }, [i18n.language]); // Refetch testimonials when the language changes
 
   if (loading) {
     return (
@@ -74,12 +85,14 @@ const Testimonials = ({ isDarkMode }) => {
           {t('testimonials_title')}
         </h2>
 
-        {/* Testimonials Row */}
-        <div className="flex flex-wrap justify-center gap-8">
+        {/* Testimonials Single Row Layout */}
+        <div className="space-y-8">
           {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="w-full sm:w-1/2 lg:w-1/3 flex justify-center">
-              <TestimonialCard testimonial={testimonial} isDarkMode={isDarkMode} />
-            </div>
+            <TestimonialCard
+              key={testimonial.id}
+              testimonial={testimonial}
+              isDarkMode={isDarkMode}
+            />
           ))}
         </div>
       </div>
