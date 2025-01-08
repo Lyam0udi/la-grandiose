@@ -118,4 +118,15 @@ class CycleController extends Controller
         $cycle->delete();
         return redirect()->route('cycle.index');
     }
+
+    // fetch data to the landing page
+    public function getCyclesForLanding()
+    {
+        // Fetch all cycles with their translations
+        $cycles = Cycle::with('translations')->get();
+
+        // Return the cycles as a JSON response
+        return response()->json($cycles);
+    }
+
 }
