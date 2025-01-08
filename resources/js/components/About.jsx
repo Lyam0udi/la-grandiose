@@ -20,7 +20,7 @@ const AboutImage = () => (
     <img
       src="/images/about-school.webp"
       alt="School environment with students engaged in learning"
-      className="rounded-lg shadow-lg max-w-full h-auto transition-transform duration-300 transform hover:scale-105"
+      className="object-cover w-full h-72 md:h-96 lg:h-[400px] rounded-xl shadow-md transition-transform duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-primaryBlue"
       style={{ maxHeight: '400px', width: 'auto' }}
       loading="lazy"
     />
