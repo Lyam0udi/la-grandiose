@@ -7,7 +7,7 @@ More ReadMe details comming soon ...
 ## Project Structure : 
 
 ### Pages :   
-#### + Landing Page :
+#### + Landing Page : Navbar, Home, About, Cycles, Why Choose Us, Testimonials, Professors Cards, Contact Us, Footer. 
 #### + Blogging Page :
 #### + Inscription Page :
 #### + Register Page :
