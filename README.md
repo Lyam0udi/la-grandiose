@@ -18,6 +18,6 @@ More ReadMe details comming soon ...
 #### + Profile Page :
 #### + 404 Page :
 
-## Learning 
+## Learning :
 
 Axios, Redux, Ajax, Swiper (For Carousel), PHPUnit, SofteDelete in Laravel, Use of Slug, SEO (meta tags), i18n, Data Structure for Translation in Web Apps, Lighthoouse norms, Suspece, Routing in React, TailwindCSS config, storage link, Recaptcha Integration? Relied Emails to Database? Utrl support arabic in tailwindcss? migration, routes in laravel, Inertia ? 
