@@ -23,3 +23,5 @@ More ReadMe details comming soon ...
 Axios, Redux, Ajax, Swiper (For Carousel), PHPUnit, SofteDelete in Laravel, Use of Slug, SEO (meta tags), i18n, Data Structure for Translation in Web Apps, Lighthoouse norms, Suspece, Routing in React, TailwindCSS config, storage link, Recaptcha Integration? Relied Emails to Database? Utrl support arabic in tailwindcss? migration, routes in laravel, Inertia ? sitemap for SEO and robots.txt 
 
 Fixe Bugs, store blogs with html description to allow extra uses.
+
+## Missing Tasks : 
