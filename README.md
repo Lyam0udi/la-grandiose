@@ -62,4 +62,4 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 	Check and improve security.
 	Titles in the entire web pages.
 
-Sending Mails option via Inscription page and contact section.
+Sending Mails option via Inscription page and contact section. Fixe bug blog carousel, (it dosent maintain local storage theme)
