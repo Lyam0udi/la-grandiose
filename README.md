@@ -62,4 +62,4 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 	Check and improve security.
 	Titles in the entire web pages.
 
-Sending Mails
+Sending Mails option via Inscription page and contact section.
