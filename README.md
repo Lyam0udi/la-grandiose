@@ -46,7 +46,7 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 	Improve inputs (Required)
 	Support dark/white mode
 + DashboardCrud Pages :
-+ Profile Page :
++ Profile Page : support i18n
 + 404 Page :
 	Display the 404 Page in Case of the error 404
 + Entire Web App :
