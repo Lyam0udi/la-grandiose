@@ -64,4 +64,5 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 
 Sending Mails option via Inscription page and contact section. Fixe bug blog carousel, (it dosent maintain local storage theme) 
 Reminder : I'll succeed no matter what. The Key is daily actions, consistency, and discipline.
+Financial Stress privating me from dailly coding habit
 
