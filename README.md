@@ -45,10 +45,12 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 	Fixe Slug bugs (Case of delete, Slug Based on title and not content for blog[Fixe the Slug to the first word or 3 first words?])
 	Improve inputs (Required)
 	Support dark/white mode
++ Profile Page :
+    Make it support i18n.
 + DashboardCrud Pages :
 + Profile Page : support i18n
 + 404 Page :
-	Display the 404 Page in Case of the error 404
+	Display the 404 Page in Case of the error 404.
 + Entire Web App :
 	Performance,
 	Support Arabic display right to life (Tailwind CSS) 
@@ -61,6 +63,9 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 	Hosting,
 	Check and improve security.
 	Titles in the entire web pages.
++ Security :
+      Improve security.
+  
 
 Sending Mails option via Inscription page and contact section. Fixe bug blog carousel, (it dosent maintain local storage theme) 
 
