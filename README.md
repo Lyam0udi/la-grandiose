@@ -69,4 +69,3 @@ Fixe Bugs, store blogs with html description to allow extra uses.
 
 Sending Mails option via Inscription page and contact section. Fixe bug blog carousel, (it dosent maintain local storage theme) 
 
-
