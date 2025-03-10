@@ -3,6 +3,7 @@
 This project is based on HTML, CSS, JavaScript, React, TailwindCSS, PHP, Laravel, MySQL. 
 More ReadMe details comming soon ...
 
+
 ## Project Structure : 
 
 ### Pages :   
