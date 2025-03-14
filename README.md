@@ -18,6 +18,14 @@ This project is a modern, fully responsive school website built using Laravel In
 - **Multilingual Support**
 - **Dark/Light Mode Toggle**
 
+## Best Practices, SEO, Performance, Accessibility and Mobile Responsiveness
+
+- This web application follows industry best practices to ensure high performance, accessibility, and SEO optimization:
+- SEO-Friendly Structure: Proper meta tags, semantic HTML, and Open Graph support for better search engine visibility.
+- High Performance: Optimized asset loading, lazy loading of images, and efficient API calls.
+- Accessibility Compliance: ARIA attributes, keyboard navigation, and color contrast improvements for an inclusive user experience.
+- Mobile Responsiveness: The application is fully responsive, ensuring seamless usability across all screen sizes and devices.
+
 ---
 
 ## Project Structure
