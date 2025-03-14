@@ -137,5 +137,5 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ---
 
 ## Contact
-For any inquiries or suggestions, contact us at `https://lyam0udi.netlify.app/` or open an issue in the repository.
+For any inquiries or suggestions, contact us at [My Portfolio](https://lyam0udi.netlify.app/) or open an issue in the repository.
 
