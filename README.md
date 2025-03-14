@@ -131,16 +131,11 @@ Now, open your browser and go to `http://127.0.0.1:8000/` to access the project.
 
 ---
 
-## Contributing
-Feel free to fork this repository, create a new branch, and submit a pull request with your enhancements.
-
----
-
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ---
 
 ## Contact
-For any inquiries or suggestions, contact us at `your-email@example.com` or open an issue in the repository.
+For any inquiries or suggestions, contact us at `https://lyam0udi.netlify.app/` or open an issue in the repository.
 
