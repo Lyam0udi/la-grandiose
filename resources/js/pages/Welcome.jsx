@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { BrowserRouter as Router } from 'react-router-dom'; // Ensure Router wraps the app correctly
+import { BrowserRouter as Router } from 'react-router-dom';
 import i18n from '../i18n';
 import { FaArrowUp } from 'react-icons/fa';
 
-// Lazy load components with optimizations
+// Lazy load components
 const Navbar = React.lazy(() => import('../components/Navbar'));
 const Home = React.lazy(() => import('../components/Home'));
 const About = React.lazy(() => import('../components/About'));
@@ -12,9 +12,9 @@ const Cycles = React.lazy(() => import('../components/Cycles'));
 const ContactUs = React.lazy(() => import('../components/ContactUs'));
 const WhyChooseUs = React.lazy(() => import('../components/WhyChooseUs'));
 const GrandioseBenefits = React.lazy(() => import('../components/GrandioseBenefits'));
-const ProfessorCards = React.lazy(() => import('../components/ProfessorCards')); // Import ProfessorCards
+const ProfessorCards = React.lazy(() => import('../components/ProfessorCards'));
 const Testimonials = React.lazy(() => import('../components/Testimonials'));
-const Footer = React.lazy(() => import('../components/Footer')); // Lazy-load Footer
+const Footer = React.lazy(() => import('../components/Footer'));
 
 // Debounce utility for better performance
 const debounce = (func, wait) => {
@@ -36,24 +36,22 @@ const Welcome = () => {
         return savedLanguage || i18n.language || 'fr';
     });
 
-    const [isContentReady, setIsContentReady] = useState(false); // Track if lazy components are loaded
-    const [professorsData, setProfessorsData] = useState([]); // State for professors data
+    const [professorsData, setProfessorsData] = useState([]);
 
-    // Fetch professors data from the API
+    // Fetch professors data
     useEffect(() => {
         const fetchProfessors = async () => {
             try {
                 const response = await fetch('/api/professors/landing');
                 const data = await response.json();
-                console.log('Fetched professors data:', data); // Log the fetched data
-                setProfessorsData(data); // Set data to the state
+                setProfessorsData(data);
             } catch (error) {
                 console.error('Error fetching professors data:', error);
             }
         };
 
         fetchProfessors();
-    }, []); // Empty dependency array means this runs only once on component mount
+    }, []);
 
     // Update dark mode class on document
     useEffect(() => {
@@ -73,62 +71,64 @@ const Welcome = () => {
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
-    // Save dark mode setting to localStorage
-    useEffect(() => {
-        localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
-    }, [isDarkMode]);
-
-    // Change language and save preference
-    useEffect(() => {
-        i18n.changeLanguage(language);
-        localStorage.setItem('language', language);
-        document.documentElement.lang = language; // Update HTML lang attribute dynamically
-    }, [language]);
-
-    // Scroll to the correct section on hash change
-    useEffect(() => {
-        if (isContentReady) {
-            const hash = window.location.hash;
-            if (hash) {
-                const target = document.querySelector(hash);
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop,
-                        behavior: 'smooth',
-                    });
-                }
-            }
-        }
-    }, [isContentReady]);
-
     // Handle scroll for updating URL hash dynamically
-    const handleScroll = debounce(() => {
-        const sections = document.querySelectorAll('section');
-        const scrollPosition = window.scrollY;
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            if (
-                sectionId &&
-                scrollPosition >= sectionTop - 100 &&
-                scrollPosition < sectionTop + sectionHeight - 100
-            ) {
-                if (window.location.hash !== `#${sectionId}`) {
-                    window.history.pushState(null, '', `#${sectionId}`);
+    useEffect(() => {
+        const handleScroll = debounce(() => {
+            const sections = document.querySelectorAll('section');
+            const scrollPosition = window.scrollY;
+
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                // Update hash based on visible section
+                if (
+                    sectionId &&
+                    scrollPosition >= sectionTop - 100 &&
+                    scrollPosition < sectionTop + sectionHeight - 100
+                ) {
+                    if (window.location.hash !== `#${sectionId}`) {
+                        window.history.pushState(null, '', `#${sectionId}`);
+                    }
                 }
+            });
+        }, 100);
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Scroll to section when hash changes
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash;
+            const target = document.querySelector(hash);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop,
+                    behavior: 'smooth',
+                });
             }
-        });
-    }, 100);
+        };
+
+        // Trigger scroll to section on initial load (if hash is present)
+        if (window.location.hash) {
+            handleHashChange();
+        }
+
+        // Listen to hash changes
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
 
     // Scroll-to-Top Button
     const ScrollToTopButton = ({ isDarkMode }) => {
         const [isVisible, setIsVisible] = useState(false);
 
-        // Toggle visibility based on scroll position
         useEffect(() => {
             const handleScroll = () => {
-                setIsVisible(window.scrollY > 100); // Show button after 100px scroll
+                setIsVisible(window.scrollY > 100);
             };
 
             window.addEventListener('scroll', handleScroll);
@@ -137,7 +137,6 @@ const Welcome = () => {
             };
         }, []);
 
-        // Scroll to the top smoothly
         const scrollToTop = () => {
             window.scrollTo({
                 top: 0,
@@ -145,7 +144,6 @@ const Welcome = () => {
             });
         };
 
-        // Styling for the button
         const buttonStyle = isDarkMode
             ? 'bg-darkSecondary text-darkText hover:bg-accentGreen'
             : 'bg-lightSecondary text-lightText hover:bg-accentGreen';
@@ -165,11 +163,8 @@ const Welcome = () => {
 
     return (
         <I18nextProvider i18n={i18n}>
-            {/* Wrap with Router */}
             <Router>
-                {/* Main Flex Container */}
                 <div className="flex flex-col min-h-screen">
-                    {/* Navbar */}
                     <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} language={language} setLanguage={setLanguage} />
 
                     <Suspense
@@ -187,7 +182,6 @@ const Welcome = () => {
                             </div>
                         }
                     >
-                        {/* Landing Page Sections */}
                         <section id="home">
                             <Home isDarkMode={isDarkMode} />
                         </section>
@@ -204,7 +198,6 @@ const Welcome = () => {
                             <GrandioseBenefits isDarkMode={isDarkMode} />
                         </section>
                         <section id="professorCards">
-                            {/* Pass professorsData to ProfessorCards */}
                             <ProfessorCards professorsData={professorsData} isDarkMode={isDarkMode} />
                         </section>
                         <section id="testimonials">
@@ -215,10 +208,8 @@ const Welcome = () => {
                         </section>
                     </Suspense>
 
-                    {/* Scroll-to-Top Button */}
                     <ScrollToTopButton isDarkMode={isDarkMode} />
 
-                    {/* Footer */}
                     <section className="mt-auto">
                         <Footer isDarkMode={isDarkMode} />
                     </section>
