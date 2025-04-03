@@ -1,6 +1,5 @@
 # School's Website
 
-
 ## Overview
 This project is a modern, fully responsive school website built using Laravel Inertia and React. It incorporates a powerful tech stack to ensure seamless performance and scalability.
 
@@ -153,10 +152,10 @@ For any inquiries or suggestions, contact us at [My Portfolio](https://lyam0udi.
 ## Next Tasks : 
 + Landing Page :
 	
-	Changing URL while scrolling.
-	Correct localization map in Contact and Inscription
-	Display Testimonials, ProfCards, Cycles,
-	Performance in Professors Cards
+	Changing URL while scrolling. [Done]
+	Correct localization map in Contact and Inscription?
+	Display Testimonials, ProfCards, Cycles, (bug to fixe)
+	Performance in Professors Cards (test with lighthouse, devtools, react performance)
 + Blogging Page :	
 	List of blogs Page,
 	Single Blog Page (Improve design)
@@ -179,18 +178,19 @@ For any inquiries or suggestions, contact us at [My Portfolio](https://lyam0udi.
 	Display the 404 Page in Case of the error 404.
 + Entire Web App :
 	Performance,
-	Support Arabic display right to life (Tailwind CSS) 
+	Support Arabic display right to life (Tailwind CSS? dir="rtl" ) 
 	Content in i18n JSON files.
 	i18n support, (in alerts and error messages too)
-	SEO, robots? 
+	SEO, robot.txt + site Map? 
 	Good Practices,
 	Tests, front/back/ different browsers, PHP Unit.
 	Delete images after deleting (storage link)
 	Hosting,
 	Check and improve security.
-	Titles in the entire web pages.
+	Titles in the entire web pages. and logos.
 + Security :
       Improve security.
++ Add recaptcha Contact section.
   
 
 Sending Mails option via Inscription page and contact section. Fixe bug blog carousel, (it dosent maintain local storage theme) 
