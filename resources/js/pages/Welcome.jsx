@@ -32,9 +32,15 @@ const Welcome = () => {
     });
 
     const [language, setLanguage] = useState(() => {
-        const savedLanguage = localStorage.getItem('language');
-        return savedLanguage || i18n.language || 'fr';
+        return localStorage.getItem('language') || i18n.language || 'fr';
     });
+    
+    // When language changes, update i18n and localStorage
+    useEffect(() => {
+        i18n.changeLanguage(language);
+        localStorage.setItem('language', language);
+    }, [language]);
+    
 
     const [professorsData, setProfessorsData] = useState([]);
 
