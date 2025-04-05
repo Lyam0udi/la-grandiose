@@ -1,5 +1,7 @@
 # School's Website
 
+
+
 ## Overview
 This project is a modern, fully responsive school website built using Laravel Inertia and React. It incorporates a powerful tech stack to ensure seamless performance and scalability.
 
